@@ -1,1 +1,42 @@
+name: CI Action
 
+# Trigger the workflow on push and pull requests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Define jobs to run in the workflow
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Set up Node.js (you can customize this for different environments)
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Run tests
+    - name: Run tests
+      run: npm test
+
+    # Example of building the project (if applicable)
+    - name: Build the project
+      run: npm run build
+
+    # Example of linting the code (optional)
+    - name: Lint the code
+      run: npm run lint
