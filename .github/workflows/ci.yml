@@ -25,24 +25,24 @@ jobs:
 
     # Install dependencies
     - name: Install dependencies
-      run: 
+      run: |
         cd frontend
         npm install
 
     # Run tests
     - name: Run tests
-      run: 
+      run: |
         cd frontend
         npm test
 
     # Build the project (if applicable)
     - name: Build the project
-      run: 
+      run: |
         cd frontend
         npm run build
 
     # Lint the code (optional)
     - name: Lint the code
-      run: 
+      run: |
         cd frontend
         npm run lint
