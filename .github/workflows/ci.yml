@@ -1,39 +1,40 @@
-name: CI_action
+name: CI Pipeline
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+    # Checkout the code using the latest action
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          cd cise_ass1a_worksheet2/cise_ass1a_worksheet2-frontend
-          npm install
-        
-      - name: Build
-        run: |
-          cd cise_ass1a_worksheet2/cise_ass1a_worksheet2-frontend
-          npm run build
+    # Set up Node.js with a newer version of the action and Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'  # Change to node version 20 or whatever you need
 
-      - name: Test
-        run: |
-          cd cise_ass1a_worksheet2/cise_ass1a_worksheet2-frontend
-          npm run test
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Run tests
+    - name: Run tests
+      run: npm test
+
+    # Example of building the project (if applicable)
+    - name: Build the project
+      run: npm run build
+
+    # Example of linting the code (optional)
+    - name: Lint the code
+      run: npm run lint
