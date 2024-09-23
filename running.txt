@@ -8,6 +8,7 @@ To execute the backend, CD into the nest_backend directory and run this command:
     cd nest_backend
     npm start
 
-To quickly deploy both frontend and backend code to the Raspberry pi on bachpad.ddns.net:3000
+To quickly deploy both frontend and backend code to the Raspberry pi on bachpad.ddns.net:3000.
+This will automatically containerise both the frontend and backend together, 
     (cmd)
     bash deploy-to-pi.sh
