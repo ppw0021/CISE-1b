@@ -1,0 +1,13 @@
+Fronend port is 3000 
+To execute the frontend, CD into the frontend directory and run this command:
+    cd frontend
+    npm start
+
+Backend port is 6000 in the .env file.
+To execute the backend, CD into the nest_backend directory and run this command:
+    cd nest_backend
+    npm start
+
+To quickly deploy both frontend and backend code to the Raspberry pi on bachpad.ddns.net:3000
+    (cmd)
+    bash deploy-to-pi.sh
