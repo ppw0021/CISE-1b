@@ -14,14 +14,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <header>
-        <p>This is a custom homepage built using Next.js and TypeScript.</p>
-      <Link href="/">
-        <button>Main Page</button>
-      </Link>
+      <title>Group 7</title>
+      <body className="flex flex-col min-h-screen"> {/* Set body to be a flex container */}
+        <header className="shadow-lg">
+          <h1 className="mb-2">Welcome to our Application</h1>
+          <nav>
+            <Link href="/">
+              <button aria-label="Login" className="mr-2"> {/* Right margin for space */}
+                Login
+              </button>
+            </Link>
+          </nav>
         </header>
-        <main>{children}</main>
+        <main className="flex-grow p-4">{children}</main> {/* Make main grow to fill space */}
+        <footer className="shadow-lg">
+          <p>Group Number 7: Adam, Declan, and Joel.</p>
+        </footer>
       </body>
     </html>
   );
