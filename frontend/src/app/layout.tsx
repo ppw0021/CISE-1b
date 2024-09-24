@@ -15,18 +15,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <title>Group 7</title>
-      <body className="flex flex-col min-h-screen"> {/* Set body to be a flex container */}
+      <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
           <h1 className="mb-2">Welcome to our Application</h1>
           <nav>
             <Link href="/">
-              <button aria-label="Login" className="mr-2"> {/* Right margin for space */}
+              <button aria-label="Login" className="mr-2">
                 Login
               </button>
             </Link>
           </nav>
         </header>
-        <main className="flex-grow p-4">{children}</main> {/* Make main grow to fill space */}
+        <main className="flex-grow p-4">{children}</main>
         <footer className="shadow-lg">
           <p>Group Number 7: Adam, Declan, and Joel.</p>
         </footer>
