@@ -12,8 +12,8 @@ let AppService = class AppService {
     getHello() {
         return 'Hello World!';
     }
-    getWeiner() {
-        return 'Hello Weiner!';
+    getLogin() {
+        return 'Login Return';
     }
 };
 exports.AppService = AppService;
