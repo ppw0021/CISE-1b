@@ -7,7 +7,7 @@ export default function AdminPage() {
         <Link href="/main">
         </Link>
         <Link href="/">
-        <button className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 dark:bg-green-700">
+        <button>
         Return
           </button>
         </Link>
