@@ -3,11 +3,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { ArticleModule } from './schemas/article.module'; // Adjust the path as needed
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), MongooseModule.forRoot(process.env.DB_URI)],
+    ConfigModule.forRoot(), 
+    MongooseModule.forRoot(process.env.DB_URI), // Ensure your DB_URI is set in your environment variables
+    ArticleModule, 
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

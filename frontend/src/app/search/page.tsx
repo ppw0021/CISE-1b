@@ -1,4 +1,3 @@
-import Link from 'next/link';
 export default function SearchPage() {
     return (
       <div className="flex items-center justify-center">
