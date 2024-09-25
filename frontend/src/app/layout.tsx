@@ -24,6 +24,11 @@ export default function RootLayout({
                 Login
               </button>
             </Link>
+            <Link href="/search">
+              <button aria-label="search" className="mr-2">
+                Search
+              </button>
+            </Link>
           </nav>
         </header>
         <main className="flex-grow p-4">{children}</main>
