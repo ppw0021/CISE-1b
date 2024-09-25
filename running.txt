@@ -12,3 +12,10 @@ To quickly deploy both frontend and backend code to the Raspberry pi on bachpad.
 This will automatically containerise both the frontend and backend together, 
     (cmd)
     bash deploy-to-pi.sh
+
+
+
+To run this normally, cd to frontend and do 'npm run dev'
+To run the backend, cd to backend and do 'npm run start'
+
+This should connect to the db and load the front end application.
