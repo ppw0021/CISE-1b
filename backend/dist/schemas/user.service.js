@@ -24,6 +24,10 @@ let UserService = class UserService {
     async findAll() {
         return this.userModel.find().exec();
     }
+    async emailExists(email) {
+        const user = await this.userModel.findOne({ email }).exec();
+        return !!user;
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

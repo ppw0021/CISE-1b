@@ -4,4 +4,5 @@ export declare class UserService {
     private userModel;
     constructor(userModel: Model<UserDocument>);
     findAll(): Promise<User[]>;
+    emailExists(email: string): Promise<boolean>;
 }

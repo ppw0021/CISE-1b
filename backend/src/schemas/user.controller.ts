@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query} from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../schemas/user.schema';
 
@@ -9,5 +9,11 @@ export class UserController {
   @Get()
   async findAll(): Promise<User[]> {
     return this.userService.findAll();
+  }
+
+  @Get('exists')
+  async emailExists(@Query('email') email: string): Promise<{ exists: boolean }> {
+    const exists = await this.userService.emailExists(email);
+    return { exists };
   }
 }

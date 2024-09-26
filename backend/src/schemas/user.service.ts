@@ -10,4 +10,9 @@ export class UserService {
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
+
+  async emailExists(email: string): Promise<boolean> {
+    const user = await this.userModel.findOne({ email }).exec();
+    return !!user; // Return true if the user exists, otherwise false
+  }
 }
