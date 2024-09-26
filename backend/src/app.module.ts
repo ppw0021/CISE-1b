@@ -4,12 +4,13 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { ArticleModule } from './schemas/article.module'; // Adjust the path as needed
+import { UserModule } from './schemas/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(), 
     MongooseModule.forRoot(process.env.DB_URI), // Ensure your DB_URI is set in your environment variables
-    ArticleModule, 
+    ArticleModule, UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
