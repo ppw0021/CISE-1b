@@ -21,12 +21,15 @@ let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
-    async findAll() {
-        return this.userModel.find().exec();
-    }
     async emailExists(email) {
         const user = await this.userModel.findOne({ email }).exec();
         return !!user;
+    }
+    async validatePassword(email, passwordHash) {
+        const user = await this.userModel.findOne({ email }).exec();
+        if (!user)
+            return false;
+        return user.passwordHash === passwordHash;
     }
 };
 exports.UserService = UserService;

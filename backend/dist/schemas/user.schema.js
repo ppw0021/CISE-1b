@@ -21,7 +21,7 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], User.prototype, "passwordHash", void 0);
 exports.User = User = __decorate([
     (0, mongoose_1.Schema)({ collection: 'users' })
 ], User);

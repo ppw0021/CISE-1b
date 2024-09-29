@@ -14,7 +14,7 @@ async function bootstrap() {
     }
     app.enableCors({ origin: true, credentials: true });
     const port = process.env.PORT || 8082;
-    await app.listen(8082);
+    await app.listen(port);
     console.log('Nest application is running on: http://localhost:8082');
 }
 bootstrap();

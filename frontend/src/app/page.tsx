@@ -5,13 +5,13 @@ export default function Home() {
       <div className="bg-white shadow-2xl rounded-lg p-6 w-80 text-center">
         <h1 className="text-lg font-bold">Login Here</h1>
         <Link href="/customerlogin">
-        <button>
-        Login as Customer
+          <button className='mb-2 w-64'>
+            Login as Customer
           </button>
         </Link>
         <Link href="/admin">
-        <button>
-        Login as Administrator
+          <button className='w-64'>
+            Login as Administrator
           </button>
         </Link>
       </div>
