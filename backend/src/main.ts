@@ -13,7 +13,10 @@ async function bootstrap() {
     console.error('Error connecting to MongoDB:', error.message); // Log connection error
   }
 
-  await app.listen(8082);
+  app.enableCors({ origin: true, credentials: true });
+  const port = process.env.PORT || 8082;
+
+  await app.listen(port);
   console.log('Nest application is running on: http://localhost:8082');
 }
 
