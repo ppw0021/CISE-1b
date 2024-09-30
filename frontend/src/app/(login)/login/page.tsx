@@ -71,12 +71,9 @@ export default function CustomerPage() {
                 //Email exists and password valid!
                 closePopup();
                 console.log("Credentials validated");
-                if (data.isAdmin) {
-                    router.push('/admin');
-                }
-                else {
-                    router.push('/customer');
-                }
+                localStorage.setItem("auth_token", data.authToken);
+                localStorage.setItem("is_admin", data.isAdmin);
+                router.push('/');
                 
 
             } else if (data.exists && !data.valid) {
