@@ -33,7 +33,16 @@ let UserService = class UserService {
     }
     async checkAdmin(email) {
         const user = await this.userModel.findOne({ email }).exec();
-        return user.isAdmin;
+        if (user.isAdmin === null) {
+            return false;
+        }
+        else {
+            return user.isAdmin;
+        }
+    }
+    async updateAuthTokenByEmail(email, authToken) {
+        const updatedUser = await this.userModel.findOneAndUpdate({ email }, { $set: { authToken } }, { new: true, useFindAndModify: false }).exec();
+        return updatedUser;
     }
 };
 exports.UserService = UserService;

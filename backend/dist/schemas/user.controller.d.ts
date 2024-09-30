@@ -5,6 +5,7 @@ export declare class UserController {
     emailExists(email: string): Promise<{
         exists: boolean;
     }>;
+    generateToken(): string;
     validateUser(body: {
         email: string;
         passwordHash: string;
@@ -12,5 +13,6 @@ export declare class UserController {
         exists: boolean;
         valid: boolean;
         isAdmin: boolean;
+        authToken: string;
     }>;
 }

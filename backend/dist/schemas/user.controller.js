@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
+const crypto = require("crypto");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -23,16 +24,35 @@ let UserController = class UserController {
         const exists = await this.userService.emailExists(email);
         return { exists };
     }
+    generateToken() {
+        return crypto.randomBytes(16).toString('hex');
+    }
     async validateUser(body) {
         const { email, passwordHash } = body;
-        console.log(`User ${email} logged in with password hash ${passwordHash}`);
         const exists = await this.userService.emailExists(email);
-        const isAdmin = await this.userService.checkAdmin(email);
+        let isAdmin = false;
+        let authToken = "";
         if (!exists) {
-            return { exists, valid: false, isAdmin };
+            console.log(`No matching email for ${email}`);
+            return { exists, valid: false, isAdmin: false, authToken };
         }
+        isAdmin = await this.userService.checkAdmin(email);
         const isValid = await this.userService.validatePassword(email, passwordHash);
-        return { exists, valid: isValid, isAdmin };
+        if (isValid) {
+            authToken = this.generateToken();
+            const updatedUser = await this.userService.updateAuthTokenByEmail(email, authToken);
+            if (updatedUser) {
+                console.log(`User ${email} logged in with password hash ${passwordHash}, authToken is ${authToken}`);
+                return { exists, valid: isValid, isAdmin, authToken };
+            }
+            else {
+                console.log("Failed to write to database, check Mongo or schema");
+                authToken = "";
+                return { exists, valid: false, isAdmin, authToken };
+            }
+        }
+        console.log(`User ${email} used the wrong password`);
+        return { exists, valid: isValid, isAdmin, authToken };
     }
 };
 exports.UserController = UserController;

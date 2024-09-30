@@ -21,6 +21,22 @@ export class UserService {
 
   async checkAdmin(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email }).exec();
-    return user.isAdmin;
+    if (user.isAdmin === null){
+      return false;
+    }
+    else {
+      return user.isAdmin;
+    }
+    
+  }
+
+  async updateAuthTokenByEmail(email: string, authToken: string): Promise<User | null> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { email },
+      { $set: { authToken } },
+      { new: true, useFindAndModify: false}
+    ).exec();
+
+    return updatedUser;
   }
 }

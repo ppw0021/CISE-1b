@@ -13,6 +13,9 @@ export class User {
 
     @Prop({required: true})
     isAdmin: boolean;
+
+    @Prop({required: true})
+    authToken: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
