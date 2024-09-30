@@ -10,6 +10,9 @@ export class User {
 
     @Prop({ required: true })
     passwordHash: string;
+
+    @Prop({required: true})
+    isAdmin: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
