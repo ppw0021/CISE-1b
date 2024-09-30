@@ -25,14 +25,14 @@ let UserController = class UserController {
     }
     async validateUser(body) {
         const { email, passwordHash } = body;
-        console.log(email);
-        console.log(passwordHash);
+        console.log(`User ${email} logged in with password hash ${passwordHash}`);
         const exists = await this.userService.emailExists(email);
+        const isAdmin = await this.userService.checkAdmin(email);
         if (!exists) {
-            return { exists, valid: false };
+            return { exists, valid: false, isAdmin };
         }
         const isValid = await this.userService.validatePassword(email, passwordHash);
-        return { exists, valid: isValid };
+        return { exists, valid: isValid, isAdmin };
     }
 };
 exports.UserController = UserController;

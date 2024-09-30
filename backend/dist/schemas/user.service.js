@@ -31,6 +31,10 @@ let UserService = class UserService {
             return false;
         return user.passwordHash === passwordHash;
     }
+    async checkAdmin(email) {
+        const user = await this.userModel.findOne({ email }).exec();
+        return user.isAdmin;
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

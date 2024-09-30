@@ -11,5 +11,6 @@ export declare class UserController {
     }): Promise<{
         exists: boolean;
         valid: boolean;
+        isAdmin: boolean;
     }>;
 }

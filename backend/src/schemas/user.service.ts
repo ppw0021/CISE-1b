@@ -18,4 +18,9 @@ export class UserService {
 
     return user.passwordHash === passwordHash;
   }
+
+  async checkAdmin(email: string): Promise<boolean> {
+    const user = await this.userModel.findOne({ email }).exec();
+    return user.isAdmin;
+  }
 }

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import crypto from 'crypto';
-import { useRouter } from 'next/navigation'; // For App Router
+import { useRouter } from 'next/navigation';
 
 export default function CustomerPage() {
 
@@ -71,7 +71,13 @@ export default function CustomerPage() {
                 //Email exists and password valid!
                 closePopup();
                 console.log("Credentials validated");
-                router.push('/customer');
+                if (data.isAdmin) {
+                    router.push('/admin');
+                }
+                else {
+                    router.push('/customer');
+                }
+                
 
             } else if (data.exists && !data.valid) {
                 //Email exists but password not valid

@@ -17,9 +17,14 @@ export default function RootLayout({
       <title>Group 7</title>
       <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
-          <h1 className="mb-2">Welcome to our Application</h1>
+          <h1 className="mb-2">SPEED Application</h1>
           <nav>
             <Link href="/">
+              <button aria-label="Home" className="mr-2">
+                Home
+              </button>
+            </Link>
+            <Link href="/customerlogin">
               <button aria-label="Login" className="mr-2">
                 Login
               </button>

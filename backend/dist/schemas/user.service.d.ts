@@ -5,4 +5,5 @@ export declare class UserService {
     constructor(userModel: Model<UserDocument>);
     emailExists(email: string): Promise<boolean>;
     validatePassword(email: string, passwordHash: string): Promise<boolean>;
+    checkAdmin(email: string): Promise<boolean>;
 }
