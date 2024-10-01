@@ -7,6 +7,10 @@ import { User, UserDocument } from '../schemas/user.schema';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+  async findAllUsers(): Promise<User[]> {
+    return this.userModel.find().exec(); // Fetch all users from the database
+  }
+  
   async emailExists(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email }).exec();
     return !!user;

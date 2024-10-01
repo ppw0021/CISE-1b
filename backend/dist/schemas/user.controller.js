@@ -20,6 +20,9 @@ let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
+    async getUsers() {
+        return this.userService.findAllUsers();
+    }
     async emailExists(email) {
         const exists = await this.userService.emailExists(email);
         return { exists };
@@ -73,6 +76,12 @@ let UserController = class UserController {
     }
 };
 exports.UserController = UserController;
+__decorate([
+    (0, common_1.Get)('all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUsers", null);
 __decorate([
     (0, common_1.Get)('exists'),
     __param(0, (0, common_1.Query)('email')),
