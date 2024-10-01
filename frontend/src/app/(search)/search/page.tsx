@@ -1,5 +1,4 @@
 "use client"
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function SearchPage() {
@@ -17,6 +16,7 @@ export default function SearchPage() {
       <div className=" w-max text-center">
         {allowedAccess && (
           <h1 className="text-lg font-bold">Welcome to the search page.</h1>
+          
         )}
         {!allowedAccess && (
           <h1 className="text-lg font-bold">Please login.</h1>

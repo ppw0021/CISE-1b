@@ -40,7 +40,7 @@ export default function RootLayout({
 
     }
 
-  }, []);
+  }, [isUserAdmin, setAdminStatus, setLoggedInStatus]);
 
   return (
     <html lang="en">
