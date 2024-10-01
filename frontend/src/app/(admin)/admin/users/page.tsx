@@ -28,12 +28,16 @@ const AdminPage: React.FC = () => {
                     }
                     const data = await response.json();
                     setUsers(data);
-                } catch (error: any) {
-                    setError(error.message); // Set error message if fetch fails
+                } catch (error) {
+                    if (error instanceof Error) {
+                        setError(error.message); // Set error message if fetch fails
+                    } else {
+                        setError('An unknown error occurred');
+                    }
                 }
-            }
             setLoading(false); // Set loading to false once done
-        };
+        }
+    };
 
         fetchUsers(); // Call fetch function
     }, []);
@@ -47,8 +51,12 @@ const AdminPage: React.FC = () => {
                 throw new Error('Failed to delete user');
             }
             setUsers(users.filter(user => user.authToken !== authToken));
-        } catch (error: any) {
-            setError(error.message); // Set error message if delete fails
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message); // Set error message if fetch fails
+            } else {
+                setError('An unknown error occurred');
+            }
         }
     }
 
