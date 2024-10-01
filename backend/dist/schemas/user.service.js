@@ -21,6 +21,9 @@ let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
+    async findAllUsers() {
+        return this.userModel.find().exec();
+    }
     async emailExists(email) {
         const user = await this.userModel.findOne({ email }).exec();
         return !!user;

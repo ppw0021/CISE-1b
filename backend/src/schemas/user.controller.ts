@@ -7,6 +7,11 @@ import * as crypto from 'crypto';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
+  @Get('all') // This will respond to GET requests to /user
+  async getUsers(): Promise<User[]> {
+    return this.userService.findAllUsers(); // Fetch all users from the service
+  }
+
   @Get('exists')
   async emailExists(@Query('email') email: string): Promise<{ exists: boolean }> {
     const exists = await this.userService.emailExists(email);
