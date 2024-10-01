@@ -54,6 +54,23 @@ let UserController = class UserController {
         console.log(`User ${email} used the wrong password`);
         return { exists, valid: isValid, isAdmin, authToken };
     }
+    async registerUser(body) {
+        const { email, passwordHash } = body;
+        const exists = await this.userService.emailExists(email);
+        if (exists) {
+            console.log(`Email already exists for ${email}`);
+            return { alreadyExists: exists, success: false, isAdmin: false, authToken: "" };
+        }
+        const newUser = await this.userService.createNewUser(email, passwordHash);
+        let authToken = this.generateToken();
+        const updatedUser = await this.userService.updateAuthTokenByEmail(email, authToken);
+        if (newUser.email != null) {
+            return { alreadyExists: false, success: true, isAdmin: false, authToken: authToken };
+        }
+        else {
+            return { alreadyExists: false, success: false, isAdmin: false, authToken: "" };
+        }
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -70,6 +87,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "validateUser", null);
+__decorate([
+    (0, common_1.Post)('register'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "registerUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

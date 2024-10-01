@@ -14,7 +14,7 @@ export class User {
     @Prop({required: true})
     isAdmin: boolean;
 
-    @Prop({required: true})
+    @Prop({required: false})
     authToken: string;
 }
 

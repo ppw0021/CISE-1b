@@ -15,4 +15,13 @@ export declare class UserController {
         isAdmin: boolean;
         authToken: string;
     }>;
+    registerUser(body: {
+        email: string;
+        passwordHash: string;
+    }): Promise<{
+        alreadyExists: boolean;
+        success: boolean;
+        isAdmin: boolean;
+        authToken: string;
+    }>;
 }
