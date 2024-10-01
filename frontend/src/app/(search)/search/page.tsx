@@ -14,20 +14,14 @@ export default function SearchPage() {
   }, []);
   return (
     <div className="flex items-center justify-center">
-      <div className="bg-white shadow-2xl rounded-lg p-6 w-80 text-center">
+      <div className=" w-max text-center">
         {allowedAccess && (
           <h1 className="text-lg font-bold">Welcome to the search page.</h1>
         )}
         {!allowedAccess && (
           <h1 className="text-lg font-bold">Please login.</h1>
         )}
-        <Link href="/main">
-        </Link>
-        <Link href="/">
-          <button>
-            Return
-          </button>
-        </Link>
+     
 
       </div>
     </div>
