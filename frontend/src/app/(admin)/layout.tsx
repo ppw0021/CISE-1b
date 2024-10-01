@@ -36,6 +36,7 @@ export default function RootLayout({
       } else {
         setAdminStatus(false)
       }
+      console.log(isUserAdmin);
 
     }
 

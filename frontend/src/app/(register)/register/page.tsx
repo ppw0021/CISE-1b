@@ -62,10 +62,6 @@ export default function RegisterPage() {
         router.push('/login');
     }
 
-    const closePopup = () => {
-        setPopupVisible(false); // Method to hide the popup
-    }
-
     return (
         <div className="flex items-center justify-center">
             <div className="bg-white shadow-2xl rounded-lg p-6 w-80 text-center">

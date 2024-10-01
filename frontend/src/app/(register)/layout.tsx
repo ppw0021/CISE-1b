@@ -13,15 +13,6 @@ export default function RootLayout({
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
   const router = useRouter();
 
-  const logOutClicked = () => {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("is_admin");
-    setLoggedInStatus(false);
-    setAdminStatus(false);
-    router.push("/");
-    window.location.reload();
-  };
-
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     const isAdmin = localStorage.getItem("is_admin");
@@ -36,7 +27,8 @@ export default function RootLayout({
       } else {
         setAdminStatus(false)
       }
-
+      console.log(isLoggedIn);
+      console.log(isUserAdmin);
     }
 
   }, []);
