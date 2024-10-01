@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import "../globals.css";
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function RootLayout({
   children,
@@ -11,7 +10,6 @@ export default function RootLayout({
 }>) {
   const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(false);
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
-  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
