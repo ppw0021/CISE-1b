@@ -44,6 +44,26 @@ let UserService = class UserService {
         const updatedUser = await this.userModel.findOneAndUpdate({ email }, { $set: { authToken } }, { new: true, useFindAndModify: false }).exec();
         return updatedUser;
     }
+    async createNewUser(email, passwordHash) {
+        if (!email || !passwordHash) {
+            console.log('Email and password required');
+            return;
+        }
+        const existingUser = await this.userModel.findOne({ email }).exec();
+        if (existingUser) {
+            console.log('Email exists');
+            return;
+        }
+        try {
+            const newUser = new this.userModel({ email, passwordHash, isAdmin: false, authToken: "" });
+            const savedUser = await newUser.save();
+            return savedUser;
+        }
+        catch (error) {
+            console.error('Error creating new user:', error);
+            throw new Error('Internal server error');
+        }
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

@@ -45,17 +45,76 @@ export default function RegisterPage() {
         else if (passwordEntry == "") {
             setPopupVisible(true);
             setPopupMessage("Please enter a password");
+            setPasswordEntry("");
+            setVerifyPasswordEntry("");
             return;
         }
         else if (passwordEntry != verifyPasswordEntry) {
             setPopupVisible(true);
             setPopupMessage("Passwords do not match");
+            setPasswordEntry("");
+            setVerifyPasswordEntry("");
             return;
         }
 
         const hashedPassword = hashMD5(passwordEntry);
         console.log("Hashed Password: " + hashedPassword);
         console.log("Email: " + emailEntry);
+
+        try {
+            const payload = {
+                email: emailEntry,
+                passwordHash: hashedPassword
+            }
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const response = await fetch(apiUrl + `/user/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch user existence");
+            }
+
+            const data = await response.json();
+            console.log(data);
+            if (!data.exists && data.success) {
+                //Email exists and password valid!
+                closePopup();
+                console.log("Registration complete");
+                localStorage.setItem("auth_token", data.authToken);
+                localStorage.setItem("is_admin", "false");
+                router.push('/');
+
+
+            } else if (data.exists || !data.success) {
+                //Email exists but password not valid
+                setPopupVisible(true);
+                setPopupMessage("Email exists already, please log in");
+                console.log("Failure");
+                setEmailEntry("");
+                setPasswordEntry("");
+                setVerifyPasswordEntry("");
+            }
+            else {
+                //Neither
+                setPopupVisible(true);
+                setPopupMessage("This should not happen");
+                console.log("Failure")
+                setEmailEntry("");
+                setPasswordEntry("");
+                setVerifyPasswordEntry("");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const closePopup = () => {
+        setPopupVisible(false); // Method to hide the popup
     }
 
     const backToLoginButtonPressed = async () => {

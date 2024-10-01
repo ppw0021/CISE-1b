@@ -39,4 +39,31 @@ export class UserService {
 
     return updatedUser;
   }
+
+  async createNewUser(email: string, passwordHash: string): Promise<User | null> {
+    //Validate email and password for security
+    if (!email || !passwordHash) {
+      console.log('Email and password required');
+      return;
+    }
+
+    //Check for existing user with the same email
+    const existingUser = await this.userModel.findOne({ email }).exec();
+    if (existingUser) {
+      console.log('Email exists');
+      return;
+    }
+
+    try {
+      //Create a new user instance
+      const newUser = new this.userModel({ email, passwordHash, isAdmin: false, authToken: ""});
+
+      //Save the new user to the database
+      const savedUser = await newUser.save();
+      return savedUser;
+    } catch (error) {
+      console.error('Error creating new user:', error);
+      throw new Error('Internal server error'); //Handle generic error for security
+    }
+  }
 }

@@ -7,4 +7,5 @@ export declare class UserService {
     validatePassword(email: string, passwordHash: string): Promise<boolean>;
     checkAdmin(email: string): Promise<boolean>;
     updateAuthTokenByEmail(email: string, authToken: string): Promise<User | null>;
+    createNewUser(email: string, passwordHash: string): Promise<User | null>;
 }
