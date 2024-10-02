@@ -5,6 +5,7 @@ const app_module_1 = require("./app.module");
 const mongoose_1 = require("mongoose");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.setGlobalPrefix('api');
     try {
         const connection = await (0, mongoose_1.connect)(process.env.DB_URI);
         console.log('Connected to MongoDB:', connection.connection.name);

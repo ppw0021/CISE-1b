@@ -5,6 +5,9 @@ import { connect } from 'mongoose'; // Import connect directly
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Set global prefix for API routes
+  app.setGlobalPrefix('api');
+
   // Test MongoDB Connection
   try {
     const connection = await connect(process.env.DB_URI); // Use the connect method directly

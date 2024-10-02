@@ -1,27 +1,28 @@
-import { IsNotEmpty, IsString, IsArray, IsNumber } from 'class-validator';
+// import { IsNotEmpty, IsString, IsArray, IsNumber } from 'class-validator';
 
-export class CreateArticleDto {
-  @IsNotEmpty()
-  @IsString()
-  title: string;
+// export class CreateArticleDto {
+//   @IsNotEmpty()
+//   @IsString()
+//   title: string;
 
-  @IsNotEmpty()
-  @IsArray() // Change to IsArray to match the schema
-  authors: string[]; // Change to string[] to match the schema
+//   @IsNotEmpty()
+//   @IsArray() // Change to IsArray to match the schema
+//   @IsString({ each: true }) // Validate each element in the array is a string
+//   authors: string[];
 
-  @IsNotEmpty()
-  @IsString()
-  publisher: string;
+//   @IsNotEmpty()
+//   @IsString()
+//   publisher: string;
 
-  @IsNotEmpty()
-  @IsNumber() // Use IsNumber from class-validator
-  year_of_publication: number; // Ensure this is a number
+//   @IsNotEmpty()
+//   @IsNumber() // Ensure this is a number
+//   year_of_publication: number;
 
-  @IsNotEmpty()
-  @IsString()
-  doi: string;
+//   @IsNotEmpty()
+//   @IsString() // Add SE practice field validation
+//   sePractice: string;
 
-  @IsNotEmpty()
-  @IsString()
-  pages: string; // Ensure this field is included
-}
+//   @IsNotEmpty()
+//   @IsString() // Add claim field validation
+//   claim: string;
+// }
