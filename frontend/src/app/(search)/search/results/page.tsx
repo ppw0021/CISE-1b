@@ -64,7 +64,7 @@ const SearchResults = () => {
     );
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen w-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center bg-gray-100">
             <div className="bg-white shadow-2xl rounded-lg p-4 w-full h-full max-w-screen text-center overflow-hidden">
                 {allowedAccess ? (
                     <>
