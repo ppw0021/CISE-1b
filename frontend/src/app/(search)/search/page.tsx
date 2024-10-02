@@ -17,7 +17,7 @@ export default function SearchPage() {
     const [selectedMethod, setSelectedMethod] = useState<string>('');
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex items-center justify-center bg-gray-100">
             <div className="p-6 bg-white shadow-lg rounded-lg w-full max-w-xl">
                 <h2 className="text-2xl font-bold mb-4">Search SE Method</h2>
                 {allowedAccess ? (
