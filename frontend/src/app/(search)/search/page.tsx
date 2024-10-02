@@ -15,7 +15,6 @@ export default function SearchPage() {
     
     const methods: string[] = ['TDD', 'BDD', 'Code Review', 'Pair Programming', 'Refactoring', 'Agile'];
     const [selectedMethod, setSelectedMethod] = useState<string>('');
-    const [searchQuery, setSearchQuery] = useState<string>('');
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
