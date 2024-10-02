@@ -1,22 +1,20 @@
+// src/app/layout.tsx
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import "../globals.css";
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
   const router = useRouter();
 
   const logOutClicked = () => {
-    
-    
-    //Old method using local storage
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
     setLoggedInStatus(false);
@@ -31,22 +29,21 @@ export default function RootLayout({
     if (token === null) {
       setLoggedInStatus(false);
       setAdminStatus(false);
-    }
-    else {
+    } else {
       setLoggedInStatus(true);
-      if (isAdmin == "true") {
+      if (isAdmin === "true") {
         setAdminStatus(true);
       } else {
-        setAdminStatus(false)
+        setAdminStatus(false);
       }
-      //Load page here
     }
-
   }, []);
 
   return (
     <html lang="en">
-      <title>Group 7</title>
+      <head>
+        <title>Group 7</title>
+      </head>
       <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
           <h1 className="mb-2">SPEED Application</h1>
@@ -61,28 +58,32 @@ export default function RootLayout({
                 <button aria-label="Login" className="mr-2">
                   Login
                 </button>
-              </Link>)}
-            <>
-              {isLoggedIn && (
+              </Link>
+            )}
+            {isLoggedIn && (
+              <>
                 <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
                   Logout
                 </button>
-              )}
-              {isLoggedIn && (
                 <Link href="/search">
                   <button aria-label="Search" className="mr-2">
                     Search
                   </button>
                 </Link>
-              )}
-              {(isLoggedIn && isUserAdmin) && (
-                <Link href="/admin">
-                  <button aria-label="Admin Panel" className="mr-2">
-                    Admin panel
+                <Link href="/submitArticle">
+                  <button aria-label="Submit Article" className="mr-2">
+                    Submit Article
                   </button>
                 </Link>
-              )}
-            </>
+                {isUserAdmin && (
+                  <Link href="/admin">
+                    <button aria-label="Admin Panel" className="mr-2">
+                      Admin Panel
+                    </button>
+                  </Link>
+                )}
+              </>
+            )}
           </nav>
         </header>
         <main className="flex-grow p-4">{children}</main>
@@ -90,6 +91,6 @@ export default function RootLayout({
           <p>Group Number 7: Adam, Declan, and Joel.</p>
         </footer>
       </body>
-    </html >
+    </html>
   );
 }
