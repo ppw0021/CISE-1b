@@ -66,7 +66,11 @@ export default function RootLayout({
             )}
             {isLoggedIn && (
               <>
-                <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
+                <button
+                  aria-label="Logout"
+                  className="mr-2"
+                  onClick={logOutClicked}
+                >
                   Logout
                 </button>
                 <Link href="/search">

@@ -21,11 +21,11 @@ let ArticleService = class ArticleService {
     constructor(articleModel) {
         this.articleModel = articleModel;
     }
-    test() {
-        return 'Article route testing';
-    }
     async findAll() {
         return await this.articleModel.find().exec();
+    }
+    async findByStatus(status) {
+        return await this.articleModel.find({ status }).exec();
     }
     async findOne(id) {
         return await this.articleModel.findById(id).exec();

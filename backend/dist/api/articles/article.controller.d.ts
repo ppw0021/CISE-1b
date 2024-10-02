@@ -6,4 +6,5 @@ export declare class ArticleController {
     addArticle(createArticleDto: CreateArticleDto): Promise<{
         message: string;
     }>;
+    getArticles(status: string): Promise<import("./article.schema").Article[]>;
 }

@@ -31,6 +31,9 @@ export class Article {
 
   @Prop({ type: Date, default: Date.now })
   updated_date: Date;
+
+  @Prop({ type: Boolean, default: false }) // Add the moderated field
+  moderated: boolean; // New field
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

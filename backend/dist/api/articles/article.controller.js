@@ -33,6 +33,18 @@ let ArticleController = class ArticleController {
             }, common_1.HttpStatus.BAD_REQUEST);
         }
     }
+    async getArticles(status) {
+        try {
+            const articles = status ? await this.articleService.findByStatus(status) : await this.articleService.findAll();
+            return articles;
+        }
+        catch (error) {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Unable to fetch articles: ' + error.message,
+            }, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -42,6 +54,13 @@ __decorate([
     __metadata("design:paramtypes", [create_article_dto_1.CreateArticleDto]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "addArticle", null);
+__decorate([
+    (0, common_1.Get)('/'),
+    __param(0, (0, common_1.Query)('status')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "getArticles", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('articles'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

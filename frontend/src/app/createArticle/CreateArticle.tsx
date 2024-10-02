@@ -1,22 +1,20 @@
+// components/CreateArticle.tsx
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Article, DefaultEmptyArticle } from "../components/Article"; // Ensure Article types are defined
+import { Article, DefaultEmptyArticle } from "../components/Article"; // Ensure correct path
 import Link from "next/link";
 import '../globals.css';
 
 const CreateArticleComponent = () => {
-  const navigate = useRouter();
+  const router = useRouter();
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
   const [feedbackMessage, setFeedbackMessage] = useState('');
-  const [isError, setIsError] = useState(false); // Track if there's an error
+  const [isError, setIsError] = useState(false);
   const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
-  const router = useRouter();
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
-    // For date inputs, keep the value as a string in 'YYYY-MM-DD' format
     setArticle({ ...article, [name]: value });
   };
 
@@ -45,26 +43,24 @@ const CreateArticleComponent = () => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // Construct the article data to submit
     const articleToSubmit: Partial<Article> = {
-        ...article,
-        updated_date: new Date(), // Directly assign Date object
+      ...article,
+      updated_date: new Date(),
     };
 
-    console.log("Submitting Article:", articleToSubmit); // Log article data
+    console.log("Submitting Article:", articleToSubmit);
     try {
-        await submitArticle(articleToSubmit);
-        setFeedbackMessage('Article created successfully!');
-        setIsError(false); // Reset error state
-        setArticle(DefaultEmptyArticle); // Reset the form
+      await submitArticle(articleToSubmit);
+      setFeedbackMessage('Article created successfully!');
+      setIsError(false);
+      setArticle(DefaultEmptyArticle);
     } catch (error) {
-        setFeedbackMessage('Error creating article: ');
-        setIsError(true); // Set error state
+      setFeedbackMessage('Error creating article: ');
+      setIsError(true);
     }
-};
+  };
 
-const logOutClicked = () => {
+  const logOutClicked = () => {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
     setLoggedInStatus(false);
@@ -138,7 +134,7 @@ const logOutClicked = () => {
                 placeholder="Authors (comma-separated)"
                 name="authors"
                 className="form-control w-full"
-                value={article.authors || ''} // Fallback for undefined
+                value={article.authors || ''}
                 onChange={onChange}
               />
             </div>
@@ -148,7 +144,7 @@ const logOutClicked = () => {
                 placeholder="Publisher"
                 name="publisher"
                 className="form-control w-full"
-                value={article.publisher || ''} // Fallback for undefined
+                value={article.publisher || ''}
                 onChange={onChange}
               />
             </div>
@@ -158,7 +154,7 @@ const logOutClicked = () => {
                 placeholder="Year of Publication"
                 name="year_of_publication"
                 className="form-control w-full"
-                value={article.year_of_publication || ''} // Fallback for undefined
+                value={article.year_of_publication || ''}
                 onChange={onChange}
               />
             </div>
@@ -168,7 +164,7 @@ const logOutClicked = () => {
                 placeholder="Volume"
                 name="volume"
                 className="form-control w-full"
-                value={article.volume || ''} // Fallback for undefined
+                value={article.volume || ''}
                 onChange={onChange}
               />
             </div>
@@ -178,7 +174,7 @@ const logOutClicked = () => {
                 placeholder="Number"
                 name="number"
                 className="form-control w-full"
-                value={article.number || ''} // Fallback for undefined
+                value={article.number || ''}
                 onChange={onChange}
               />
             </div>
@@ -188,7 +184,7 @@ const logOutClicked = () => {
                 placeholder="Pages"
                 name="pages"
                 className="form-control w-full"
-                value={article.pages || ''} // Fallback for undefined
+                value={article.pages || ''}
                 onChange={onChange}
               />
             </div>
@@ -198,7 +194,7 @@ const logOutClicked = () => {
                 placeholder="DOI"
                 name="doi"
                 className="form-control w-full"
-                value={article.doi || ''} // Fallback for undefined
+                value={article.doi || ''}
                 onChange={onChange}
               />
             </div>
@@ -208,7 +204,7 @@ const logOutClicked = () => {
                 placeholder="Publication Date"
                 name="published_date"
                 className="form-control w-full"
-                value={article.published_date || ''} // Fallback for undefined
+                value={article.published_date || ''}
                 onChange={onChange}
               />
             </div>

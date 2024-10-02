@@ -92,3 +92,19 @@ input.form-control {
   box-sizing: border-box; /* Makes padding and border part of the input's size */
 }
 
+/* global.css or a specific CSS file for this component */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid black;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+
