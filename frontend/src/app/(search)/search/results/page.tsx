@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -17,7 +18,7 @@ interface Article {
     updated_at: string;
 }
 
-export default function Results() {
+const SearchResults = () => {
     const [allowedAccess, setAccess] = useState<boolean>(true);
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -122,4 +123,12 @@ export default function Results() {
             </div>
         </div>
     );
+}
+
+export default function ResultsPage() {
+  return (
+      <Suspense fallback={<div>Loading...</div>}>
+          <SearchResults />
+      </Suspense>
+  );
 }
