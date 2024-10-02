@@ -18,18 +18,21 @@ export default function AdminPage() {
         {allowedAccess ? (
           <>
             <h1 className="text-lg font-bold">Welcome to the admin page.</h1>
-            <div className="flex flex-row justify-between items-center">
             <Link href="/admin/users">
-              <button>
-                Users
+              <button className="w-48 mb-1">
+                Manage Users
               </button>
             </Link>
             <Link href="/admin/articles">
-              <button>
+              <button className="w-48 mb-1">
                 Reviewed Articles
               </button>
             </Link>
-            </div>
+            <Link href="/">
+              <button className="w-48">
+                Return
+              </button>
+            </Link>
           </>
         ) : (
           <h1 className="text-lg font-bold">Please login.</h1>

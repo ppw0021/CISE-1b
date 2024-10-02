@@ -75,20 +75,22 @@ export default function RootLayout({
                     Search
                   </button>
                 </Link>
-                <Link href="/createArticle">
-                  <button aria-label="Submit Article" className="mr-2">
-                    Submit Article
+              )}
+              {isLoggedIn && (
+                <Link href="/browse">
+                  <button aria-label="Search" className="mr-2">
+                    Browse
                   </button>
                 </Link>
-                {isUserAdmin && (
-                  <Link href="/admin">
-                    <button aria-label="Admin Panel" className="mr-2">
-                      Admin Panel
-                    </button>
-                  </Link>
-                )}
-              </>
-            )}
+              )}
+              {(isLoggedIn && isUserAdmin) && (
+                <Link href="/admin">
+                  <button aria-label="Admin Panel" className="mr-2">
+                    Admin panel
+                  </button>
+                </Link>
+              )}
+            </>
           </nav>
         </header>
         <main className="flex-grow p-4">{children}</main>

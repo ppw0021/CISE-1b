@@ -146,6 +146,13 @@ export default function LoginPage() {
                 >
                     Register
                 </button>
+                <Link href={"/"}>
+                <button
+                    className="w-64 mt-1"
+                >
+                    Return
+                </button>
+                </Link>
             </div>
 
         </div>
