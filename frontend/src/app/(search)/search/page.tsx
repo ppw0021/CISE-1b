@@ -44,9 +44,16 @@ export default function SearchPage() {
                         <Link href={`/search/results?method=${selectedMethod}`}>
                             <button
                                 disabled={!selectedMethod} // Disable if no method is selected
-                                className={`px-4 py-2 ${!selectedMethod ? 'bg-gray-400' : 'bg-blue-500'} text-white rounded hover:bg-blue-600`}
+                                className={`px-4 py-2 ${!selectedMethod ? 'bg-gray-400' : 'bg-blue'} text-white rounded hover:${!selectedMethod ? 'bg-gray-400' : 'bg-blue'}`}
                             >
                                 Search
+                            </button>
+                        </Link>
+                        <Link href={"/"}>
+                            <button
+                                className={"ml-1"}
+                            >
+                                Return
                             </button>
                         </Link>
                     </>
