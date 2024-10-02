@@ -73,13 +73,6 @@ export default function RootLayout({
                   </button>
                 </Link>
               )}
-              {isLoggedIn && (
-                <Link href="/browse">
-                  <button aria-label="Search" className="mr-2">
-                    Browse
-                  </button>
-                </Link>
-              )}
             </>
           </nav>
         </header>
