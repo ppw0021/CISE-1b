@@ -23,27 +23,37 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateArticleDto.prototype, "isbn", void 0);
+], CreateArticleDto.prototype, "authors", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateArticleDto.prototype, "author", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateArticleDto.prototype, "description", void 0);
-__decorate([
-    (0, class_validator_1.IsDate)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Date)
-], CreateArticleDto.prototype, "published_date", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
 ], CreateArticleDto.prototype, "publisher", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateArticleDto.prototype, "year_of_publication", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateArticleDto.prototype, "volume", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateArticleDto.prototype, "number", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateArticleDto.prototype, "pages", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateArticleDto.prototype, "doi", void 0);
 __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)

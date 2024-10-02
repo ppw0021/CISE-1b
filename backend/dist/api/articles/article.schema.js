@@ -21,23 +21,31 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Article.prototype, "isbn", void 0);
+], Article.prototype, "authors", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Article.prototype, "author", void 0);
-__decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", String)
-], Article.prototype, "description", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: Date }),
-    __metadata("design:type", Date)
-], Article.prototype, "published_date", void 0);
-__decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", String)
 ], Article.prototype, "publisher", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Number }),
+    __metadata("design:type", Number)
+], Article.prototype, "year_of_publication", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, default: null }),
+    __metadata("design:type", String)
+], Article.prototype, "volume", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, default: null }),
+    __metadata("design:type", String)
+], Article.prototype, "number", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String }),
+    __metadata("design:type", String)
+], Article.prototype, "pages", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String }),
+    __metadata("design:type", String)
+], Article.prototype, "doi", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: Date, default: Date.now }),
     __metadata("design:type", Date)

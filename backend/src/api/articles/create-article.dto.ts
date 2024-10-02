@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDate, IsNotEmpty } from 'class-validator';
+import { IsString, IsOptional, IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
@@ -7,23 +7,31 @@ export class CreateArticleDto {
 
   @IsString()
   @IsNotEmpty()
-  isbn: string;
+  authors: string; // Changed from author to authors
 
   @IsString()
   @IsNotEmpty()
-  author: string;
+  publisher: string;
+
+  @IsNumber()
+  @IsOptional() // Year of publication can be optional
+  year_of_publication?: number;
 
   @IsString()
   @IsOptional()
-  description?: string;
-
-  @IsDate()
-  @IsOptional()
-  published_date?: Date; // Use JavaScript Date type
+  volume?: string | null; // Volume can be null
 
   @IsString()
   @IsOptional()
-  publisher?: string;
+  number?: string | null; // Number can be null
+
+  @IsString()
+  @IsOptional()
+  pages?: string; // Pages as an optional string
+
+  @IsString()
+  @IsOptional()
+  doi?: string; // DOI as an optional string
 
   @IsDate()
   updated_date: Date; // Use JavaScript Date type

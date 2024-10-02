@@ -21,7 +21,6 @@ export class ArticleService {
   }
 
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
-    // You can perform additional validation or transformation here if needed
     return await this.articleModel.create(createArticleDto);
   }
 

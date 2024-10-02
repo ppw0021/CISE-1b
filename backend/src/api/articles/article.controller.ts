@@ -9,17 +9,8 @@ export class ArticleController {
   @Post('/')
   async addArticle(@Body() createArticleDto: CreateArticleDto) {
     try {
-      // Ensure that the published_date and updated_date are JavaScript Dates
-      if (createArticleDto.published_date) {
-        createArticleDto.published_date = new Date(createArticleDto.published_date);
-      }
-
       // Check if updated_date exists; if not, initialize it
-      if (createArticleDto.updated_date) {
-        createArticleDto.updated_date = new Date(createArticleDto.updated_date);
-      } else {
-        createArticleDto.updated_date = new Date(); // Default to now if not provided
-      }
+      createArticleDto.updated_date = new Date(); // Default to now if not provided
 
       // Call the service to create the article
       await this.articleService.create(createArticleDto);

@@ -1,9 +1,11 @@
 export declare class CreateArticleDto {
     title: string;
-    isbn: string;
-    author: string;
-    description?: string;
-    published_date?: Date;
-    publisher?: string;
+    authors: string;
+    publisher: string;
+    year_of_publication?: number;
+    volume?: string | null;
+    number?: string | null;
+    pages?: string;
+    doi?: string;
     updated_date: Date;
 }

@@ -22,15 +22,7 @@ let ArticleController = class ArticleController {
     }
     async addArticle(createArticleDto) {
         try {
-            if (createArticleDto.published_date) {
-                createArticleDto.published_date = new Date(createArticleDto.published_date);
-            }
-            if (createArticleDto.updated_date) {
-                createArticleDto.updated_date = new Date(createArticleDto.updated_date);
-            }
-            else {
-                createArticleDto.updated_date = new Date();
-            }
+            createArticleDto.updated_date = new Date();
             await this.articleService.create(createArticleDto);
             return { message: 'Article added successfully' };
         }
