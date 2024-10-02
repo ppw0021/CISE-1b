@@ -50,6 +50,10 @@ __decorate([
     (0, mongoose_1.Prop)({ type: Date, default: Date.now }),
     __metadata("design:type", Date)
 ], Article.prototype, "updated_date", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Article.prototype, "moderated", void 0);
 exports.Article = Article = __decorate([
     (0, mongoose_1.Schema)()
 ], Article);

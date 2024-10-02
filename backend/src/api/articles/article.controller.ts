@@ -1,6 +1,6 @@
-import { Controller, Post, Body, Get, Query, HttpException, HttpStatus } from '@nestjs/common';
-import { CreateArticleDto } from './create-article.dto'; // Adjust the import path as necessary
-import { ArticleService } from './article.service'; // Ensure you have the correct service import
+import { Controller, Post, Body, Get, Query, Delete, Patch, Param, HttpException, HttpStatus } from '@nestjs/common';
+import { CreateArticleDto } from './create-article.dto';
+import { ArticleService } from './article.service';
 
 @Controller('articles')
 export class ArticleController {
@@ -9,7 +9,7 @@ export class ArticleController {
     @Post('/')
     async addArticle(@Body() createArticleDto: CreateArticleDto) {
         try {
-            createArticleDto.updated_date = new Date(); // Default to now if not provided
+            createArticleDto.updated_date = new Date();
             await this.articleService.create(createArticleDto);
             return { message: 'Article added successfully' };
         } catch (error) {
@@ -35,6 +35,41 @@ export class ArticleController {
                     error: 'Unable to fetch articles: ' + error.message,
                 },
                 HttpStatus.BAD_REQUEST,
+            );
+        }
+    }
+
+    @Patch(':id/accept')
+    async acceptArticle(@Param('id') id: string) {
+        try {
+            const updatedArticle = await this.articleService.update(id, { moderated: true });
+            return updatedArticle;
+        } catch (error) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.NOT_FOUND,
+                    error: 'Cannot accept article: ' + error.message,
+                },
+                HttpStatus.NOT_FOUND,
+            );
+        }
+    }
+
+    @Delete(':id')
+    async deleteArticle(@Param('id') id: string) {
+        try {
+            const deletedArticle = await this.articleService.delete(id);
+            if (!deletedArticle) {
+                throw new HttpException('Article not found', HttpStatus.NOT_FOUND);
+            }
+            return { message: 'Article deleted successfully' };
+        } catch (error) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.NOT_FOUND,
+                    error: 'Cannot delete article: ' + error.message,
+                },
+                HttpStatus.NOT_FOUND,
             );
         }
     }

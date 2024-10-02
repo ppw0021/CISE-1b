@@ -202,9 +202,9 @@ const CreateArticleComponent = () => {
               <input
                 type="date"
                 placeholder="Publication Date"
-                name="published_date"
+                name="year_of_publication"
                 className="form-control w-full"
-                value={article.published_date || ''}
+                value={article.year_of_publication || ''}
                 onChange={onChange}
               />
             </div>

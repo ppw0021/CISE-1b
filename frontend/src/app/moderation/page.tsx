@@ -11,6 +11,9 @@ const ModerationPage: React.FC = () => {
     const fetchArticles = async () => {
       try {
         const response = await fetch("http://localhost:8082/api/articles");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
         const data = await response.json();
         console.log("Fetched articles:", data); // Log the fetched data
         setArticles(data);
@@ -24,7 +27,7 @@ const ModerationPage: React.FC = () => {
     fetchArticles();
   }, []);
 
-  // Show articles that haven't been moderated (i.e., isModerated is false or undefined)
+  // Show articles that haven't been moderated (i.e., moderated is false or undefined)
   const unmoderatedArticles = articles.filter(
     (article) => !article.isModerated
   );
@@ -40,13 +43,16 @@ const ModerationPage: React.FC = () => {
       });
 
       if (response.ok) {
+        const updatedArticle = await response.json();
+        console.log("Accepted article:", updatedArticle); // Log the accepted article
         setArticles((prev) => 
           prev.map((article) =>
-            article._id === articleId ? { ...article, isModerated: true } : article
+            article._id === articleId ? { ...article, moderated: true } : article
           )
         );
       } else {
-        console.error("Failed to accept article");
+        const errorData = await response.json();
+        console.error("Failed to accept article:", errorData.message || "Unknown error");
       }
     } catch (error) {
       console.error("Error accepting article:", error);
@@ -61,9 +67,11 @@ const ModerationPage: React.FC = () => {
       });
 
       if (response.ok) {
+        console.log("Denied article with ID:", articleId); // Log the denied article ID
         setArticles((prev) => prev.filter((article) => article._id !== articleId));
       } else {
-        console.error("Failed to deny article");
+        const errorData = await response.json();
+        console.error("Failed to deny article:", errorData.message || "Unknown error");
       }
     } catch (error) {
       console.error("Error denying article:", error);

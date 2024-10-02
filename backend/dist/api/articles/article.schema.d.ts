@@ -10,6 +10,7 @@ export declare class Article {
     pages: string;
     doi: string;
     updated_date: Date;
+    moderated: boolean;
 }
 export declare const ArticleSchema: import("mongoose").Schema<Article, import("mongoose").Model<Article, any, any, any, import("mongoose").Document<unknown, any, Article> & Article & {
     _id: import("mongoose").Types.ObjectId;
