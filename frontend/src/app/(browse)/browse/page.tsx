@@ -18,7 +18,6 @@ interface Article {
 }
 
 export default function BrowsePage() {
-    const [allowedAccess, setAccess] = useState<boolean>(true);
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
