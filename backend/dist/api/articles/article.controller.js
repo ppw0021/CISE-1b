@@ -23,6 +23,9 @@ let ArticleController = class ArticleController {
     async addArticle(createArticleDto) {
         try {
             createArticleDto.updated_date = new Date();
+            if (createArticleDto.moderated === undefined) {
+                createArticleDto.moderated = false;
+            }
             await this.articleService.create(createArticleDto);
             return { message: 'Article added successfully' };
         }
@@ -45,6 +48,33 @@ let ArticleController = class ArticleController {
             }, common_1.HttpStatus.BAD_REQUEST);
         }
     }
+    async acceptArticle(id) {
+        try {
+            const updatedArticle = await this.articleService.update(id, { moderated: true });
+            return updatedArticle;
+        }
+        catch (error) {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.NOT_FOUND,
+                error: 'Cannot accept article: ' + error.message,
+            }, common_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async deleteArticle(id) {
+        try {
+            const deletedArticle = await this.articleService.delete(id);
+            if (!deletedArticle) {
+                throw new common_1.HttpException('Article not found', common_1.HttpStatus.NOT_FOUND);
+            }
+            return { message: 'Article deleted successfully' };
+        }
+        catch (error) {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.NOT_FOUND,
+                error: 'Cannot delete article: ' + error.message,
+            }, common_1.HttpStatus.NOT_FOUND);
+        }
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -61,6 +91,20 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "getArticles", null);
+__decorate([
+    (0, common_1.Patch)(':id/accept'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "acceptArticle", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "deleteArticle", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('articles'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

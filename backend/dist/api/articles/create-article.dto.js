@@ -58,4 +58,9 @@ __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)
 ], CreateArticleDto.prototype, "updated_date", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], CreateArticleDto.prototype, "moderated", void 0);
 //# sourceMappingURL=create-article.dto.js.map

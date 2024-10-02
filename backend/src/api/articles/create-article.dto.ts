@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDate, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsString, IsOptional, IsDate, IsNotEmpty, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateArticleDto {
     @IsString()
@@ -35,4 +35,8 @@ export class CreateArticleDto {
 
     @IsDate()
     updated_date: Date; // Use JavaScript Date type
+
+    @IsOptional()
+    @IsBoolean()
+    moderated?: boolean;  // Moderated status is optional and defaults to false
 }

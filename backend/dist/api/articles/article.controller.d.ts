@@ -7,4 +7,8 @@ export declare class ArticleController {
         message: string;
     }>;
     getArticles(status: string): Promise<import("./article.schema").Article[]>;
+    acceptArticle(id: string): Promise<import("./article.schema").Article>;
+    deleteArticle(id: string): Promise<{
+        message: string;
+    }>;
 }

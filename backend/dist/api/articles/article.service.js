@@ -14,31 +14,32 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticleService = void 0;
 const common_1 = require("@nestjs/common");
-const article_schema_1 = require("./article.schema");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const article_schema_1 = require("./article.schema");
 let ArticleService = class ArticleService {
     constructor(articleModel) {
         this.articleModel = articleModel;
     }
+    async create(createArticleDto) {
+        const newArticle = new this.articleModel(createArticleDto);
+        return newArticle.save();
+    }
     async findAll() {
-        return await this.articleModel.find().exec();
+        return this.articleModel.find().exec();
     }
     async findByStatus(status) {
-        return await this.articleModel.find({ status }).exec();
+        return this.articleModel.find({ status }).exec();
     }
-    async findOne(id) {
-        return await this.articleModel.findById(id).exec();
-    }
-    async create(createArticleDto) {
-        return await this.articleModel.create(createArticleDto);
-    }
-    async update(id, createArticleDto) {
-        return await this.articleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
+    async update(id, updateArticleDto) {
+        const updatedArticle = await this.articleModel.findByIdAndUpdate(id, updateArticleDto, { new: true }).exec();
+        if (!updatedArticle) {
+            throw new common_1.NotFoundException('Article not found');
+        }
+        return updatedArticle;
     }
     async delete(id) {
-        const deletedArticle = await this.articleModel.findByIdAndDelete(id).exec();
-        return deletedArticle;
+        return this.articleModel.findByIdAndDelete(id).exec();
     }
 };
 exports.ArticleService = ArticleService;

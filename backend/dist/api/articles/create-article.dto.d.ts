@@ -8,4 +8,5 @@ export declare class CreateArticleDto {
     pages?: string;
     doi?: string;
     updated_date: Date;
+    moderated?: boolean;
 }

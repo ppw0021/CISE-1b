@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Get, Query, Delete, Patch, Param, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateArticleDto } from './create-article.dto';
+import { UpdateArticleDto } from './update-article.dto';  // Import the new Update DTO
 import { ArticleService } from './article.service';
 
 @Controller('articles')
@@ -10,6 +11,9 @@ export class ArticleController {
     async addArticle(@Body() createArticleDto: CreateArticleDto) {
         try {
             createArticleDto.updated_date = new Date();
+            if (createArticleDto.moderated === undefined) {
+                createArticleDto.moderated = false;  // Set default to false
+            }
             await this.articleService.create(createArticleDto);
             return { message: 'Article added successfully' };
         } catch (error) {
@@ -42,7 +46,7 @@ export class ArticleController {
     @Patch(':id/accept')
     async acceptArticle(@Param('id') id: string) {
         try {
-            const updatedArticle = await this.articleService.update(id, { moderated: true });
+            const updatedArticle = await this.articleService.update(id, { moderated: true } as UpdateArticleDto);
             return updatedArticle;
         } catch (error) {
             throw new HttpException(
