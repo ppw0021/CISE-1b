@@ -75,6 +75,11 @@ export default function RootLayout({
                     Search
                   </button>
                 </Link>
+                <Link href="/createArticle">
+                  <button aria-label="Submit Article" className="mr-2">
+                    Submit Article
+                  </button>
+                </Link>
                 <Link href="/browse">
                   <button aria-label="Browse" className="mr-2">
                     Browse
