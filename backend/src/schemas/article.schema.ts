@@ -23,8 +23,8 @@ export class Article {
     @Prop({ type: Number, default: null })
     number?: number | null;
 
-    @Prop({ required: true })
-    pages: number;
+    @Prop({ required: true }) // If pages are meant to be a string, change to String
+    pages: string; // Or keep as number if you're sure it'll be a number
 
     @Prop({ required: true })
     doi: string;

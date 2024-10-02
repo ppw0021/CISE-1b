@@ -7,7 +7,7 @@ export declare class Article {
     year_of_publication: number;
     volume?: number | null;
     number?: number | null;
-    pages: number;
+    pages: string;
     doi: string;
 }
 export declare const ArticleSchema: import("mongoose").Schema<Article, import("mongoose").Model<Article, any, any, any, Document<unknown, any, Article> & Article & {

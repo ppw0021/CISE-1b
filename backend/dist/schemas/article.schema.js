@@ -40,7 +40,7 @@ __decorate([
 ], Article.prototype, "number", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Article.prototype, "pages", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),

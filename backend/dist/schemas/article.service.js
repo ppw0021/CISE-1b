@@ -16,13 +16,17 @@ exports.ArticleService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const article_schema_1 = require("../schemas/article.schema");
+const article_schema_1 = require("./article.schema");
 let ArticleService = class ArticleService {
     constructor(articleModel) {
         this.articleModel = articleModel;
     }
     async findAll() {
         return this.articleModel.find().exec();
+    }
+    async create(articleData) {
+        const newArticle = new this.articleModel(articleData);
+        return newArticle.save();
     }
 };
 exports.ArticleService = ArticleService;

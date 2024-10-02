@@ -5,44 +5,58 @@ import "../../globals.css";
 
 export default function SubmitArticle() {
   const router = useRouter(); // Initialize the router
-  const [title, setTitle] = useState("");
-  const [authors, setAuthors] = useState("");
-  const [journalName, setJournalName] = useState("");
-  const [yearOfPublication, setYearOfPublication] = useState("");
-  const [volume, setVolume] = useState("");
-  const [number, setNumber] = useState("");
-  const [pages, setPages] = useState("");
-  const [doi, setDoi] = useState("");
-  const [bibtexFile, setBibtexFile] = useState<File | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    authors: "",
+    publisher: "",
+    yearOfPublication: "",
+    sePractice: "",
+    claim: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validate year is a valid number
-    if (isNaN(Number(yearOfPublication)) || yearOfPublication.length !== 4) {
+    if (isNaN(Number(formData.yearOfPublication)) || formData.yearOfPublication.length !== 4) {
       alert("Please enter a valid 4-digit year.");
       return;
     }
 
-    const articleData = {
-      title,
-      authors,
-      journalName,
-      yearOfPublication,
-      volume,
-      number,
-      pages,
-      doi,
-      bibtexFile,
-    };
+    const articleData = new FormData(); // Use FormData to handle file uploads
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null) {
+        articleData.append(key, value);
+      }
+    });
 
-    // Handle form submission logic (POST to backend or API)
-    console.log(articleData);
-  };
+    try {
+      // Send POST request to backend API
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`, {
+        method: "POST",
+        body: articleData,
+      });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setBibtexFile(e.target.files[0]);
+      if (response.ok) {
+        alert("Article submitted successfully!");
+        router.push("/success"); // Redirect to a success page or wherever you'd like
+      } else {
+        const errorData = await response.json();
+        alert(`Submission failed: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error submitting article:", error);
+      alert("An error occurred while submitting the article.");
     }
   };
 
@@ -54,109 +68,28 @@ export default function SubmitArticle() {
       >
         <h1 className="text-lg font-bold mb-4">Submit Article</h1>
         
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">Article Title</label>
-          <input
-            type="text"
-            placeholder="Enter the title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="p-2 border rounded w-full"
-            required
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">Authors</label>
-          <input
-            type="text"
-            placeholder="Enter authors' names"
-            value={authors}
-            onChange={(e) => setAuthors(e.target.value)}
-            className="p-2 border rounded w-full"
-            required
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">Journal Name</label>
-          <input
-            type="text"
-            placeholder="Enter the journal name"
-            value={journalName}
-            onChange={(e) => setJournalName(e.target.value)}
-            className="p-2 border rounded w-full"
-            required
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">Year of Publication</label>
-          <input
-            type="text"
-            placeholder="YYYY"
-            value={yearOfPublication}
-            onChange={(e) => setYearOfPublication(e.target.value)}
-            className="p-2 border rounded w-full"
-            required
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">Volume</label>
-          <input
-            type="text"
-            placeholder="Enter volume number"
-            value={volume}
-            onChange={(e) => setVolume(e.target.value)}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">Number (Issue)</label>
-          <input
-            type="text"
-            placeholder="Enter issue number"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">Pages</label>
-          <input
-            type="text"
-            placeholder="Enter page range"
-            value={pages}
-            onChange={(e) => setPages(e.target.value)}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">DOI</label>
-          <input
-            type="text"
-            placeholder="Enter DOI"
-            value={doi}
-            onChange={(e) => setDoi(e.target.value)}
-            className="p-2 border rounded w-full"
-            required
-          />
-        </div>
-
-        <div className="mb-2 flex flex-col items-start">
-          <label className="text-left">BibTeX File (optional)</label>
-          <input
-            type="file"
-            accept=".bib"
-            onChange={handleFileChange}
-            className="p-2 border rounded w-full"
-          />
-          <small className="text-gray-500">Optional: Upload a BibTeX file</small>
-        </div>
+        {/* Form fields */}
+        {[
+          { label: "Article Title", name: "title", type: "text", placeholder: "Enter the title", required: true },
+          { label: "Authors", name: "authors", type: "text", placeholder: "Enter authors' names", required: true },
+          { label: "Publisher (Journal/Conference)", name: "publisher", type: "text", placeholder: "Enter the publisher", required: true },
+          { label: "Year of Publication", name: "yearOfPublication", type: "text", placeholder: "YYYY", required: true },
+          { label: "SE Practice", name: "sePractice", type: "text", placeholder: "Enter SE practice", required: true },
+          { label: "Claim", name: "claim", type: "text", placeholder: "Enter claim", required: true },
+        ].map(({ label, name, type, placeholder, required }) => (
+          <div key={name} className="mb-2 flex flex-col items-start">
+            <label className="text-left">{label}</label>
+            <input
+              type={type}
+              name={name}
+              placeholder={placeholder}
+              value={formData[name as keyof typeof formData]}
+              onChange={handleChange}
+              className="p-2 border rounded w-full"
+              required={required}
+            />
+          </div>
+        ))}
 
         <button
           type="submit"
@@ -165,14 +98,13 @@ export default function SubmitArticle() {
           Submit Article
         </button>
         <button
-        onClick={() => router.back()} // Navigate back to the previous page
-        className="mt-4 bg-gray-300 text-black p-2 rounded"
-      >
-        Go Back
-      </button>
+          type="button"
+          onClick={() => router.back()} // Navigate back to the previous page
+          className="mt-4 bg-gray-300 text-black p-2 rounded"
+        >
+          Go Back
+        </button>
       </form>
-      {/* Go Back Button */}
-
     </div>
   );
 }
