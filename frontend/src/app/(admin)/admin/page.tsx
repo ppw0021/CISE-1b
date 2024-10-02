@@ -26,7 +26,7 @@ export default function AdminPage() {
             </Link>
             <Link href="/admin/articles">
               <button>
-                Articles
+                Reviewed Articles
               </button>
             </Link>
             </div>
