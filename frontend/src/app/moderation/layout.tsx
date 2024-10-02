@@ -1,4 +1,5 @@
-"use client";
+"use client"; // Ensures this component runs on the client side
+
 import { useState, useEffect } from "react";
 import "../globals.css";
 import Link from "next/link";
@@ -9,32 +10,31 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
-  const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
+  // State variables for authentication and admin status
+  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(null);
+  const [isUserAdmin, setAdminStatus] = useState<boolean | null>(null);
   const router = useRouter();
 
+  // Log out function to clear local storage and update state
   const logOutClicked = () => {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
     setLoggedInStatus(false);
     setAdminStatus(false);
     router.push("/");
-    window.location.reload();
   };
 
+  // Effect to check the login status and admin status on component mount
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     const isAdmin = localStorage.getItem("is_admin");
-    if (token === null) {
+
+    if (token) {
+      setLoggedInStatus(true);
+      setAdminStatus(isAdmin === "true");
+    } else {
       setLoggedInStatus(false);
       setAdminStatus(false);
-    } else {
-      setLoggedInStatus(true);
-      if (isAdmin === "true") {
-        setAdminStatus(true);
-      } else {
-        setAdminStatus(false);
-      }
     }
   }, []);
 
@@ -52,7 +52,6 @@ export default function RootLayout({
                 Home
               </button>
             </Link>
-            {/* Add Moderation link here */}
             <Link href="/moderation">
               <button aria-label="Moderation" className="mr-2">
                 Moderation

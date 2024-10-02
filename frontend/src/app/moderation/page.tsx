@@ -1,19 +1,15 @@
-"use client";
-import { useState, useEffect } from "react";
-import "../globals.css";
+'use client';
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
+import '../globals.css';
 import { useRouter } from "next/navigation";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
-  const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
-  const router = useRouter();
 
-  const logOutClicked = () => {
+const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
+const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
+const router = useRouter();
+
+const logOutClicked = () => {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
     setLoggedInStatus(false);
@@ -22,31 +18,10 @@ export default function RootLayout({
     window.location.reload();
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    const isAdmin = localStorage.getItem("is_admin");
-    if (token === null) {
-      setLoggedInStatus(false);
-      setAdminStatus(false);
-    } else {
-      setLoggedInStatus(true);
-      if (isAdmin === "true") {
-        setAdminStatus(true);
-      } else {
-        setAdminStatus(false);
-      }
-    }
-  }, []);
-
-  return (
-    <html lang="en">
-      <head>
-        <title>Group 7</title>
-      </head>
-      <body className="flex flex-col min-h-screen">
-        <header className="shadow-lg">
-          <h1 className="mb-2">SPEED Application</h1>
-          <nav>
+const Moderation = () => {
+    return (
+        <div>
+                    <nav>
             <Link href="/">
               <button aria-label="Home" className="mr-2">
                 Home
@@ -90,12 +65,9 @@ export default function RootLayout({
               </>
             )}
           </nav>
-        </header>
-        <main className="flex-grow p-4">{children}</main>
-        <footer className="shadow-lg">
-          <p>Group Number 7: Adam, Declan, and Joel.</p>
-        </footer>
-      </body>
-    </html>
-  );
-}
+            <h1>Moderation</h1>
+        </div>
+    );
+};
+
+export default Moderation;

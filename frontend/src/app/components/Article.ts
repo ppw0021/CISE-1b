@@ -1,5 +1,6 @@
 // components/Article.ts
 export interface Article {
+    _id?: string;
     title: string;
     authors: string; // Ensure the property name matches your usage
     publisher: string;
@@ -13,6 +14,7 @@ export interface Article {
   }
   
   export const DefaultEmptyArticle: Article = {
+    _id: undefined,
     title: '',
     authors: '',
     publisher: '',
