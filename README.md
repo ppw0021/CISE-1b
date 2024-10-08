@@ -4,4 +4,4 @@ Welcome to our repository. SPEED project using MNNN.
 
 ## Team members
 Declan Ross, Adam Ross, Joel Macise.
-Test
+Testing deployment
