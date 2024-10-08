@@ -11,7 +11,7 @@ on:
 jobs:
   Test:
     if: github.event.pull_request.merged == true
-    uses: ppw0021/CISE-1b/.github/workflows/test.yml@develop
+    uses: ppw0021/CISE-1b/.github/workflows/test.yml@main
 
   Deploy-Production:
     if: github.event.pull_request.merged == true
