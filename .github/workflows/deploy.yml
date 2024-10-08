@@ -1,4 +1,4 @@
-name: GitHub Actions Vercel Deploy
+name: GitHub Actions Vercel Deploy Frontend
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
