@@ -26,6 +26,7 @@ const SearchResults = () => {
     
     const searchParams = useSearchParams();
     const methodToFilter = searchParams.get('method'); // Get the method from query params
+    const [selectedResults, setSelectedResults] = useState<string[]>(['Title']);
 
     useEffect(() => {
         const isAdmin = localStorage.getItem("is_admin");
@@ -64,12 +65,38 @@ const SearchResults = () => {
         article.se_practice === methodToFilter
     );
 
+    const results: string[] = ['Title', 'Year', 'Journal/Conference', 'SE Practice', 'Claim', 'Evidence Result', 'Research Type', 'Participant Type', 'Authors', 'Created At', 'Updated At'];
+
+    const handleCheckboxChange = (result: string) => {
+        if (selectedResults.includes(result)) {
+            setSelectedResults(selectedResults.filter(r => r !== result));
+        } else {
+            setSelectedResults([...selectedResults, result]);
+            console.log(selectedResults)
+        }
+    }
+
     return (
         <div className="flex flex-col items-center justify-center bg-gray-100">
             <div className="bg-white shadow-2xl rounded-lg p-4 w-full h-full max-w-screen text-center overflow-hidden">
                 {allowedAccess ? (
                     <>
                         <h1 className="text-2xl font-bold mb-4">Reviewed Articles for {methodToFilter}</h1>
+                        <div className="mb-4">
+                            {results.map(result => (
+                                <label key={result} className="mr-4">
+                                    <input
+                                        type="checkbox"
+                                        name="result"
+                                        value={result}
+                                        checked={selectedResults.includes(result)}
+                                        onChange={() => handleCheckboxChange(result)}
+                                    />
+                                    {result}
+                                </label>
+                            ))}
+                
+                        </div>
                         {loading ? (
                             <p>Loading articles...</p>
                         ) : error ? (
