@@ -19,11 +19,6 @@ jobs:
           cd frontend
           npm install
 
-      - name: Verify Next.js version
-        run: |
-          cd frontend
-          npm ls next
-
       - name: Run tests
         run: |
           cd frontend
