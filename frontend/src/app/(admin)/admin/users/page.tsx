@@ -22,7 +22,8 @@ const AdminPage: React.FC = () => {
         const fetchUsers = async () => {
             if (isAdmin === "true") { // Fetch users only if admin
                 try {
-                    const response = await fetch('http://localhost:8082/user/all'); // Use full URL
+                    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+                    const response = await fetch(apiUrl + '/user/all'); // Use full URL
                     if (!response.ok) {
                         throw new Error('Failed to fetch users');
                     }
@@ -44,7 +45,8 @@ const AdminPage: React.FC = () => {
 
     const handleDelete = async (authToken: string) => {
         try {
-            const response = await fetch(`http://localhost:8082/user/${authToken}`, {
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const response = await fetch(apiUrl + `/user/${authToken}`, {
                 method: 'DELETE',
             });
             if (!response.ok) {

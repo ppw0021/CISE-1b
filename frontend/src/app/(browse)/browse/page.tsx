@@ -25,7 +25,8 @@ export default function BrowsePage() {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await fetch('http://localhost:8082/revarticle');
+                const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+                const response = await fetch(apiUrl + '/revarticle');
                 if (!response.ok) {
                     throw new Error('Failed to fetch articles');
                 }
