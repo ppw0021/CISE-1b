@@ -26,4 +26,7 @@ export declare class UserController {
         isAdmin: boolean;
         authToken: string;
     }>;
+    deleteUserByToken(authToken: string): Promise<{
+        success: boolean;
+    }>;
 }

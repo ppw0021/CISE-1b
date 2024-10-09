@@ -60,7 +60,7 @@ export class UserService {
 
     try {
       //Create a new user instance
-      const newUser = new this.userModel({ email, passwordHash, isAdmin: false, authToken: ""});
+      const newUser = new this.userModel({ email, passwordHash, isAdmin: false, isAnalyst: false, isMod: false, authToken: ""});
 
       //Save the new user to the database
       const savedUser = await newUser.save();
@@ -69,5 +69,12 @@ export class UserService {
       console.error('Error creating new user:', error);
       throw new Error('Internal server error'); //Handle generic error for security
     }
+  }
+
+  async deleteUser(authToken: string): Promise<boolean> {
+    const deleted = await this.userModel.findOne
+    ({ authToken }).deleteOne().exec();
+    return !!deleted;
+
   }
 }

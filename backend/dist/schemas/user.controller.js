@@ -74,6 +74,14 @@ let UserController = class UserController {
             return { alreadyExists: false, success: false, isAdmin: false, authToken: "" };
         }
     }
+    async deleteUserByToken(authToken) {
+        console.log(`Deleting user with authToken ${authToken}`);
+        const deleted = await this.userService.deleteUser(authToken);
+        if (deleted) {
+            console.log(`Deleted user with authToken ${authToken}`);
+        }
+        return { success: deleted };
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -103,6 +111,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "registerUser", null);
+__decorate([
+    (0, common_1.Delete)(':authToken'),
+    __param(0, (0, common_1.Param)('authToken')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "deleteUserByToken", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

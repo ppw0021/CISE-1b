@@ -14,6 +14,12 @@ export class User {
     @Prop({required: true})
     isAdmin: boolean;
 
+    @Prop({required: true})
+    isMod: boolean;
+
+    @Prop({required: true})
+    isAnalyst: boolean;
+
     @Prop({required: false})
     authToken: string;
 }

@@ -26,6 +26,7 @@ const SearchResults = () => {
 
     const searchParams = useSearchParams();
     const methodToFilter = searchParams.get('method'); // Get the method from query params
+    const [selectedResults, setSelectedResults] = useState<string[]>(['Title', 'Year', 'Journal/Conference', 'SE Practice', 'Claim', 'Evidence Result', 'Research Type', 'Participant Type', 'Authors', 'Created At', 'Updated At']);
     const fromYearToFilter = searchParams.get('fromYear');
     const toYearToFilter = searchParams.get('toYear');
 
@@ -78,53 +79,79 @@ const SearchResults = () => {
         );
     });
 
+    const results: string[] = ['Title', 'Year', 'Journal/Conference', 'SE Practice', 'Claim', 'Evidence Result', 'Research Type', 'Participant Type', 'Authors', 'Created At', 'Updated At'];
+
+    const handleCheckboxChange = (result: string) => {
+        if (selectedResults.includes(result)) {
+            setSelectedResults(selectedResults.filter(r => r !== result));
+        } else {
+            setSelectedResults([...selectedResults, result]);
+            console.log(selectedResults)
+        }
+    }
+
+    const resultKeyMap: { [key: string]: keyof Article } = {
+        Title: 'title',
+        Year: 'year_of_publication',
+        'Journal/Conference': 'journal_or_conference',
+        'SE Practice': 'se_practice',
+        Claim: 'claim',
+        'Evidence Result': 'evidence_result',
+        'Research Type': 'research_type',
+        'Participant Type': 'participant_type',
+        Authors: 'authors',
+        'Created At': 'created_at',
+        'Updated At': 'updated_at',
+    };
+
     return (
         <div className="flex flex-col items-center justify-center bg-gray-100">
             <div className="bg-white shadow-2xl rounded-lg p-4 w-full h-full max-w-screen text-center overflow-hidden">
                 {allowedAccess ? (
                     <>
                         <h1 className="text-2xl font-bold mb-4">Reviewed Articles for {methodToFilter}</h1>
+                        <div className="mb-4">
+                            {results.map(result => (
+                                <label key={result} className="mr-4">
+                                    <input
+                                        type="checkbox"
+                                        name="result"
+                                        value={result}
+                                        checked={selectedResults.includes(result)}
+                                        onChange={() => handleCheckboxChange(result)}
+                                    />
+                                    {result}
+                                </label>
+                            ))}
+
+                        </div>
                         {loading ? (
                             <p>Loading articles...</p>
                         ) : error ? (
                             <p className="text-red-500">{error}</p>
                         ) : (
-                            <div className="overflow-auto max-h-full max-w-full">
-                                <table className="min-w-full bg-white table-auto text-sm">
-                                    <thead>
-                                        <tr>
-                                            <th className="border border-gray-300 px-4 py-2">Title</th>
-                                            <th className="border border-gray-300 px-4 py-2">Year</th>
-                                            <th className="border border-gray-300 px-4 py-2">Journal/Conference</th>
-                                            <th className="border border-gray-300 px-4 py-2">SE Practice</th>
-                                            <th className="border border-gray-300 px-4 py-2">Claim</th>
-                                            <th className="border border-gray-300 px-4 py-2">Evidence Result</th>
-                                            <th className="border border-gray-300 px-4 py-2">Research Type</th>
-                                            <th className="border border-gray-300 px-4 py-2">Participant Type</th>
-                                            <th className="border border-gray-300 px-4 py-2">Authors</th>
-                                            <th className="border border-gray-300 px-4 py-2">Created At</th>
-                                            <th className="border border-gray-300 px-4 py-2">Updated At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {filteredArticles.map(article => (
-                                            <tr key={article.title} className="bg-gray-50">
-                                                <td className="border border-gray-300 px-4 py-2">{article.title}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.year_of_publication}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.journal_or_conference}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.se_practice}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.claim}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.evidence_result}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.research_type}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.participant_type}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{article.authors.join(', ')}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{new Date(article.created_at).toLocaleDateString()}</td>
-                                                <td className="border border-gray-300 px-4 py-2">{new Date(article.updated_at).toLocaleDateString()}</td>
+                            selectedResults.length > 0 && (
+                                <div className="overflow-auto max-h-full max-w-full">
+                                    <table className="min-w-full bg-white table-auto text-sm">
+                                        <thead>
+                                            <tr>
+                                                {selectedResults.map(result => (
+                                                    <th key={result} className="border border-gray-300 px-4 py-2">{result}</th>
+                                                ))}
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            {filteredArticles.map((article, index) => (
+                                                <tr key={index}>
+                                                    {selectedResults.map(result => (
+                                                        <td key={result} className="border border-gray-300 px-4 py-2"> {article[resultKeyMap[result]]}</td>
+                                                    ))}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )
                         )}
                         <Link href="/search">
                             <button className="mt-4 px-4 py-2">
