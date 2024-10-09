@@ -9,17 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticleModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const article_schema_1 = require("./article.schema");
 const article_service_1 = require("./article.service");
 const article_controller_1 = require("./article.controller");
-const article_schema_1 = require("./article.schema");
 let ArticleModule = class ArticleModule {
 };
 exports.ArticleModule = ArticleModule;
 exports.ArticleModule = ArticleModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: article_schema_1.Article.name, schema: article_schema_1.ArticleSchema }]),
-        ],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: article_schema_1.Article.name, schema: article_schema_1.ArticleSchema }])],
         controllers: [article_controller_1.ArticleController],
         providers: [article_service_1.ArticleService],
     })

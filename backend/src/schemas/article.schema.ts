@@ -3,12 +3,12 @@ import { Document } from 'mongoose';
 
 export type ArticleDocument = Article & Document;
 
-@Schema({ collection: 'articles' }) // Use the correct collection name here
+@Schema({ collection: 'articles' })
 export class Article {
     @Prop({ required: true })
     title: string;
 
-    @Prop({ type: [String], required: true }) // Array of authors
+    @Prop({ type: [String], required: true })
     authors: string[];
 
     @Prop({ required: true })

@@ -24,6 +24,10 @@ let ArticleService = class ArticleService {
     async findAll() {
         return this.articleModel.find().exec();
     }
+    async create(createArticleDto) {
+        const createdArticle = new this.articleModel(createArticleDto);
+        return createdArticle.save();
+    }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([
