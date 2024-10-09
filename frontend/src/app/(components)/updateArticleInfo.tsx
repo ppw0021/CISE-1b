@@ -74,25 +74,13 @@ function UpdateArticleInfo() {
                         </div>
                         <br />
                         <div className='form-group'>
-                            <label htmlFor='isbn'>ISBN</label>
+                            <label htmlFor='author'>Authors</label>
                             <input
                                 type='text'
-                                placeholder='ISBN'
-                                name='isbn'
+                                placeholder='Authors'
+                                name='authors'
                                 className='form-control'
-                                value={Article.isbn}
-                                onChange={inputOnChange}
-                            />
-                        </div>
-                        <br />
-                        <div className='form-group'>
-                            <label htmlFor='author'>Author</label>
-                            <input
-                                type='text'
-                                placeholder='Author'
-                                name='author'
-                                className='form-control'
-                                value={Article.author}
+                                value={Article.authors}
                                 onChange={inputOnChange}
                             />
                         </div>

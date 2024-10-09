@@ -22,7 +22,7 @@ return (<div className='card-container' onClick={onClick}>
     <h2>
     {Article.title}
     </h2>
-    <h3>{Article.author}</h3>
+    <h3>{Article.authors}</h3>
     <p>{Article.description}</p>
     </div>
     </div>

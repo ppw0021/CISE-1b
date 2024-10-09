@@ -1,5 +1,5 @@
 'use client';
-import CreateArticleComponent from "../(components)/createArticle";
+import CreateArticleComponent from "../../(components)/createArticle";
 
 export default function CreateArticle() {
   return (

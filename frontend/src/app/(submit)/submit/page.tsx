@@ -33,12 +33,12 @@ export default function SubmitterPage() {
     const handleSubmit = async () => {
         setErrorMessage('');
         setSuccessMessage('');
-
+    
         if (!title || !authors || !journalName || !year || !pages || !doi) {
             setErrorMessage("Please fill in all required fields.");
             return;
         }
-
+    
         // Construct the article data object to send to the backend
         const articleData = {
             title,
@@ -50,16 +50,16 @@ export default function SubmitterPage() {
             pages: parseInt(pages, 10), // Convert pages to number
             doi // Use DOI directly
         };
-
+    
         try {
-            const response = await fetch('/api/article/create', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/article/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(articleData),
             });
-
+    
             if (response.ok) {
                 setSuccessMessage("Article submitted successfully!");
                 // Clear form fields
