@@ -9,14 +9,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
+  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(false);
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
   const router = useRouter();
 
   const logOutClicked = () => {
-    
-    
-    //Old method using local storage
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
     setLoggedInStatus(false);
@@ -39,7 +36,7 @@ export default function RootLayout({
       } else {
         setAdminStatus(false)
       }
-      //Load page here
+
     }
 
   }, []);
@@ -64,16 +61,9 @@ export default function RootLayout({
               </Link>)}
             <>
               {isLoggedIn && (
-                <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
+                < button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
                   Logout
                 </button>
-              )}
-              {isLoggedIn && (
-                <Link href="/search">
-                  <button aria-label="Search" className="mr-2">
-                    Search
-                  </button>
-                </Link>
               )}
               {isLoggedIn && (
                 <Link href="/browse">
@@ -82,7 +72,7 @@ export default function RootLayout({
                   </button>
                 </Link>
               )}
-              {isLoggedIn && (
+            {isLoggedIn && (
                 <Link href="/submit">
                   <button aria-label="Submit" className="mr-2">
                     Submit Article

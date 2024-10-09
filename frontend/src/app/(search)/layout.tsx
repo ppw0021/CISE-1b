@@ -72,6 +72,13 @@ export default function RootLayout({
                   </button>
                 </Link>
               )}
+              {isLoggedIn && (
+                <Link href="/submit">
+                  <button aria-label="Submit" className="mr-2">
+                    Submit Article
+                  </button>
+                </Link>
+              )}
               {(isLoggedIn && isUserAdmin) && (
                 <Link href="/admin">
                   <button aria-label="Admin Panel" className="mr-2">
