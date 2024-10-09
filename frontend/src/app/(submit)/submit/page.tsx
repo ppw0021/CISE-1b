@@ -2,10 +2,16 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function SearchPage() {
+export default function SubmitterPage() {
     const [allowedAccess, setAccess] = useState<boolean>(false);
-    const [fromYear, setFromYear] = useState<string>("0");
-    const [toYear, setToYear] = useState<string>("2024");
+    const [title, setTitle] = useState<string>('');
+    const [authors, setAuthors] = useState<string>('');
+    const [journalName, setJournalName] = useState<string>('');
+    const [year, setYear] = useState<string>('2024');
+    const [volume, setVolume] = useState<string>('');
+    const [number, setNumber] = useState<string>('');
+    const [pages, setPages] = useState<string>('');
+    const [doi, setDoi] = useState<string>('');
 
     useEffect(() => {
         const token = localStorage.getItem("auth_token");
@@ -16,73 +22,132 @@ export default function SearchPage() {
         }
     }, []);
 
-    const handleToYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (/^\d{0,4}$/.test(e.target.value)) {
-            setToYear(e.target.value);
+            setYear(e.target.value);
         }
     }
 
-    const handleFromYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (/^\d{0,4}$/.test(e.target.value)) {
-            setFromYear(e.target.value);
+    const handleSubmit = () => {
+        if (title && authors && journalName && year) {
+            // Submit form logic here (e.g., API call)
+            console.log({
+                title,
+                authors,
+                journalName,
+                year,
+                volume,
+                number,
+                pages,
+                doi
+            });
         }
     }
-    
-    const methods: string[] = ['TDD', 'BDD', 'Code Review', 'Pair Programming', 'Refactoring', 'Agile'];
-    const [selectedMethod, setSelectedMethod] = useState<string>('');
 
     return (
         <div className="flex items-center justify-center bg-gray-100">
             <div className="p-6 bg-white shadow-lg rounded-lg w-full max-w-xl">
-                <h2 className="text-2xl font-bold mb-4">Search SE Method</h2>
+                <h2 className="text-2xl font-bold mb-4">Submit Journal Article</h2>
                 {allowedAccess ? (
                     <>
-                        <div className="">
-                            <h3 className="font-semibold mb-2">Select SE Method:</h3>
-                            {methods.map((method) => (
-                                <div key={method} className="flex items-center mb-2">
-                                    <input
-                                        type="radio"
-                                        id={method}
-                                        name="seMethod"
-                                        value={method}
-                                        checked={selectedMethod === method}
-                                        onChange={() => setSelectedMethod(method)}
-                                        className="mr-2"
-                                    />
-                                    <label htmlFor={method} className="text-gray-700">
-                                        {method}
-                                    </label>
-                                </div>
-                            ))}
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">Title:</label>
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the title"
+                            />
                         </div>
-                        From (year):
-                        <input
-                            type="number"
-                            value={fromYear}
-                            onChange={handleFromYearChange}
-                            className='border p-2 rounded m-1 w-20'
-                        />
-                        To (year): 
-                        <input
-                            type="number"
-                            value={toYear}
-                            onChange={handleToYearChange}
-                            className='border p-2 rounded m-1 mb-4 w-20'
-                        />
-                        <br></br>
-                            <Link href={`/search/results?method=${selectedMethod}&fromYear=${fromYear}&toYear=${toYear}`}>
-                                <button
-                                    disabled={!selectedMethod} // Disable if no method is selected
-                                    className={`px-4 py-2 ${!selectedMethod ? 'bg-gray-400' : 'bg-blue'} text-white rounded hover:${!selectedMethod ? 'bg-gray-400' : 'bg-blue'}`}
-                                >
-                                    Search
-                                </button>
-                        </Link>
+
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">Authors:</label>
+                            <input
+                                type="text"
+                                value={authors}
+                                onChange={(e) => setAuthors(e.target.value)}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the authors"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">Journal Name:</label>
+                            <input
+                                type="text"
+                                value={journalName}
+                                onChange={(e) => setJournalName(e.target.value)}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the journal name"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">Year:</label>
+                            <input
+                                type="number"
+                                value={year}
+                                onChange={handleYearChange}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the year"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">Volume:</label>
+                            <input
+                                type="text"
+                                value={volume}
+                                onChange={(e) => setVolume(e.target.value)}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the volume"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">Number:</label>
+                            <input
+                                type="text"
+                                value={number}
+                                onChange={(e) => setNumber(e.target.value)}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the number"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">Pages:</label>
+                            <input
+                                type="text"
+                                value={pages}
+                                onChange={(e) => setPages(e.target.value)}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the page numbers (e.g., 10-20)"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="font-semibold block mb-1">DOI:</label>
+                            <input
+                                type="text"
+                                value={doi}
+                                onChange={(e) => setDoi(e.target.value)}
+                                className="border p-2 rounded w-full"
+                                placeholder="Enter the DOI"
+                            />
+                        </div>
+
+                        <button
+                            onClick={handleSubmit}
+                            disabled={!title || !authors || !journalName || !year}
+                            className={`px-4 py-2 ${!title || !authors || !journalName || !year ? 'bg-gray-400' : 'bg-blue'} text-white rounded hover:bg-blue`}
+                        >
+                            Submit
+                        </button>
+
                         <Link href={"/"}>
-                            <button
-                                className={"ml-1"}
-                            >
+                            <button className={"ml-2"}>
                                 Return
                             </button>
                         </Link>
