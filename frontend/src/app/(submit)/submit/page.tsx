@@ -33,30 +33,33 @@ export default function SubmitterPage() {
     const handleSubmit = async () => {
         setErrorMessage('');
         setSuccessMessage('');
-    
-        if (!title || !authors || !journalName || !year) {
+
+        if (!title || !authors || !journalName || !year || !pages || !doi) {
             setErrorMessage("Please fill in all required fields.");
             return;
         }
-    
+
+        // Construct the article data object to send to the backend
+        const articleData = {
+            title,
+            authors: authors.split(',').map(author => author.trim()), // Split authors by comma
+            publisher: journalName,
+            year_of_publication: parseInt(year, 10), // Convert year to number
+            volume: volume ? parseInt(volume, 10) : null, // Parse volume if it exists
+            number: number ? parseInt(number, 10) : null, // Parse number if it exists
+            pages: parseInt(pages, 10), // Convert pages to number
+            doi // Use DOI directly
+        };
+
         try {
             const response = await fetch('/api/article/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    title,
-                    authors: authors.split(',').map(author => author.trim()),
-                    publisher: journalName,
-                    year_of_publication: parseInt(year, 10),
-                    volume,
-                    number,
-                    pages: parseInt(pages, 10),
-                    doi
-                }),
+                body: JSON.stringify(articleData),
             });
-    
+
             if (response.ok) {
                 setSuccessMessage("Article submitted successfully!");
                 // Clear form fields
@@ -176,8 +179,8 @@ export default function SubmitterPage() {
 
                         <button
                             onClick={handleSubmit}
-                            disabled={!title || !authors || !journalName || !year}
-                            className={`px-4 py-2 ${!title || !authors || !journalName || !year ? 'bg-gray-400' : 'bg-blue-500'} text-white rounded hover:bg-blue-700`}
+                            disabled={!title || !authors || !journalName || !year || !pages || !doi}
+                            className={`px-4 py-2 ${!title || !authors || !journalName || !year || !pages || !doi ? 'bg-gray-400' : 'bg-blue-500'} text-white rounded hover:bg-blue-700`}
                         >
                             Submit
                         </button>
