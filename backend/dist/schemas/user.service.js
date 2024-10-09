@@ -58,7 +58,7 @@ let UserService = class UserService {
             return;
         }
         try {
-            const newUser = new this.userModel({ email, passwordHash, isAdmin: false, authToken: "" });
+            const newUser = new this.userModel({ email, passwordHash, isAdmin: false, isAnalyst: false, isMod: false, authToken: "" });
             const savedUser = await newUser.save();
             return savedUser;
         }
@@ -66,6 +66,10 @@ let UserService = class UserService {
             console.error('Error creating new user:', error);
             throw new Error('Internal server error');
         }
+    }
+    async deleteUser(authToken) {
+        const deleted = await this.userModel.findOne({ authToken }).deleteOne().exec();
+        return !!deleted;
     }
 };
 exports.UserService = UserService;

@@ -89,7 +89,11 @@ const AdminPage: React.FC = () => {
                                                 <td className="py-2 px-4 border-b">{user.isAdmin ? 'Yes' : 'No'}</td>
                                                 <td className="py-2 px-4 border-b">{user.authToken}</td>
                                                 <button
-                                                        onClick={() => handleDelete(user.authToken)}
+                                                         onClick={() => {
+                                                            if (window.confirm('Are you sure you want to delete this user?')) {
+                                                                handleDelete(user.authToken);
+                                                            }
+                                                        }}
                                                         className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                                                     >
                                                         Delete

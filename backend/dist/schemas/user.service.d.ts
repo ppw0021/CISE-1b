@@ -9,4 +9,5 @@ export declare class UserService {
     checkAdmin(email: string): Promise<boolean>;
     updateAuthTokenByEmail(email: string, authToken: string): Promise<User | null>;
     createNewUser(email: string, passwordHash: string): Promise<User | null>;
+    deleteUser(authToken: string): Promise<boolean>;
 }

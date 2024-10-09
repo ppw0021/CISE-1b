@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../schemas/user.schema';
 import * as crypto from 'crypto';
@@ -75,5 +75,14 @@ export class UserController {
       return { alreadyExists: false, success: false, isAdmin: false, authToken: "" };
     }
 
+  }
+  @Delete(':authToken')
+  async deleteUserByToken(@Param('authToken') authToken: string): Promise<{ success: boolean }> {
+    console.log(`Deleting user with authToken ${authToken}`);
+    const deleted = await this.userService.deleteUser(authToken);
+    if (deleted) {
+      console.log(`Deleted user with authToken ${authToken}`);
+    }
+    return { success: deleted };
   }
 }
