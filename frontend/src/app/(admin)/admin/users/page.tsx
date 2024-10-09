@@ -7,6 +7,8 @@ interface User {
     passwordHash: string; // Sensitive info, not displayed in the UI
     isAdmin: boolean;
     authToken: string; // Use authToken for backend operations if needed
+    isMod: boolean;
+    isAnalyst: boolean;
 }
 
 const AdminPage: React.FC = () => {
@@ -79,6 +81,8 @@ const AdminPage: React.FC = () => {
                                         <tr>
                                             <th className="py-2 px-4 border-b">Email</th>
                                             <th className="py-2 px-4 border-b">Admin</th>
+                                            <th className="py-2 px-4 border-b">Mod</th>
+                                            <th className="py-2 px-4 border-b">Analyst</th>
                                             <th className="py-2 px-4 border-b">Auth Token</th>
                                         </tr>
                                     </thead>
@@ -87,6 +91,8 @@ const AdminPage: React.FC = () => {
                                             <tr key={user.authToken} className="bg-gray-50">
                                                 <td className="py-2 px-4 border-b">{user.email}</td>
                                                 <td className="py-2 px-4 border-b">{user.isAdmin ? 'Yes' : 'No'}</td>
+                                                <td className="py-2 px-4 border-b">{user.isMod ? 'Yes' : 'No'}</td>
+                                                <td className="py-2 px-4 border-b">{user.isAnalyst ? 'Yes' : 'No'}</td>
                                                 <td className="py-2 px-4 border-b">{user.authToken}</td>
                                                 <button
                                                          onClick={() => {

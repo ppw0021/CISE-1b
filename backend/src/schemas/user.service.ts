@@ -5,12 +5,12 @@ import { User, UserDocument } from '../schemas/user.schema';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
   async findAllUsers(): Promise<User[]> {
     return this.userModel.find().exec(); // Fetch all users from the database
   }
-  
+
   async emailExists(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email }).exec();
     return !!user;
@@ -25,20 +25,40 @@ export class UserService {
 
   async checkAdmin(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email }).exec();
-    if (user.isAdmin === null){
+    if (user.isAdmin === null) {
       return false;
     }
     else {
       return user.isAdmin;
     }
-    
+
+  }
+
+  async checkMod(email: string): Promise<boolean> {
+    const user = await this.userModel.findOne ({ email }).exec();
+    if (user.isMod === null) {
+      return false;
+    }
+    else {
+      return user.isMod;
+    }
+  }
+
+  async checkAnalyst(email: string): Promise<boolean> {
+    const user = await this.userModel.findOne ({ email }).exec();
+    if (user.isAnalyst === null) {
+      return false;
+    }
+    else {
+      return user.isAnalyst;
+    }
   }
 
   async updateAuthTokenByEmail(email: string, authToken: string): Promise<User | null> {
     const updatedUser = await this.userModel.findOneAndUpdate(
       { email },
       { $set: { authToken } },
-      { new: true, useFindAndModify: false}
+      { new: true, useFindAndModify: false }
     ).exec();
 
     return updatedUser;
@@ -60,7 +80,7 @@ export class UserService {
 
     try {
       //Create a new user instance
-      const newUser = new this.userModel({ email, passwordHash, isAdmin: false, isAnalyst: false, isMod: false, authToken: ""});
+      const newUser = new this.userModel({ email, passwordHash, isAdmin: false, isAnalyst: false, isMod: false, authToken: "" });
 
       //Save the new user to the database
       const savedUser = await newUser.save();
@@ -73,7 +93,7 @@ export class UserService {
 
   async deleteUser(authToken: string): Promise<boolean> {
     const deleted = await this.userModel.findOne
-    ({ authToken }).deleteOne().exec();
+      ({ authToken }).deleteOne().exec();
     return !!deleted;
 
   }
