@@ -1,31 +1,27 @@
 import React from 'react';
 import { Article } from './Article';
-import { useRouter } from 'next/navigation';
-interface IProp {
-Article?: Article;
+import Link from 'next/link';
+
+interface Props {
+    article: Article;
 }
-const ArticleCard = ({ Article }: IProp) => {
-const router = useRouter();
-if (Article == undefined) {
-return null;
-}
-const onClick = () => {
-router.push(`/show-article/${Article._id}`)
-};
-return (<div className='card-container' onClick={onClick}>
-    <img
-    src='https://images.unsplash.com/photo-1495446815901-a7297e633e8d'
-    alt='Articles'
-    height={200}
-    />
-    <div className='desc'>
-    <h2>
-    {Article.title}
-    </h2>
-    <h3>{Article.authors}</h3>
-    <p>{Article.description}</p>
-    </div>
-    </div>
+
+function ArticleCard({ article }: Props) {
+    return (
+        <div className='ArticleCard'>
+            <div className='card'>
+                <div className='card-body'>
+                    <h5 className='card-title'>{article.title}</h5>
+                    <p className='card-text'>Authors: {article.authors}</p>
+                    <p className='card-text'>Journal: {article.journalName}</p>
+                    <p className='card-text'>Year: {article.year}</p>
+                    <Link href={`/show-article/${article._id}`} className='btn btn-outline-info'>
+                        View Details
+                    </Link>
+                </div>
+            </div>
+        </div>
     );
-    };
-    export default ArticleCard;
+}
+
+export default ArticleCard;

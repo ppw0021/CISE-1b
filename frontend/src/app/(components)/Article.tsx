@@ -8,10 +8,6 @@ export type Article = {
     number?: string; // Added number
     pages?: string; // Added pages
     doi?: string; // Added DOI
-    description?: string; // Kept description for additional details
-    published_date?: Date; // Kept for backward compatibility if needed
-    publisher?: string;
-    updated_date?: Date;
 };
 
 export const DefaultEmptyArticle: Article = {
@@ -24,8 +20,4 @@ export const DefaultEmptyArticle: Article = {
     number: '', // Initialized number
     pages: '', // Initialized pages
     doi: '', // Initialized DOI
-    description: '',
-    published_date: undefined,
-    publisher: '',
-    updated_date: undefined,
 };

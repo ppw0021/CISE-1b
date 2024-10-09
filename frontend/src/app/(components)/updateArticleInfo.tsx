@@ -37,7 +37,7 @@ function UpdateArticleInfo() {
             body: JSON.stringify(Article),
         })
             .then((res) => {
-                router.push(`/show-Article/${id}`);
+                router.push(`/show-article/${id}`);
             })
             .catch((err) => {
                 console.log('Error from UpdateArticleInfo: ' + err);
@@ -74,7 +74,7 @@ function UpdateArticleInfo() {
                         </div>
                         <br />
                         <div className='form-group'>
-                            <label htmlFor='author'>Authors</label>
+                            <label htmlFor='authors'>Authors</label>
                             <input
                                 type='text'
                                 placeholder='Authors'
@@ -86,36 +86,73 @@ function UpdateArticleInfo() {
                         </div>
                         <br />
                         <div className='form-group'>
-                            <label htmlFor='description'>Description</label>
-                            <textarea
-                                placeholder='Description of the Article'
-                                name='description'
-                                className='form-control'
-                                value={Article.description}
-                                onChange={textAreaOnChange}
-                            />
-                        </div>
-                        <br />
-                        <div className='form-group'>
-                            <label htmlFor='published_date'>Published Date</label>
+                            <label htmlFor='journalName'>Journal Name</label>
                             <input
                                 type='text'
-                                placeholder='Published Date'
-                                name='published_date'
+                                placeholder='Journal Name'
+                                name='journalName'
                                 className='form-control'
-                                value={Article.published_date?.toString()}
+                                value={Article.journalName}
                                 onChange={inputOnChange}
                             />
                         </div>
                         <br />
                         <div className='form-group'>
-                            <label htmlFor='publisher'>Publisher</label>
+                            <label htmlFor='year'>Year</label>
+                            <input
+                                type='number'
+                                placeholder='Year'
+                                name='year'
+                                className='form-control'
+                                value={Article.year?.toString() || ''}
+                                onChange={inputOnChange}
+                            />
+                        </div>
+                        <br />
+                        <div className='form-group'>
+                            <label htmlFor='volume'>Volume</label>
                             <input
                                 type='text'
-                                placeholder='Publisher of the Article'
-                                name='publisher'
+                                placeholder='Volume'
+                                name='volume'
                                 className='form-control'
-                                value={Article.publisher}
+                                value={Article.volume}
+                                onChange={inputOnChange}
+                            />
+                        </div>
+                        <br />
+                        <div className='form-group'>
+                            <label htmlFor='number'>Number</label>
+                            <input
+                                type='text'
+                                placeholder='Number'
+                                name='number'
+                                className='form-control'
+                                value={Article.number}
+                                onChange={inputOnChange}
+                            />
+                        </div>
+                        <br />
+                        <div className='form-group'>
+                            <label htmlFor='pages'>Pages</label>
+                            <input
+                                type='text'
+                                placeholder='Pages'
+                                name='pages'
+                                className='form-control'
+                                value={Article.pages}
+                                onChange={inputOnChange}
+                            />
+                        </div>
+                        <br />
+                        <div className='form-group'>
+                            <label htmlFor='doi'>DOI</label>
+                            <input
+                                type='text'
+                                placeholder='DOI'
+                                name='doi'
+                                className='form-control'
+                                value={Article.doi}
                                 onChange={inputOnChange}
                             />
                         </div>

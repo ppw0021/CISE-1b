@@ -22,7 +22,7 @@ function ShowArticleList() {
     const ArticleList =
         Articles.length === 0
             ? 'There are no Article records!'
-            : Articles.map((Article, k) => <ArticleCard Article={Article} key={k} />);
+            : Articles.map((Article, k) => <ArticleCard article={Article} key={k} />);
 
     return (
         <div className='ShowArticleList'>

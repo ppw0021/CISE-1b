@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Article, DefaultEmptyArticle } from './Article';
@@ -48,18 +48,33 @@ function ShowArticleDetails() {
                     </tr>
                     <tr>
                         <th scope='row'>3</th>
-                        <td>Publisher</td>
-                        <td>{Article.publisher}</td>
+                        <td>Journal Name</td>
+                        <td>{Article.journalName}</td>
                     </tr>
                     <tr>
                         <th scope='row'>4</th>
-                        <td>Published Date</td>
-                        <td>{Article.published_date?.toString()}</td>
+                        <td>Year</td>
+                        <td>{Article.year}</td>
                     </tr>
                     <tr>
                         <th scope='row'>5</th>
-                        <td>Description</td>
-                        <td>{Article.description}</td>
+                        <td>Volume</td>
+                        <td>{Article.volume}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>6</th>
+                        <td>Number</td>
+                        <td>{Article.number}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>7</th>
+                        <td>Pages</td>
+                        <td>{Article.pages}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>8</th>
+                        <td>DOI</td>
+                        <td>{Article.doi}</td>
                     </tr>
                 </tbody>
             </table>
@@ -93,14 +108,6 @@ function ShowArticleDetails() {
                         >
                             Delete Article
                         </button>
-                    </div>
-                    <div className='col-md-6 m-auto'>
-                        <Link
-                            href={`/edit-article/${Article._id}`}
-                            className='btn btn-outline-info btn-lg btn-block'
-                        >
-                            Edit Article
-                        </Link>
                     </div>
                 </div>
             </div>
