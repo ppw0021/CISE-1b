@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import "../globals.css"; // Import global styles
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Article, DefaultEmptyArticle } from "./Article";
+import { Article as ArticleType, DefaultEmptyArticle } from "./Article"; // Rename import for clarity
 
 const CreateArticleComponent = () => {
     const navigate = useRouter();
-    const [Article, setArticle] = useState<Article>(DefaultEmptyArticle);
+    const [articleState, setArticle] = useState<ArticleType>(DefaultEmptyArticle); // Renamed state variable
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [allowedAccess, setAllowedAccess] = useState(true); // Replace with your actual logic
@@ -28,35 +28,38 @@ const CreateArticleComponent = () => {
     }, []);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setArticle({ ...Article, [event.target.name]: event.target.value });
+        setArticle({ ...articleState, [event.target.name]: event.target.value });
     };
 
     const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value ? parseInt(event.target.value) : 0; // Set to 0 if empty
-        setArticle({ ...Article, year: value });
+        setArticle({ ...articleState, year: value });
     };
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(Article);
+        console.log(articleState); // Check the console to see the structure of Article
     
-        fetch("http://localhost:8082/api/article/create", { // Change this line
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(Article)
-        })    
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error('Failed to submit the article.');
-                }
-                setArticle(DefaultEmptyArticle);
-                setSuccessMessage("Article submitted successfully!");
-                navigate.push("/");
-            })
-            .catch((err) => {
-                console.log('Error from CreateArticle: ' + err);
-                setErrorMessage('Error submitting article. Please try again.');
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/article`, {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(articleState)
             });
+
+            if (!res.ok) {
+                throw new Error('Failed to submit the article.');
+            }
+
+            const data = await res.json(); // Ensure to parse the response
+            console.log("Response from server:", data); // Log the server response
+            setArticle(DefaultEmptyArticle);
+            setSuccessMessage("Article submitted successfully!");
+            navigate.push("/");
+        } catch (err) {
+            console.log('Error from CreateArticle: ', err);
+            setErrorMessage('Error submitting article. Please try again.');
+        }
     };
 
     const logOutClicked = () => {
@@ -100,7 +103,6 @@ const CreateArticleComponent = () => {
                                     Browse
                                 </button>
                             </Link>
-                            {/* Link to Create Article */}
                             <Link href="/create-article">
                                 <button aria-label="Create Article" className="mr-2">
                                     Create Article
@@ -132,7 +134,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="title"
-                                            value={Article.title}
+                                            value={articleState.title}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the title"
@@ -144,7 +146,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="authors"
-                                            value={Article.authors}
+                                            value={articleState.authors}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the authors"
@@ -156,7 +158,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="journalName"
-                                            value={Article.journalName}
+                                            value={articleState.journalName}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the journal name"
@@ -168,7 +170,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="number"
                                             name="year"
-                                            value={Article.year || ''}
+                                            value={articleState.year || ''}
                                             onChange={handleYearChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the year"
@@ -180,7 +182,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="volume"
-                                            value={Article.volume}
+                                            value={articleState.volume}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the volume"
@@ -192,7 +194,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="number"
-                                            value={Article.number}
+                                            value={articleState.number}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the number"
@@ -204,7 +206,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="pages"
-                                            value={Article.pages}
+                                            value={articleState.pages}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the page numbers (e.g., 10-20)"
@@ -216,7 +218,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="doi"
-                                            value={Article.doi}
+                                            value={articleState.doi}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the DOI"
@@ -224,28 +226,22 @@ const CreateArticleComponent = () => {
                                     </div>
 
                                     <button
-                                        type="submit" // Set type to "submit"
-                                        disabled={!Article.title || !Article.authors || !Article.journalName || !Article.year || !Article.pages || !Article.doi}
-                                        className={`px-4 py-2 ${!Article.title || !Article.authors || !Article.journalName || !Article.year || !Article.pages || !Article.doi ? 'bg-gray-400' : 'bg-blue-500'} text-white rounded hover:bg-blue-700`}
+                                        type="submit"
+                                        disabled={!articleState.title || !articleState.authors || !articleState.journalName || !articleState.year || !articleState.pages || !articleState.doi}
+                                        className={`px-4 py-2 ${!articleState.title || !articleState.authors || !articleState.journalName || !articleState.year || !articleState.pages || !articleState.doi ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"} text-white rounded`}
                                     >
-                                        Submit
+                                        Submit Article
                                     </button>
                                 </form>
-
-                                <Link href={"/"}>
-                                    <button className="ml-2 text-blue-500 hover:underline">
-                                        Return
-                                    </button>
-                                </Link>
                             </>
                         ) : (
-                            <h1 className="text-lg font-bold">Please login to submit an article.</h1>
+                            <p>You do not have access to this page.</p>
                         )}
                     </div>
                 </div>
             </main>
-            <footer className="shadow-lg">
-                <p>Group Number 7: Adam, Declan, and Joel.</p>
+            <footer className="bg-gray-800 text-white text-center p-4">
+                <p>&copy; {new Date().getFullYear()} SPEED Application</p>
             </footer>
         </div>
     );
