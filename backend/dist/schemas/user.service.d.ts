@@ -7,6 +7,8 @@ export declare class UserService {
     emailExists(email: string): Promise<boolean>;
     validatePassword(email: string, passwordHash: string): Promise<boolean>;
     checkAdmin(email: string): Promise<boolean>;
+    checkMod(email: string): Promise<boolean>;
+    checkAnalyst(email: string): Promise<boolean>;
     updateAuthTokenByEmail(email: string, authToken: string): Promise<User | null>;
     createNewUser(email: string, passwordHash: string): Promise<User | null>;
     deleteUser(authToken: string): Promise<boolean>;

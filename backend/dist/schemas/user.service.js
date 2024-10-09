@@ -43,6 +43,24 @@ let UserService = class UserService {
             return user.isAdmin;
         }
     }
+    async checkMod(email) {
+        const user = await this.userModel.findOne({ email }).exec();
+        if (user.isMod === null) {
+            return false;
+        }
+        else {
+            return user.isMod;
+        }
+    }
+    async checkAnalyst(email) {
+        const user = await this.userModel.findOne({ email }).exec();
+        if (user.isAnalyst === null) {
+            return false;
+        }
+        else {
+            return user.isAnalyst;
+        }
+    }
     async updateAuthTokenByEmail(email, authToken) {
         const updatedUser = await this.userModel.findOneAndUpdate({ email }, { $set: { authToken } }, { new: true, useFindAndModify: false }).exec();
         return updatedUser;

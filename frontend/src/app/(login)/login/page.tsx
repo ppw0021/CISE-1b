@@ -77,6 +77,8 @@ export default function LoginPage() {
                 console.log("Credentials validated");
                 localStorage.setItem("auth_token", data.authToken);
                 localStorage.setItem("is_admin", data.isAdmin);
+                localStorage.setItem("is_mod", data.isMod);
+                localStorage.setItem("is_analyst", data.isAnalyst);
                 router.push('/');
                 
 

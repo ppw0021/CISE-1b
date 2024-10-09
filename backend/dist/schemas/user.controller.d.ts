@@ -15,6 +15,8 @@ export declare class UserController {
         exists: boolean;
         valid: boolean;
         isAdmin: boolean;
+        isMod: boolean;
+        isAnalyst: boolean;
         authToken: string;
     }>;
     registerUser(body: {

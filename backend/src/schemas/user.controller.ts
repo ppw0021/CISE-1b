@@ -23,17 +23,21 @@ export class UserController {
   }
 
   @Post('validate')
-  async validateUser(@Body() body: { email: string, passwordHash: string }): Promise<{ exists: boolean, valid: boolean, isAdmin: boolean, authToken: string }> {
+  async validateUser(@Body() body: { email: string, passwordHash: string }): Promise<{ exists: boolean, valid: boolean, isAdmin: boolean, isMod: boolean, isAnalyst: boolean, authToken: string }> {
     const { email, passwordHash } = body;
     const exists = await this.userService.emailExists(email);
     let isAdmin = false;
+    let isMod = false;
+    let isAnalyst = false;
     let authToken = "";
     if (!exists) {
       //User does not exist
       console.log(`No matching email for ${email}`);
-      return { exists, valid: false, isAdmin: false, authToken };
+      return { exists, valid: false, isAdmin: false, isMod: false, isAnalyst: false, authToken };
     }
     isAdmin = await this.userService.checkAdmin(email);
+    isMod = await this.userService.checkMod(email);
+    isAnalyst = await this.userService.checkAnalyst(email);
     const isValid = await this.userService.validatePassword(email, passwordHash);
     if (isValid) {
       authToken = this.generateToken();
@@ -41,18 +45,18 @@ export class UserController {
       if (updatedUser) {
         //Successful login and update
         console.log(`User ${email} logged in with password hash ${passwordHash}, authToken is ${authToken}`);
-        return { exists, valid: isValid, isAdmin, authToken };
+        return { exists, valid: isValid, isAdmin, isMod, isAnalyst, authToken };
       }
       else {
         //Failed to write to database, but credentials correct
         console.log("Failed to write to database, check Mongo or schema");
         authToken = "";
-        return { exists, valid: false, isAdmin, authToken };
+        return { exists, valid: false, isAdmin, isMod: false, isAnalyst: false, authToken };
       }
     }
     //Failed to login, wrong password
     console.log(`User ${email} used the wrong password`);
-    return { exists, valid: isValid, isAdmin, authToken };
+    return { exists, valid: isValid, isAdmin, isMod, isAnalyst, authToken };
   }
 
   @Post('register')
