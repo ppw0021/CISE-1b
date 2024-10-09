@@ -27,14 +27,18 @@ const SearchResults = () => {
     const searchParams = useSearchParams();
     const methodToFilter = searchParams.get('method'); // Get the method from query params
     const [selectedResults, setSelectedResults] = useState<string[]>(['Title', 'Year', 'Journal/Conference', 'SE Practice', 'Claim', 'Evidence Result', 'Research Type', 'Participant Type', 'Authors', 'Created At', 'Updated At']);
+    const fromYearToFilter = searchParams.get('fromYear');
+    const toYearToFilter = searchParams.get('toYear');
 
     useEffect(() => {
+        setAccess(true);
+        /*
         const isAdmin = localStorage.getItem("is_admin");
         if (isAdmin === "true") {
             setAccess(true);
         } else {
             setAccess(false);
-        }
+        }*/
     }, []);
 
     useEffect(() => {
@@ -47,6 +51,7 @@ const SearchResults = () => {
                 }
                 const data = await response.json();
                 setArticles(data);
+                console.log(`Parameters: method: ${methodToFilter} fromYear: ${fromYearToFilter} toYear ${toYearToFilter}`);
             } catch (error) {
                 if (error instanceof Error) {
                     setError(error.message);
@@ -60,10 +65,19 @@ const SearchResults = () => {
         fetchArticles();
     }, []);
 
-    // Filter articles based on the selected SE method
-    const filteredArticles = articles.filter(article =>
-        article.se_practice === methodToFilter
-    );
+    const filteredArticles = articles.filter(article => {
+        const articleYear = article.year_of_publication; // Replace this with the actual property name for the year
+
+        const fromYear = fromYearToFilter !== null ? parseInt(fromYearToFilter) : Number.MIN_SAFE_INTEGER;
+        const toYear = toYearToFilter !== null ? parseInt(toYearToFilter) : Number.MAX_SAFE_INTEGER;
+
+        // Check if the article matches the method and falls within the year range
+        return (
+            article.se_practice === methodToFilter &&
+            articleYear >= fromYear &&
+            articleYear <= toYear
+        );
+    });
 
     const results: string[] = ['Title', 'Year', 'Journal/Conference', 'SE Practice', 'Claim', 'Evidence Result', 'Research Type', 'Participant Type', 'Authors', 'Created At', 'Updated At'];
 
