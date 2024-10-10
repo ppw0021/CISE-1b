@@ -3,10 +3,10 @@ export type Article = {
     title?: string;
     authors?: string[]; // Changed to array
     publisher?: string; // Match CreateArticleDto
-    year?: number;
-    volume?: number | null; // Match CreateArticleDto
-    number?: number | null; // Match CreateArticleDto
-    pages?: number; // Match CreateArticleDto
+    year_of_publication?: number; // Change to match DTO and schema
+    volume?: number | null;
+    number?: number | null;
+    pages?: number;
     doi?: string;
 };
 
@@ -15,7 +15,7 @@ export const DefaultEmptyArticle: Article = {
     title: '',
     authors: [], // Initialize as an empty array
     publisher: '', // Renamed from journalName to match DTO
-    year: 2024,
+    year_of_publication: 2024, // Update field name
     volume: null, // Set to null by default
     number: null, // Set to null by default
     pages: 0, // Set to 0 by default

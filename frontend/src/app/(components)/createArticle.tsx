@@ -60,7 +60,9 @@ const CreateArticleComponent = () => {
             console.log("Response from server:", data); 
             setArticle(DefaultEmptyArticle);
             setSuccessMessage("Article submitted successfully!");
-            router.push("/");
+            
+            // Show a popup message
+            alert("Article has been submitted successfully!");
         } catch (err) {
             console.log('Error from CreateArticle: ', err);
             setErrorMessage('Error submitting article. Please try again.');
@@ -156,7 +158,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="number"
                                             name="year"
-                                            value={articleState.year || ''}
+                                            value={articleState.year_of_publication || ''}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the year"
@@ -213,14 +215,13 @@ const CreateArticleComponent = () => {
 
                                     <button
                                         type="submit"
-                                        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
-                                    >
+                                        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
                                         Submit Article
                                     </button>
                                 </form>
                             </>
                         ) : (
-                            <p>You are not allowed to submit articles.</p>
+                            <p>You are not allowed to access this page.</p>
                         )}
                     </div>
                 </div>
