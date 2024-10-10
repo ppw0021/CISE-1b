@@ -6,7 +6,10 @@ import { Article as ArticleType, DefaultEmptyArticle } from "./Article";
 
 const CreateArticleComponent = () => {
     const router = useRouter();
-    const [articleState, setArticle] = useState<ArticleType>(DefaultEmptyArticle); 
+    const [articleState, setArticle] = useState<ArticleType>({
+        ...DefaultEmptyArticle,
+        authors: [] // Initialize authors as an empty array
+    }); 
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [allowedAccess, setAllowedAccess] = useState(true); 
@@ -29,7 +32,7 @@ const CreateArticleComponent = () => {
         const { name, value } = event.target;
         setArticle((prevState) => ({
             ...prevState,
-            [name]: name === 'year' || name === 'volume' || name === 'number' || name === 'pages'
+            [name]: name === 'year_of_publication' || name === 'volume' || name === 'number' || name === 'pages'
                 ? parseInt(value) || null
                 : value,
         }));
@@ -38,12 +41,65 @@ const CreateArticleComponent = () => {
     const handleAuthorsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setArticle((prevState) => ({
             ...prevState,
-            authors: event.target.value.split(","),
+            authors: event.target.value.split(",").map(author => author.trim()),
         }));
     };
 
+    const validateForm = () => {
+        if (!articleState.title?.trim()) {
+            setErrorMessage("Title is required.");
+            return false;
+        }
+        if (!articleState.authors || articleState.authors.length === 0 || articleState.authors[0] === '') {
+            setErrorMessage("At least one author is required.");
+            return false;
+        }
+        if (!articleState.publisher?.trim()) {
+            setErrorMessage("Publisher is required.");
+            return false;
+        }
+        
+        // Validate year of publication
+        if (articleState.year_of_publication === undefined || articleState.year_of_publication === null) {
+            setErrorMessage("Year of publication is required.");
+            return false;
+        }
+    
+        // Validate volume
+        if (articleState.volume === undefined || articleState.volume === null) {
+            setErrorMessage("Volume is required.");
+            return false;
+        }
+    
+        // Validate number
+        if (articleState.number === undefined || articleState.number === null) {
+            setErrorMessage("Number is required.");
+            return false;
+        }
+    
+        // Validate pages
+        if (articleState.pages === undefined || articleState.pages === null) {
+            setErrorMessage("Pages are required.");
+            return false;
+        }
+    
+        // Validate DOI
+        if (!articleState.doi?.trim()) {
+            setErrorMessage("DOI is required.");
+            return false;
+        }
+    
+        setErrorMessage(""); // Clear any previous error messages
+        return true; // All validations passed
+    };
+    
+    
+    
+    
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
+        if (!validateForm()) return; 
         
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/article`, {
@@ -58,10 +114,11 @@ const CreateArticleComponent = () => {
     
             const data = await res.json(); 
             console.log("Response from server:", data); 
-            setArticle(DefaultEmptyArticle);
+            setArticle({
+                ...DefaultEmptyArticle,
+                authors: [] // Reset authors back to an empty array
+            });
             setSuccessMessage("Article submitted successfully!");
-            
-            // Show a popup message
             alert("Article has been submitted successfully!");
         } catch (err) {
             console.log('Error from CreateArticle: ', err);
@@ -134,7 +191,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="authors"
-                                            value={articleState.authors?.join(", ")}
+                                            value={(articleState.authors || []).join(", ")}
                                             onChange={handleAuthorsChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the authors"
@@ -157,7 +214,7 @@ const CreateArticleComponent = () => {
                                         <label className="font-semibold block mb-1">Year of Publication:</label>
                                         <input
                                             type="number"
-                                            name="year"
+                                            name="year_of_publication" // Use the correct property name here
                                             value={articleState.year_of_publication || ''}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
@@ -170,7 +227,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="volume"
-                                            value={articleState.volume || ""}
+                                            value={articleState.volume?.toString() || ""} // Convert to string for input
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the volume"
@@ -182,7 +239,7 @@ const CreateArticleComponent = () => {
                                         <input
                                             type="text"
                                             name="number"
-                                            value={articleState.number || ""}
+                                            value={articleState.number?.toString() || ""} // Convert to string for input
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the number"
@@ -192,7 +249,7 @@ const CreateArticleComponent = () => {
                                     <div className="mb-2">
                                         <label className="font-semibold block mb-1">Pages:</label>
                                         <input
-                                            type="text"
+                                            type="number" // Change to number type for better input handling
                                             name="pages"
                                             value={articleState.pages || ""}
                                             onChange={onChange}
@@ -215,13 +272,14 @@ const CreateArticleComponent = () => {
 
                                     <button
                                         type="submit"
-                                        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">
+                                        className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                                    >
                                         Submit Article
                                     </button>
                                 </form>
                             </>
                         ) : (
-                            <p>You are not allowed to access this page.</p>
+                            <p>Access denied.</p>
                         )}
                     </div>
                 </div>
