@@ -12,7 +12,8 @@ export class ArticleController {
     return this.articleService.findAll();
   }
 
-  @Post('create')
+  // POST request for creating a new article
+  @Post()
   async create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
     return this.articleService.create(createArticleDto);
   }

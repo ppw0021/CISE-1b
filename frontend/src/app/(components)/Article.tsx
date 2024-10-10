@@ -1,23 +1,23 @@
 export type Article = {
     _id?: string;
     title?: string;
-    authors?: string; // Changed from 'author' to 'authors'
-    journalName?: string; // Added journalName
+    authors?: string[]; // Changed to array
+    publisher?: string; // Match CreateArticleDto
     year?: number;
-    volume?: string; // Added volume
-    number?: string; // Added number
-    pages?: string; // Added pages
-    doi?: string; // Added DOI
+    volume?: number | null; // Match CreateArticleDto
+    number?: number | null; // Match CreateArticleDto
+    pages?: number; // Match CreateArticleDto
+    doi?: string;
 };
 
 export const DefaultEmptyArticle: Article = {
     _id: undefined,
     title: '',
-    authors: '', // Changed from '' to ''
-    journalName: '', // Initialized journalName
+    authors: [], // Initialize as an empty array
+    publisher: '', // Renamed from journalName to match DTO
     year: 2024,
-    volume: '', // Initialized volume
-    number: '', // Initialized number
-    pages: '', // Initialized pages
-    doi: '', // Initialized DOI
+    volume: null, // Set to null by default
+    number: null, // Set to null by default
+    pages: 0, // Set to 0 by default
+    doi: '',
 };
