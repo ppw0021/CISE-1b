@@ -86,7 +86,7 @@ export default function ModeratorLayout({
         </header>
         <main className="flex-grow p-4">{children}</main>
         <footer className="shadow-lg">
-          <p>Moderator Portal © Group 7: Adam, Declan, Joel.</p>
+          <p>Group Number 7: Adam, Declan, and Joel.</p>
         </footer>
       </body>
     </html>

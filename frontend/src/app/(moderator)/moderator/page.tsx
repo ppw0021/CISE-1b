@@ -12,7 +12,6 @@ export default function ModeratorPage() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        // Use the correct environment variable for the backend URL
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/article`);
   
         if (!res.ok) {
@@ -37,17 +36,17 @@ export default function ModeratorPage() {
 
   return (
     <div>
-      <h1>Moderator Page</h1>
-
+      <h1 style={{ textAlign: 'center' }}><u>Moderator Page</u></h1>
+      <br />
       {/* Unmoderated Articles */}
-      <h2>Unmoderated Articles</h2>
+      <h1><u>Unmoderated Articles</u></h1>
       <ShowArticleList articles={unmoderatedArticles} moderationMode={true} />
 
       {/* Moderated Articles */}
-      <h2>Accepted Articles</h2>
+      <h1><u>Accepted Articles</u></h1>
       <ShowArticleList articles={moderatedArticles.accepted} />
 
-      <h2>Denied Articles</h2>
+      <h1><u>Denied Articles</u></h1>
       <ShowArticleList articles={moderatedArticles.denied} />
     </div>
   );
