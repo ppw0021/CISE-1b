@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Param, Body } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { Article } from '../schemas/article.schema';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -16,5 +16,15 @@ export class ArticleController {
   @Post()
   async create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
     return this.articleService.create(createArticleDto);
+  }
+
+  // New route for updating moderation status
+  @Put(':id/moderate')
+  async moderateArticle(
+    @Param('id') id: string,
+    @Body('moderated') moderated: boolean,
+    @Body('status') status: 'accepted' | 'denied' | 'unmoderated',
+  ): Promise<Article> {
+    return this.articleService.updateModerationStatus(id, moderated, status);
   }
 }

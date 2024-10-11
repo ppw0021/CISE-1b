@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from 'react';
-import "../globals.css";
+import "../globals.css"; // Ensure this path is correct for your project
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function RootLayout({
+export default function ModeratorLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -36,10 +36,10 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <title>Group 7</title>
+      <title>Moderator Page</title>
       <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
-          <h1 className="mb-2">SPEED Application</h1>
+          <h1 className="mb-2">Moderator Portal</h1>
           <nav>
             <Link href="/">
               <button aria-label="Home" className="mr-2">
@@ -65,18 +65,12 @@ export default function RootLayout({
                 </Link>
                 <Link href="/moderator">
                   <button aria-label="Moderator" className="mr-2">
-                    Moderate Article
+                    Moderate Articles
                   </button>
                 </Link>
                 <Link href="/browse">
                   <button aria-label="Browse" className="mr-2">
                     Browse
-                  </button>
-                </Link>
-                {/* Link to Create Article */}
-                <Link href="/create-article">
-                  <button aria-label="Create Article" className="mr-2">
-                    Create Article
                   </button>
                 </Link>
                 {isUserAdmin && (
@@ -92,7 +86,7 @@ export default function RootLayout({
         </header>
         <main className="flex-grow p-4">{children}</main>
         <footer className="shadow-lg">
-          <p>Group Number 7: Adam, Declan, and Joel.</p>
+          <p>Moderator Portal © Group 7: Adam, Declan, Joel.</p>
         </footer>
       </body>
     </html>

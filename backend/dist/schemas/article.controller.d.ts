@@ -6,4 +6,5 @@ export declare class ArticleController {
     constructor(articleService: ArticleService);
     findAll(): Promise<Article[]>;
     create(createArticleDto: CreateArticleDto): Promise<Article>;
+    moderateArticle(id: string, moderated: boolean, status: 'accepted' | 'denied' | 'unmoderated'): Promise<Article>;
 }

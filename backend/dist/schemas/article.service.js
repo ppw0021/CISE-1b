@@ -28,6 +28,13 @@ let ArticleService = class ArticleService {
         const createdArticle = new this.articleModel(createArticleDto);
         return createdArticle.save();
     }
+    async updateModerationStatus(id, moderated, status) {
+        const updatedArticle = await this.articleModel.findByIdAndUpdate(id, { moderated, status }, { new: true });
+        if (!updatedArticle) {
+            throw new common_1.NotFoundException('Article not found');
+        }
+        return updatedArticle;
+    }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([

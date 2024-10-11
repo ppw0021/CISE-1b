@@ -6,4 +6,5 @@ export declare class ArticleService {
     constructor(articleModel: Model<ArticleDocument>);
     findAll(): Promise<Article[]>;
     create(createArticleDto: CreateArticleDto): Promise<Article>;
+    updateModerationStatus(id: string, moderated: boolean, status: 'accepted' | 'denied' | 'unmoderated'): Promise<Article>;
 }

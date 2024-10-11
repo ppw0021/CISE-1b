@@ -28,6 +28,13 @@ export class Article {
 
     @Prop({ required: true })
     doi: string;
+
+    // New fields for moderation
+    @Prop({ default: false })
+    moderated: boolean;
+
+    @Prop({ default: 'unmoderated' })
+    status: 'accepted' | 'denied' | 'unmoderated';
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

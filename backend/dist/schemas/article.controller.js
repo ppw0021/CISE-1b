@@ -26,6 +26,9 @@ let ArticleController = class ArticleController {
     async create(createArticleDto) {
         return this.articleService.create(createArticleDto);
     }
+    async moderateArticle(id, moderated, status) {
+        return this.articleService.updateModerationStatus(id, moderated, status);
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -41,6 +44,15 @@ __decorate([
     __metadata("design:paramtypes", [create_article_dto_1.CreateArticleDto]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "create", null);
+__decorate([
+    (0, common_1.Put)(':id/moderate'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)('moderated')),
+    __param(2, (0, common_1.Body)('status')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Boolean, String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "moderateArticle", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('article'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

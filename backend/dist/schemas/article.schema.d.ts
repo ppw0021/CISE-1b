@@ -9,6 +9,8 @@ export declare class Article {
     number?: number | null;
     pages: number;
     doi: string;
+    moderated: boolean;
+    status: 'accepted' | 'denied' | 'unmoderated';
 }
 export declare const ArticleSchema: import("mongoose").Schema<Article, import("mongoose").Model<Article, any, any, any, Document<unknown, any, Article> & Article & {
     _id: import("mongoose").Types.ObjectId;

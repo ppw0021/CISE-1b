@@ -49,12 +49,12 @@ function ShowArticleDetails() {
                     <tr>
                         <th scope='row'>3</th>
                         <td>Journal Name</td>
-                        <td>{Article.journalName}</td>
+                        <td>{Article.publisher}</td>
                     </tr>
                     <tr>
                         <th scope='row'>4</th>
                         <td>Year</td>
-                        <td>{Article.year}</td>
+                        <td>{Article.year_of_publication}</td>
                     </tr>
                     <tr>
                         <th scope='row'>5</th>
