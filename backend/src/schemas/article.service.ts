@@ -5,14 +5,9 @@ import { Article, ArticleDocument } from '../schemas/article.schema';
 
 @Injectable()
 export class ArticleService {
-  constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
+  constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) { }
 
   async findAll(): Promise<Article[]> {
     return this.articleModel.find().exec();
-  }
-
-  async addRating(articleNameIncoming: string, ratingIncoming: number): Promise<boolean> {
-    //return this.articleModel.
-    return false;
   }
 }

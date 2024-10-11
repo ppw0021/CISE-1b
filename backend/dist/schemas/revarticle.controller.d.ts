@@ -7,4 +7,8 @@ export declare class RevArticleController {
     findAll(): Promise<RevArticle[]>;
     findOne(id: string): Promise<RevArticle>;
     remove(id: string): Promise<RevArticle>;
+    addRating(body: {
+        articleName: string;
+        rating: number;
+    }): Promise<boolean>;
 }

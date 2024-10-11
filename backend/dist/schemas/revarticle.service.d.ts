@@ -7,4 +7,5 @@ export declare class RevArticleService {
     findAll(): Promise<RevArticle[]>;
     findOne(id: string): Promise<RevArticle>;
     remove(id: string): Promise<RevArticle>;
+    addRating(articleNameIncoming: string, ratingIncoming: number): Promise<boolean>;
 }

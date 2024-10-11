@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Article {
     title: string;
@@ -28,6 +29,7 @@ export default function BrowsePage() {
     const [error, setError] = useState<string | null>(null);
     const [hoverRatings, setHoverRatings] = useState<{ [key: string]: number }>({});
     const [rated, setRated] = useState<{ [key: string]: boolean }>({});
+    const router = useRouter();
 
     const handleMouseEnter = (title: string, num: number) => {
         if (rated[title]) {
@@ -43,15 +45,40 @@ export default function BrowsePage() {
         setHoverRatings((prev) => ({ ...prev, [title]: 0 }));
     }
 
-    const rateArticle = (title: string, num: number) => {
+    const rateArticle = async (title: string, num: number) => {
         if (rated[title]) {
             return;
         }
-
-
         setRated((prev) => ({ ...prev, [title]: true }));
         setHoverRatings((prev) => ({ ...prev, [title]: num }));
 
+        try {
+            const payload = {
+                articleName: title,
+                rating: num
+            }
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const response = await fetch(apiUrl + `/revarticle/addrating`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch user existence");
+            }
+
+            const data = await response.json();
+            console.log(data);
+            if (!data.exists && data.success) {
+                //Email exists and password valid!
+                console.log("Rate Complete");
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     const averageRating = (dataIncoming: Article) => {
@@ -65,7 +92,7 @@ export default function BrowsePage() {
             + (dataIncoming.three_star_reviews)
             + (dataIncoming.four_star_reviews)
             + (dataIncoming.five_star_reviews);
-        let average = total / 5;
+        let average = total / totalCount;
         if (Number.isNaN(average)) {
             return "No reviews";
         }

@@ -32,6 +32,11 @@ let RevArticleController = class RevArticleController {
     async remove(id) {
         return this.revArticleService.remove(id);
     }
+    async addRating(body) {
+        const { articleName, rating } = body;
+        console.log(`Article Name: ${articleName} and rating: ${rating}`);
+        return this.revArticleService.addRating(articleName, rating);
+    }
 };
 exports.RevArticleController = RevArticleController;
 __decorate([
@@ -61,6 +66,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], RevArticleController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Post)('addrating'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], RevArticleController.prototype, "addRating", null);
 exports.RevArticleController = RevArticleController = __decorate([
     (0, common_1.Controller)('revarticle'),
     __metadata("design:paramtypes", [revarticle_service_1.RevArticleService])
