@@ -87,6 +87,8 @@ export default function RegisterPage() {
                 console.log("Registration complete");
                 localStorage.setItem("auth_token", data.authToken);
                 localStorage.setItem("is_admin", "false");
+                localStorage.setItem("is_mod", "false");
+                localStorage.setItem("is_analyst", "false");
                 router.push('/');
 
 

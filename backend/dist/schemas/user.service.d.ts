@@ -12,4 +12,6 @@ export declare class UserService {
     updateAuthTokenByEmail(email: string, authToken: string): Promise<User | null>;
     createNewUser(email: string, passwordHash: string): Promise<User | null>;
     deleteUser(authToken: string): Promise<boolean>;
+    findUserByAuthToken(authToken: string): Promise<User | null>;
+    toggleUserRole(authToken: string, role: string, status: boolean): Promise<UserDocument | null>;
 }

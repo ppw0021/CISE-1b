@@ -35,7 +35,7 @@ export class UserService {
   }
 
   async checkMod(email: string): Promise<boolean> {
-    const user = await this.userModel.findOne ({ email }).exec();
+    const user = await this.userModel.findOne({ email }).exec();
     if (user.isMod === null) {
       return false;
     }
@@ -45,7 +45,7 @@ export class UserService {
   }
 
   async checkAnalyst(email: string): Promise<boolean> {
-    const user = await this.userModel.findOne ({ email }).exec();
+    const user = await this.userModel.findOne({ email }).exec();
     if (user.isAnalyst === null) {
       return false;
     }
@@ -97,4 +97,47 @@ export class UserService {
     return !!deleted;
 
   }
+
+  async findUserByAuthToken(authToken: string): Promise<User | null> {
+    return this.userModel.findOne({ authToken }).exec();
+  }
+
+  async toggleUserRole(authToken: string, role: string, status: boolean): Promise < UserDocument | null > {
+    // Map simple role names to the actual schema field names
+    const roleMap: { [key: string]: string } = {
+    admin: 'isAdmin',
+      mod: 'isMod',
+        analyst: 'isAnalyst',
+    };
+  
+  // Convert role to the correct schema field
+  const roleField = roleMap[role];
+  
+  if (!roleField) {
+    throw new Error(`Invalid role: ${role}`);
+  }
+  
+  const update = { [roleField]: status };
+  
+  console.log(`Toggling ${roleField} role for user to ${status} with authToken ${authToken}`);
+  
+  // Find user and update the role
+  const updatedUser = await this.userModel.findOneAndUpdate(
+    { authToken },
+    { $set: update },
+    { new: true }
+  ).exec();
+  
+  if (!updatedUser) {
+    throw new Error('Failed to update user role');
+  }
+  
+  console.log('Updated user:', updatedUser);
+  return updatedUser;
+  }
+  
 }
+
+
+
+
