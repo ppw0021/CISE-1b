@@ -80,16 +80,16 @@ export default function BrowsePage() {
     }
 
     const averageRating = (dataIncoming: Article) => {
-        const total = (dataIncoming.one_star_reviews * 1)
-            + (dataIncoming.two_star_reviews * 2)
-            + (dataIncoming.three_star_reviews * 3)
-            + (dataIncoming.four_star_reviews * 4)
-            + (dataIncoming.five_star_reviews * 5);
-        const totalCount = (dataIncoming.one_star_reviews)
-            + (dataIncoming.two_star_reviews)
-            + (dataIncoming.three_star_reviews)
-            + (dataIncoming.four_star_reviews)
-            + (dataIncoming.five_star_reviews);
+        const total = ((dataIncoming.one_star_reviews ?? 0) * 1)
+            + ((dataIncoming.two_star_reviews ?? 0) * 2)
+            + ((dataIncoming.three_star_reviews ?? 0) * 3)
+            + ((dataIncoming.four_star_reviews ?? 0) * 4)
+            + ((dataIncoming.five_star_reviews ?? 0) * 5);
+        const totalCount = (dataIncoming.one_star_reviews ?? 0)
+            + (dataIncoming.two_star_reviews ?? 0)
+            + (dataIncoming.three_star_reviews ?? 0)
+            + (dataIncoming.four_star_reviews ?? 0)
+            + (dataIncoming.five_star_reviews ?? 0);
         const average = total / totalCount;
         if (Number.isNaN(average)) {
             return "No reviews";
