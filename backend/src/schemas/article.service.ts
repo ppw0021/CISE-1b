@@ -70,7 +70,7 @@ export class ArticleService {
         throw new NotFoundException('Article not found');
     }
     
-    return updatedArticle;
+    return updatedArticle; 
 }
 
 }
