@@ -4,4 +4,5 @@ export declare class ArticleService {
     private articleModel;
     constructor(articleModel: Model<ArticleDocument>);
     findAll(): Promise<Article[]>;
+    addRating(articleNameIncoming: string, ratingIncoming: number): Promise<boolean>;
 }

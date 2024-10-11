@@ -24,6 +24,9 @@ let ArticleService = class ArticleService {
     async findAll() {
         return this.articleModel.find().exec();
     }
+    async addRating(articleNameIncoming, ratingIncoming) {
+        return false;
+    }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([

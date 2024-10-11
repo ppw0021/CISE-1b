@@ -15,6 +15,11 @@ interface Article {
     databases?: string[]; // Optional field for databases
     created_at: string;
     updated_at: string;
+    one_star_reviews: number;
+    two_star_reviews: number;
+    three_star_reviews: number;
+    four_star_reviews: number;
+    five_star_reviews: number;
 }
 
 export default function BrowsePage() {
@@ -43,12 +48,29 @@ export default function BrowsePage() {
             return;
         }
 
-        
+
         setRated((prev) => ({ ...prev, [title]: true }));
         setHoverRatings((prev) => ({ ...prev, [title]: num }));
 
     }
 
+    const averageRating = (dataIncoming: Article) => {
+        let total = (dataIncoming.one_star_reviews * 1)
+            + (dataIncoming.two_star_reviews * 2)
+            + (dataIncoming.three_star_reviews * 3)
+            + (dataIncoming.four_star_reviews * 4)
+            + (dataIncoming.five_star_reviews * 5);
+        let totalCount = (dataIncoming.one_star_reviews)
+            + (dataIncoming.two_star_reviews)
+            + (dataIncoming.three_star_reviews)
+            + (dataIncoming.four_star_reviews)
+            + (dataIncoming.five_star_reviews);
+        let average = total / 5;
+        if (Number.isNaN(average)) {
+            return "No reviews";
+        }
+        return average.toFixed(1) + `★ (${totalCount})`;
+    }
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -116,7 +138,7 @@ export default function BrowsePage() {
                                             <td className="border border-gray-300 px-4 py-2">{article.authors.join(', ')}</td>
                                             <td className="border border-gray-300 px-4 py-2">{new Date(article.created_at).toLocaleDateString()}</td>
                                             <td className="border border-gray-300 px-4 py-2">{new Date(article.updated_at).toLocaleDateString()}</td>
-                                            <td className="border border-gray-300 px-4 py-2">{"☆☆☆☆☆"}</td>
+                                            <td className="border border-gray-300 px-4 py-2">{averageRating(article)}</td>
                                             <td className="border border-gray-300 px-4 py-2">
                                                 <div className="flex flex-nowrap">
                                                     <button className='p-0 bg-gray-50 text-black shadow-none hover:bg-gray-50'
@@ -141,7 +163,7 @@ export default function BrowsePage() {
                                                         onMouseEnter={() => handleMouseEnter(article.title, 4)}
                                                         onMouseLeave={() => handleMouseLeave(article.title)}
                                                         onClick={() => rateArticle(article.title, 4)}>
-                                                        
+
                                                         {(hoverRatings[article.title] >= 4) ? '★' : '☆'}
                                                     </button>
                                                     <button className='p-0 bg-gray-50 text-black shadow-none hover:bg-gray-50'

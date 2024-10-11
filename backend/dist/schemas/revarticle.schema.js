@@ -58,6 +58,26 @@ __decorate([
     (0, mongoose_1.Prop)({ default: Date.now }),
     __metadata("design:type", Date)
 ], RevArticle.prototype, "updated_at", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: false }),
+    __metadata("design:type", Number)
+], RevArticle.prototype, "one_star_reviews", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: false }),
+    __metadata("design:type", Number)
+], RevArticle.prototype, "two_star_reviews", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: false }),
+    __metadata("design:type", Number)
+], RevArticle.prototype, "three_star_reviews", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: false }),
+    __metadata("design:type", Number)
+], RevArticle.prototype, "four_star_reviews", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: false }),
+    __metadata("design:type", Number)
+], RevArticle.prototype, "five_star_reviews", void 0);
 exports.RevArticle = RevArticle = __decorate([
     (0, mongoose_1.Schema)()
 ], RevArticle);

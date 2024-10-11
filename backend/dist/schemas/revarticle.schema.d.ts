@@ -12,6 +12,11 @@ export declare class RevArticle {
     authors: string[];
     created_at: Date;
     updated_at: Date;
+    one_star_reviews: number;
+    two_star_reviews: number;
+    three_star_reviews: number;
+    four_star_reviews: number;
+    five_star_reviews: number;
 }
 export declare const RevArticleSchema: import("mongoose").Schema<RevArticle, import("mongoose").Model<RevArticle, any, any, any, Document<unknown, any, RevArticle> & RevArticle & {
     _id: import("mongoose").Types.ObjectId;

@@ -10,4 +10,9 @@ export class ArticleService {
   async findAll(): Promise<Article[]> {
     return this.articleModel.find().exec();
   }
+
+  async addRating(articleNameIncoming: string, ratingIncoming: number): Promise<boolean> {
+    //return this.articleModel.
+    return false;
+  }
 }
