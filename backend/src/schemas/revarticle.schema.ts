@@ -37,6 +37,21 @@ export class RevArticle {
 
     @Prop({ default: Date.now })
     updated_at: Date;
+
+    @Prop({ required: false})
+    one_star_reviews: number;
+
+    @Prop({ required: false})
+    two_star_reviews: number;
+
+    @Prop({ required: false})
+    three_star_reviews: number;
+
+    @Prop({ required: false})
+    four_star_reviews: number;
+
+    @Prop({ required: false})
+    five_star_reviews: number;
 }
 
 export const RevArticleSchema = SchemaFactory.createForClass(RevArticle);

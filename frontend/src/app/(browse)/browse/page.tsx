@@ -15,12 +15,87 @@ interface Article {
     databases?: string[]; // Optional field for databases
     created_at: string;
     updated_at: string;
+    one_star_reviews: number;
+    two_star_reviews: number;
+    three_star_reviews: number;
+    four_star_reviews: number;
+    five_star_reviews: number;
 }
 
 export default function BrowsePage() {
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [hoverRatings, setHoverRatings] = useState<{ [key: string]: number }>({});
+    const [rated, setRated] = useState<{ [key: string]: boolean }>({});
+
+    const handleMouseEnter = (title: string, num: number) => {
+        if (rated[title]) {
+            return;
+        }
+        setHoverRatings((prev) => ({ ...prev, [title]: num }));
+    }
+
+    const handleMouseLeave = (title: string) => {
+        if (rated[title]) {
+            return;
+        }
+        setHoverRatings((prev) => ({ ...prev, [title]: 0 }));
+    }
+
+    const rateArticle = async (title: string, num: number) => {
+        if (rated[title]) {
+            return;
+        }
+        setRated((prev) => ({ ...prev, [title]: true }));
+        setHoverRatings((prev) => ({ ...prev, [title]: num }));
+
+        try {
+            const payload = {
+                articleName: title,
+                rating: num
+            }
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const response = await fetch(apiUrl + `/revarticle/addrating`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch user existence");
+            }
+
+            const data = await response.json();
+            console.log(data);
+            if (!data.exists && data.success) {
+                //Email exists and password valid!
+                console.log("Rate Complete");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const averageRating = (dataIncoming: Article) => {
+        const total = (dataIncoming.one_star_reviews * 1)
+            + (dataIncoming.two_star_reviews * 2)
+            + (dataIncoming.three_star_reviews * 3)
+            + (dataIncoming.four_star_reviews * 4)
+            + (dataIncoming.five_star_reviews * 5);
+        const totalCount = (dataIncoming.one_star_reviews)
+            + (dataIncoming.two_star_reviews)
+            + (dataIncoming.three_star_reviews)
+            + (dataIncoming.four_star_reviews)
+            + (dataIncoming.five_star_reviews);
+        const average = total / totalCount;
+        if (Number.isNaN(average)) {
+            return "No reviews";
+        }
+        return average.toFixed(1) + `★ (${totalCount})`;
+    }
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -70,6 +145,8 @@ export default function BrowsePage() {
                                         <th className="border border-gray-300 px-4 py-2">Authors</th>
                                         <th className="border border-gray-300 px-4 py-2">Created At</th>
                                         <th className="border border-gray-300 px-4 py-2">Updated At</th>
+                                        <th className="border border-gray-300 px-4 py-2">Average Rating</th>
+                                        <th className="border border-gray-300 px-4 py-2">Rate Article   </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,6 +163,42 @@ export default function BrowsePage() {
                                             <td className="border border-gray-300 px-4 py-2">{article.authors.join(', ')}</td>
                                             <td className="border border-gray-300 px-4 py-2">{new Date(article.created_at).toLocaleDateString()}</td>
                                             <td className="border border-gray-300 px-4 py-2">{new Date(article.updated_at).toLocaleDateString()}</td>
+                                            <td className="border border-gray-300 px-4 py-2">{averageRating(article)}</td>
+                                            <td className="border border-gray-300 px-4 py-2">
+                                                <div className="flex flex-nowrap">
+                                                    <button className='p-0 bg-gray-50 text-black shadow-none hover:bg-gray-50'
+                                                        onMouseEnter={() => handleMouseEnter(article.title, 1)}
+                                                        onMouseLeave={() => handleMouseLeave(article.title)}
+                                                        onClick={() => rateArticle(article.title, 1)}>
+                                                        {(hoverRatings[article.title] >= 1) ? '★' : '☆'}
+                                                    </button>
+                                                    <button className='p-0 bg-gray-50 text-black shadow-none hover:bg-gray-50'
+                                                        onMouseEnter={() => handleMouseEnter(article.title, 2)}
+                                                        onMouseLeave={() => handleMouseLeave(article.title)}
+                                                        onClick={() => rateArticle(article.title, 2)}>
+                                                        {(hoverRatings[article.title] >= 2) ? '★' : '☆'}
+                                                    </button>
+                                                    <button className='p-0 bg-gray-50 text-black shadow-none hover:bg-gray-50'
+                                                        onMouseEnter={() => handleMouseEnter(article.title, 3)}
+                                                        onMouseLeave={() => handleMouseLeave(article.title)}
+                                                        onClick={() => rateArticle(article.title, 3)}>
+                                                        {(hoverRatings[article.title] >= 3) ? '★' : '☆'}
+                                                    </button>
+                                                    <button className='p-0 bg-gray-50 text-black shadow-none hover:bg-gray-50'
+                                                        onMouseEnter={() => handleMouseEnter(article.title, 4)}
+                                                        onMouseLeave={() => handleMouseLeave(article.title)}
+                                                        onClick={() => rateArticle(article.title, 4)}>
+
+                                                        {(hoverRatings[article.title] >= 4) ? '★' : '☆'}
+                                                    </button>
+                                                    <button className='p-0 bg-gray-50 text-black shadow-none hover:bg-gray-50'
+                                                        onMouseEnter={() => handleMouseEnter(article.title, 5)}
+                                                        onMouseLeave={() => handleMouseLeave(article.title)}
+                                                        onClick={() => rateArticle(article.title, 5)}>
+                                                        {(hoverRatings[article.title] >= 5) ? '★' : '☆'}
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
