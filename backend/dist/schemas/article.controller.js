@@ -78,7 +78,7 @@ __decorate([
     __param(2, (0, common_1.Body)('status')),
     __param(3, (0, common_1.Body)('researchType')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Boolean, String, String]),
+    __metadata("design:paramtypes", [String, Boolean, String, Array]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "moderateArticle", null);
 __decorate([

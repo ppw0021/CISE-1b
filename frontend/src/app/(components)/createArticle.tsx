@@ -102,7 +102,6 @@ const CreateArticleComponent = () => {
         return true; // All validations passed
     };
     
-    // New function to check for duplicate articles
     const checkForDuplicateArticle = async (title: string) => {
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/article/exists?title=${encodeURIComponent(title)}`);
@@ -123,8 +122,7 @@ const CreateArticleComponent = () => {
         
         if (!validateForm()) return; 
         
-        // Check for duplicate before submitting
-        const isDuplicate = await checkForDuplicateArticle(articleState.title || ""); // Use empty string if title is undefined
+        const isDuplicate = await checkForDuplicateArticle(articleState.title || ""); 
         if (isDuplicate) {
             setErrorMessage("This article has already been entered into the SPEED database.");
             return;
@@ -192,7 +190,6 @@ const CreateArticleComponent = () => {
                             Browse
                           </button>
                         </Link>
-                        {/* Link to Create Article */}
                         <Link href="/create-article">
                           <button aria-label="Create Article" className="mr-2">
                             Create Article
@@ -317,21 +314,18 @@ const CreateArticleComponent = () => {
 
                                     <button
                                         type="submit"
-                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                        className="bg-blue-500 text-white p-2 rounded"
                                     >
-                                        Submit
+                                        Submit Article
                                     </button>
                                 </form>
                             </>
                         ) : (
-                            <p className="text-red-500">You do not have access to create an article.</p>
+                            <p className="text-red-500">You do not have permission to access this section.</p>
                         )}
                     </div>
                 </div>
             </main>
-            <footer className="bg-gray-800 text-white p-4 text-center">
-                <p>&copy; 2024 SPEED Application. All rights reserved.</p>
-            </footer>
         </div>
     );
 };

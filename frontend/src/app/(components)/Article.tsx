@@ -23,5 +23,8 @@ export const DefaultEmptyArticle: Article = {
     number: 0,
     pages: 0,
     doi: '',
-    researchType: [], // Initialize with an empty string or default value
+    moderated: false,
+    status: 'unmoderated',
+    researchType: [], // Initialize as an empty array
 };
+

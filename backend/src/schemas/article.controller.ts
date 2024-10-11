@@ -31,7 +31,7 @@ export class ArticleController {
     @Param('id') id: string,
     @Body('moderated') moderated: boolean,
     @Body('status') status: 'accepted' | 'denied' | 'unmoderated',
-    @Body('researchType') researchType?: string // Accepting researchType for moderation
+    @Body('researchType') researchType?: string[] // Change type to string[]
   ): Promise<Article> {
     return this.articleService.updateModerationStatus(id, moderated, status, researchType);
   }
@@ -62,6 +62,5 @@ export class ArticleController {
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateArticleDto: CreateArticleDto): Promise<Article> {
     return this.articleService.update(id, updateArticleDto);
-}
-
+  }
 }
