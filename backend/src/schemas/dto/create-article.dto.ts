@@ -7,4 +7,5 @@ export class CreateArticleDto {
     readonly number?: number | null;
     readonly pages: number;
     readonly doi: string;
+    readonly researchType: string; // e.g., 'case study', 'experiment', etc.
 }

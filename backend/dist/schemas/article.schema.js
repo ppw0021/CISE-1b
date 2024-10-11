@@ -54,6 +54,10 @@ __decorate([
     (0, mongoose_1.Prop)({ default: 'unmoderated', index: true }),
     __metadata("design:type", String)
 ], Article.prototype, "status", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, default: 'unknown' }),
+    __metadata("design:type", String)
+], Article.prototype, "researchType", void 0);
 exports.Article = Article = __decorate([
     (0, mongoose_1.Schema)({ collection: 'articles', timestamps: true })
 ], Article);

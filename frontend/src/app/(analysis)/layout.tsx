@@ -1,5 +1,3 @@
-// frontend/src/app/(analysis)/layout.tsx
-
 "use client";
 import { useState, useEffect } from 'react';
 import "../globals.css"; // Ensure this path is correct for your project
@@ -82,7 +80,6 @@ export default function AnalysisLayout({
                     Browse
                   </button>
                 </Link>
-                {/* Link to Create Article */}
                 <Link href="/create-article">
                   <button aria-label="Create Article" className="mr-2">
                     Create Article

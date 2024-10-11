@@ -68,12 +68,16 @@ export default function RootLayout({
                     Moderate Article
                   </button>
                 </Link>
+                <Link href="/analysis">
+                  <button aria-label="Analysis" className="mr-2">
+                    Analysis
+                  </button>
+                </Link>  
                 <Link href="/browse">
                   <button aria-label="Browse" className="mr-2">
                     Browse
                   </button>
                 </Link>
-                {/* Link to Create Article */}
                 <Link href="/create-article">
                   <button aria-label="Create Article" className="mr-2">
                     Create Article

@@ -28,9 +28,13 @@ let ArticleService = class ArticleService {
         const createdArticle = new this.articleModel(createArticleDto);
         return createdArticle.save();
     }
-    async updateModerationStatus(id, moderated, status) {
+    async updateModerationStatus(id, moderated, status, researchType) {
         console.log(`Updating article ${id} with status: ${status}`);
-        const updatedArticle = await this.articleModel.findByIdAndUpdate(id, { moderated, status }, { new: true });
+        const updateData = { moderated, status };
+        if (researchType) {
+            updateData.researchType = researchType;
+        }
+        const updatedArticle = await this.articleModel.findByIdAndUpdate(id, updateData, { new: true });
         if (!updatedArticle) {
             console.log(`Article ${id} not found`);
             throw new common_1.NotFoundException('Article not found');
@@ -41,6 +45,12 @@ let ArticleService = class ArticleService {
     async checkArticleExists(title) {
         const article = await this.articleModel.findOne({ title }).exec();
         return !!article;
+    }
+    async findUnmoderated() {
+        return this.articleModel.find({ moderated: false }).exec();
+    }
+    async findByStatus(status) {
+        return await this.articleModel.find({ status }).exec();
     }
 };
 exports.ArticleService = ArticleService;

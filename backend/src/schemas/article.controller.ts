@@ -10,8 +10,8 @@ export class ArticleController {
   // New endpoint to check for duplicate articles
   @Get('exists')
   async checkArticleExists(@Query('title') title: string) {
-      const exists = await this.articleService.checkArticleExists(title);
-      return { exists };
+    const exists = await this.articleService.checkArticleExists(title);
+    return { exists };
   }
 
   @Get()
@@ -31,8 +31,9 @@ export class ArticleController {
     @Param('id') id: string,
     @Body('moderated') moderated: boolean,
     @Body('status') status: 'accepted' | 'denied' | 'unmoderated',
+    @Body('researchType') researchType?: string // Accepting researchType for moderation
   ): Promise<Article> {
-    return this.articleService.updateModerationStatus(id, moderated, status);
+    return this.articleService.updateModerationStatus(id, moderated, status, researchType);
   }
 
   // New PATCH route for accepting an article
@@ -43,10 +44,17 @@ export class ArticleController {
 
   @Patch(':id/deny')
   async denyArticle(@Param('id') id: string): Promise<Article> {
-      console.log(`Denying article with ID: ${id}`); // This should log the ID you passed
-      return this.articleService.updateModerationStatus(id, true, 'denied');
+    console.log(`Denying article with ID: ${id}`); // This should log the ID you passed
+    return this.articleService.updateModerationStatus(id, true, 'denied');
   }
 
+  @Get('/unmoderated')
+  async findUnmoderated(): Promise<Article[]> {
+    return this.articleService.findUnmoderated();
+  }
 
-  
+  @Get('moderated')
+  async getModeratedArticles(@Query('status') status: 'accepted' | 'denied' | 'unmoderated') {
+    return await this.articleService.findByStatus(status);
+  }
 }

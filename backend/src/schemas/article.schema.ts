@@ -35,6 +35,10 @@ export class Article {
 
     @Prop({ default: 'unmoderated', index: true }) // Added indexing
     status: 'accepted' | 'denied' | 'unmoderated';
+
+    // New field for research type
+    @Prop({ required: true, default: 'unknown' })  // Default to 'unknown' if not provided
+    researchType: string; // For example: 'case study', 'experiment', etc.
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

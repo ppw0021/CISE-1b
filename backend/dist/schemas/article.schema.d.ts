@@ -11,6 +11,7 @@ export declare class Article {
     doi: string;
     moderated: boolean;
     status: 'accepted' | 'denied' | 'unmoderated';
+    researchType: string;
 }
 export declare const ArticleSchema: import("mongoose").Schema<Article, import("mongoose").Model<Article, any, any, any, Document<unknown, any, Article> & Article & {
     _id: import("mongoose").Types.ObjectId;

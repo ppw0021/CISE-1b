@@ -30,8 +30,8 @@ let ArticleController = class ArticleController {
     async create(createArticleDto) {
         return this.articleService.create(createArticleDto);
     }
-    async moderateArticle(id, moderated, status) {
-        return this.articleService.updateModerationStatus(id, moderated, status);
+    async moderateArticle(id, moderated, status, researchType) {
+        return this.articleService.updateModerationStatus(id, moderated, status, researchType);
     }
     async acceptArticle(id) {
         return this.articleService.updateModerationStatus(id, true, 'accepted');
@@ -39,6 +39,12 @@ let ArticleController = class ArticleController {
     async denyArticle(id) {
         console.log(`Denying article with ID: ${id}`);
         return this.articleService.updateModerationStatus(id, true, 'denied');
+    }
+    async findUnmoderated() {
+        return this.articleService.findUnmoderated();
+    }
+    async getModeratedArticles(status) {
+        return await this.articleService.findByStatus(status);
     }
 };
 exports.ArticleController = ArticleController;
@@ -67,8 +73,9 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)('moderated')),
     __param(2, (0, common_1.Body)('status')),
+    __param(3, (0, common_1.Body)('researchType')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Boolean, String]),
+    __metadata("design:paramtypes", [String, Boolean, String, String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "moderateArticle", null);
 __decorate([
@@ -85,6 +92,19 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "denyArticle", null);
+__decorate([
+    (0, common_1.Get)('/unmoderated'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "findUnmoderated", null);
+__decorate([
+    (0, common_1.Get)('moderated'),
+    __param(0, (0, common_1.Query)('status')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "getModeratedArticles", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('article'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

@@ -9,17 +9,19 @@ export type Article = {
     pages?: number;
     doi?: string;
     moderated?: boolean;
-    status?: 'accepted' | 'denied' | 'unmoderated'; // New field to track moderation status
+    status?: 'accepted' | 'denied' | 'unmoderated';
+    researchType?: string[]; // Add this field to the Article type
 };
 
 export const DefaultEmptyArticle: Article = {
     _id: undefined,
     title: '',
     authors: [], // Initialize as an empty array
-    publisher: '', // Renamed from journalName to match DTO
-    year_of_publication: 2024, // Update field name
-    volume: 0, // Set to null by default
-    number: 0, // Set to null by default
-    pages: 0, // Set to 0 by default
+    publisher: '',
+    year_of_publication: 2024,
+    volume: 0,
+    number: 0,
+    pages: 0,
     doi: '',
+    researchType: [], // Initialize with an empty string or default value
 };
