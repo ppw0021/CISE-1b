@@ -57,4 +57,11 @@ export class ArticleController {
   async getModeratedArticles(@Query('status') status: 'accepted' | 'denied' | 'unmoderated') {
     return await this.articleService.findByStatus(status);
   }
+
+  // PUT request for updating an article
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateArticleDto: CreateArticleDto): Promise<Article> {
+    return this.articleService.update(id, updateArticleDto);
+}
+
 }

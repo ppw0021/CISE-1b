@@ -10,4 +10,5 @@ export declare class ArticleService {
     checkArticleExists(title: string): Promise<boolean>;
     findUnmoderated(): Promise<Article[]>;
     findByStatus(status: 'accepted' | 'denied' | 'unmoderated'): Promise<Article[]>;
+    update(id: string, updateArticleDto: CreateArticleDto): Promise<Article>;
 }

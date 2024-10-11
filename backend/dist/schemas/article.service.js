@@ -52,6 +52,13 @@ let ArticleService = class ArticleService {
     async findByStatus(status) {
         return await this.articleModel.find({ status }).exec();
     }
+    async update(id, updateArticleDto) {
+        const updatedArticle = await this.articleModel.findByIdAndUpdate(id, updateArticleDto, { new: true });
+        if (!updatedArticle) {
+            throw new common_1.NotFoundException('Article not found');
+        }
+        return updatedArticle;
+    }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([

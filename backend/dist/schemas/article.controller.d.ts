@@ -14,4 +14,5 @@ export declare class ArticleController {
     denyArticle(id: string): Promise<Article>;
     findUnmoderated(): Promise<Article[]>;
     getModeratedArticles(status: 'accepted' | 'denied' | 'unmoderated'): Promise<Article[]>;
+    update(id: string, updateArticleDto: CreateArticleDto): Promise<Article>;
 }

@@ -46,6 +46,9 @@ let ArticleController = class ArticleController {
     async getModeratedArticles(status) {
         return await this.articleService.findByStatus(status);
     }
+    async update(id, updateArticleDto) {
+        return this.articleService.update(id, updateArticleDto);
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -105,6 +108,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "getModeratedArticles", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, create_article_dto_1.CreateArticleDto]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "update", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('article'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

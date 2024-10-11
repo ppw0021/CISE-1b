@@ -62,4 +62,15 @@ export class ArticleService {
     // Implement your logic to fetch articles based on status
     return await this.articleModel.find({ status }).exec();
   }
+
+  async update(id: string, updateArticleDto: CreateArticleDto): Promise<Article> {
+    const updatedArticle = await this.articleModel.findByIdAndUpdate(id, updateArticleDto, { new: true });
+    
+    if (!updatedArticle) {
+        throw new NotFoundException('Article not found');
+    }
+    
+    return updatedArticle;
+}
+
 }
