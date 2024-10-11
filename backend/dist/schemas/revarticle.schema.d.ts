@@ -1,6 +1,7 @@
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 export type RevArticleDocument = RevArticle & Document;
 export declare class RevArticle {
+    _id: string;
     title: string;
     year_of_publication: number;
     journal_or_conference: string;
@@ -18,8 +19,8 @@ export declare class RevArticle {
     four_star_reviews: number;
     five_star_reviews: number;
 }
-export declare const RevArticleSchema: import("mongoose").Schema<RevArticle, import("mongoose").Model<RevArticle, any, any, any, Document<unknown, any, RevArticle> & RevArticle & {
-    _id: import("mongoose").Types.ObjectId;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, RevArticle, Document<unknown, {}, import("mongoose").FlatRecord<RevArticle>> & import("mongoose").FlatRecord<RevArticle> & {
-    _id: import("mongoose").Types.ObjectId;
-}>;
+export declare const RevArticleSchema: mongoose.Schema<RevArticle, mongoose.Model<RevArticle, any, any, any, mongoose.Document<unknown, any, RevArticle> & RevArticle & Required<{
+    _id: string;
+}>, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, RevArticle, mongoose.Document<unknown, {}, mongoose.FlatRecord<RevArticle>> & mongoose.FlatRecord<RevArticle> & Required<{
+    _id: string;
+}>>;
