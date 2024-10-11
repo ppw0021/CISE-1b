@@ -7,4 +7,5 @@ export declare class ArticleService {
     findAll(): Promise<Article[]>;
     create(createArticleDto: CreateArticleDto): Promise<Article>;
     updateModerationStatus(id: string, moderated: boolean, status: 'accepted' | 'denied' | 'unmoderated'): Promise<Article>;
+    checkArticleExists(title: string): Promise<boolean>;
 }

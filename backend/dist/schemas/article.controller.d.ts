@@ -4,6 +4,9 @@ import { CreateArticleDto } from './dto/create-article.dto';
 export declare class ArticleController {
     private readonly articleService;
     constructor(articleService: ArticleService);
+    checkArticleExists(title: string): Promise<{
+        exists: boolean;
+    }>;
     findAll(): Promise<Article[]>;
     create(createArticleDto: CreateArticleDto): Promise<Article>;
     moderateArticle(id: string, moderated: boolean, status: 'accepted' | 'denied' | 'unmoderated'): Promise<Article>;

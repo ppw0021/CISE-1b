@@ -35,7 +35,7 @@ const CreateArticleComponent = () => {
         setAdminStatus(false);
         router.push("/");
         window.location.reload();
-      };
+    };
     
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -102,14 +102,34 @@ const CreateArticleComponent = () => {
         return true; // All validations passed
     };
     
-    
-    
+    // New function to check for duplicate articles
+    const checkForDuplicateArticle = async (title: string) => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/article/exists?title=${encodeURIComponent(title)}`);
+            if (!res.ok) {
+                throw new Error('Failed to check for duplicates.');
+            }
+            const exists = await res.json();
+            return exists.exists; // Assume your backend returns { exists: true/false }
+        } catch (error) {
+            console.error('Error checking for duplicates:', error);
+            setErrorMessage('Error checking for duplicates. Please try again.');
+            return false;
+        }
+    };
     
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         if (!validateForm()) return; 
         
+        // Check for duplicate before submitting
+        const isDuplicate = await checkForDuplicateArticle(articleState.title || ""); // Use empty string if title is undefined
+        if (isDuplicate) {
+            setErrorMessage("This article has already been entered into the SPEED database.");
+            return;
+        }
+    
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/article`, {
                 method: 'POST',
@@ -134,60 +154,60 @@ const CreateArticleComponent = () => {
             setErrorMessage('Error submitting article. Please try again.');
         }
     };
-
+    
     return (
         <div className="flex flex-col min-h-screen">
             <header className="shadow-lg">
                 <h1 className="mb-2">SPEED Application</h1>
                 <nav>
-            <Link href="/">
-              <button aria-label="Home" className="mr-2">
-                Home
-              </button>
-            </Link>
-            {!isLoggedIn && (
-              <Link href="/login">
-                <button aria-label="Login" className="mr-2">
-                  Login
-                </button>
-              </Link>
-            )}
-            {isLoggedIn && (
-              <>
-                <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
-                  Logout
-                </button>
-                <Link href="/search">
-                  <button aria-label="Search" className="mr-2">
-                    Search
-                  </button>
-                </Link>
-                <Link href="/moderator">
-                  <button aria-label="Moderator" className="mr-2">
-                    Moderate Article
-                  </button>
-                </Link>
-                <Link href="/browse">
-                  <button aria-label="Browse" className="mr-2">
-                    Browse
-                  </button>
-                </Link>
-                {/* Link to Create Article */}
-                <Link href="/create-article">
-                  <button aria-label="Create Article" className="mr-2">
-                    Create Article
-                  </button>
-                </Link>
-                {isUserAdmin && (
-                  <Link href="/admin">
-                    <button aria-label="Admin Panel" className="mr-2">
-                      Admin Panel
-                    </button>
-                  </Link>
-                )}
-              </>
-            )}
-          </nav>
+                    <Link href="/">
+                      <button aria-label="Home" className="mr-2">
+                        Home
+                      </button>
+                    </Link>
+                    {!isLoggedIn && (
+                      <Link href="/login">
+                        <button aria-label="Login" className="mr-2">
+                          Login
+                        </button>
+                      </Link>
+                    )}
+                    {isLoggedIn && (
+                      <>
+                        <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
+                          Logout
+                        </button>
+                        <Link href="/search">
+                          <button aria-label="Search" className="mr-2">
+                            Search
+                          </button>
+                        </Link>
+                        <Link href="/moderator">
+                          <button aria-label="Moderator" className="mr-2">
+                            Moderate Article
+                          </button>
+                        </Link>
+                        <Link href="/browse">
+                          <button aria-label="Browse" className="mr-2">
+                            Browse
+                          </button>
+                        </Link>
+                        {/* Link to Create Article */}
+                        <Link href="/create-article">
+                          <button aria-label="Create Article" className="mr-2">
+                            Create Article
+                          </button>
+                        </Link>
+                        {isUserAdmin && (
+                          <Link href="/admin">
+                            <button aria-label="Admin Panel" className="mr-2">
+                              Admin Panel
+                            </button>
+                          </Link>
+                        )}
+                      </>
+                    )}
+                </nav>
             </header>
             <main className="flex-grow p-4">
                 <div className="flex items-center justify-center bg-gray-100">
@@ -239,20 +259,20 @@ const CreateArticleComponent = () => {
                                         <label className="font-semibold block mb-1">Year of Publication:</label>
                                         <input
                                             type="number"
-                                            name="year_of_publication" // Use the correct property name here
-                                            value={articleState.year_of_publication || ''}
+                                            name="year_of_publication"
+                                            value={articleState.year_of_publication || ""}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
-                                            placeholder="Enter the year"
+                                            placeholder="Enter the year of publication"
                                         />
                                     </div>
 
                                     <div className="mb-2">
                                         <label className="font-semibold block mb-1">Volume:</label>
                                         <input
-                                            type="text"
+                                            type="number"
                                             name="volume"
-                                            value={articleState.volume?.toString() || ""} // Convert to string for input
+                                            value={articleState.volume || ""}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the volume"
@@ -262,9 +282,9 @@ const CreateArticleComponent = () => {
                                     <div className="mb-2">
                                         <label className="font-semibold block mb-1">Number:</label>
                                         <input
-                                            type="text"
+                                            type="number"
                                             name="number"
-                                            value={articleState.number?.toString() || ""} // Convert to string for input
+                                            value={articleState.number || ""}
                                             onChange={onChange}
                                             className="border p-2 rounded w-full"
                                             placeholder="Enter the number"
@@ -274,7 +294,7 @@ const CreateArticleComponent = () => {
                                     <div className="mb-2">
                                         <label className="font-semibold block mb-1">Pages:</label>
                                         <input
-                                            type="number" // Change to number type for better input handling
+                                            type="number"
                                             name="pages"
                                             value={articleState.pages || ""}
                                             onChange={onChange}
@@ -297,18 +317,21 @@ const CreateArticleComponent = () => {
 
                                     <button
                                         type="submit"
-                                        className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                                     >
-                                        Submit Article
+                                        Submit
                                     </button>
                                 </form>
                             </>
                         ) : (
-                            <p>Access denied.</p>
+                            <p className="text-red-500">You do not have access to create an article.</p>
                         )}
                     </div>
                 </div>
             </main>
+            <footer className="bg-gray-800 text-white p-4 text-center">
+                <p>&copy; 2024 SPEED Application. All rights reserved.</p>
+            </footer>
         </div>
     );
 };

@@ -38,6 +38,10 @@ let ArticleService = class ArticleService {
         console.log(`Updated article: ${JSON.stringify(updatedArticle)}`);
         return updatedArticle;
     }
+    async checkArticleExists(title) {
+        const article = await this.articleModel.findOne({ title }).exec();
+        return !!article;
+    }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([

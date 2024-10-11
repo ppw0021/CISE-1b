@@ -38,4 +38,9 @@ export class ArticleService {
     return updatedArticle;
 }
 
+async checkArticleExists(title: string): Promise<boolean> {
+  const article = await this.articleModel.findOne({ title }).exec();
+  return !!article; // Return true if exists, false otherwise
+}
+
 }

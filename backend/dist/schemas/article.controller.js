@@ -20,6 +20,10 @@ let ArticleController = class ArticleController {
     constructor(articleService) {
         this.articleService = articleService;
     }
+    async checkArticleExists(title) {
+        const exists = await this.articleService.checkArticleExists(title);
+        return { exists };
+    }
     async findAll() {
         return this.articleService.findAll();
     }
@@ -38,6 +42,13 @@ let ArticleController = class ArticleController {
     }
 };
 exports.ArticleController = ArticleController;
+__decorate([
+    (0, common_1.Get)('exists'),
+    __param(0, (0, common_1.Query)('title')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "checkArticleExists", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

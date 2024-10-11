@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Patch, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Param, Body, Query } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { Article } from '../schemas/article.schema';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -6,6 +6,13 @@ import { CreateArticleDto } from './dto/create-article.dto';
 @Controller('article')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
+
+  // New endpoint to check for duplicate articles
+  @Get('exists')
+  async checkArticleExists(@Query('title') title: string) {
+      const exists = await this.articleService.checkArticleExists(title);
+      return { exists };
+  }
 
   @Get()
   async findAll(): Promise<Article[]> {
@@ -39,5 +46,7 @@ export class ArticleController {
       console.log(`Denying article with ID: ${id}`); // This should log the ID you passed
       return this.articleService.updateModerationStatus(id, true, 'denied');
   }
+
+
   
 }
