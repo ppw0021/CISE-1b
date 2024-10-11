@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Article, ArticleDocument } from '../schemas/article.schema';
@@ -17,16 +17,25 @@ export class ArticleService {
     return createdArticle.save();
   }
 
-  // New method to update moderation status
-  async updateModerationStatus(id: string, moderated: boolean, status: 'accepted' | 'denied' | 'unmoderated'): Promise<Article> {
+  async updateModerationStatus(
+    id: string,
+    moderated: boolean,
+    status: 'accepted' | 'denied' | 'unmoderated'
+): Promise<Article> {
+    console.log(`Updating article ${id} with status: ${status}`);
     const updatedArticle = await this.articleModel.findByIdAndUpdate(
-      id,
-      { moderated, status },
-      { new: true }, // Return the updated article
+        id,
+        { moderated, status },
+        { new: true }
     );
+
     if (!updatedArticle) {
-      throw new NotFoundException('Article not found');
+        console.log(`Article ${id} not found`);
+        throw new NotFoundException('Article not found');
     }
+    
+    console.log(`Updated article: ${JSON.stringify(updatedArticle)}`);
     return updatedArticle;
-  }
+}
+
 }

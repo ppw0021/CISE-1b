@@ -29,6 +29,13 @@ let ArticleController = class ArticleController {
     async moderateArticle(id, moderated, status) {
         return this.articleService.updateModerationStatus(id, moderated, status);
     }
+    async acceptArticle(id) {
+        return this.articleService.updateModerationStatus(id, true, 'accepted');
+    }
+    async denyArticle(id) {
+        console.log(`Denying article with ID: ${id}`);
+        return this.articleService.updateModerationStatus(id, true, 'denied');
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -53,6 +60,20 @@ __decorate([
     __metadata("design:paramtypes", [String, Boolean, String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "moderateArticle", null);
+__decorate([
+    (0, common_1.Patch)(':id/accept'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "acceptArticle", null);
+__decorate([
+    (0, common_1.Patch)(':id/deny'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "denyArticle", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('article'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

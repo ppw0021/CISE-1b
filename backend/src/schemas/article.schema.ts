@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type ArticleDocument = Article & Document;
 
-@Schema({ collection: 'articles' })
+@Schema({ collection: 'articles', timestamps: true }) // Added timestamps
 export class Article {
     @Prop({ required: true })
     title: string;
@@ -26,14 +26,14 @@ export class Article {
     @Prop({ required: true })
     pages: number;
 
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true }) // Ensure unique DOI
     doi: string;
 
     // New fields for moderation
     @Prop({ default: false })
     moderated: boolean;
 
-    @Prop({ default: 'unmoderated' })
+    @Prop({ default: 'unmoderated', index: true }) // Added indexing
     status: 'accepted' | 'denied' | 'unmoderated';
 }
 

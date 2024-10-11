@@ -43,7 +43,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Article.prototype, "pages", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Article.prototype, "doi", void 0);
 __decorate([
@@ -51,11 +51,11 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Article.prototype, "moderated", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: 'unmoderated' }),
+    (0, mongoose_1.Prop)({ default: 'unmoderated', index: true }),
     __metadata("design:type", String)
 ], Article.prototype, "status", void 0);
 exports.Article = Article = __decorate([
-    (0, mongoose_1.Schema)({ collection: 'articles' })
+    (0, mongoose_1.Schema)({ collection: 'articles', timestamps: true })
 ], Article);
 exports.ArticleSchema = mongoose_1.SchemaFactory.createForClass(Article);
 //# sourceMappingURL=article.schema.js.map

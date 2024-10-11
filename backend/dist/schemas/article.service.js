@@ -29,10 +29,13 @@ let ArticleService = class ArticleService {
         return createdArticle.save();
     }
     async updateModerationStatus(id, moderated, status) {
+        console.log(`Updating article ${id} with status: ${status}`);
         const updatedArticle = await this.articleModel.findByIdAndUpdate(id, { moderated, status }, { new: true });
         if (!updatedArticle) {
+            console.log(`Article ${id} not found`);
             throw new common_1.NotFoundException('Article not found');
         }
+        console.log(`Updated article: ${JSON.stringify(updatedArticle)}`);
         return updatedArticle;
     }
 };

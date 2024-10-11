@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Param, Body } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { Article } from '../schemas/article.schema';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -27,4 +27,17 @@ export class ArticleController {
   ): Promise<Article> {
     return this.articleService.updateModerationStatus(id, moderated, status);
   }
+
+  // New PATCH route for accepting an article
+  @Patch(':id/accept')
+  async acceptArticle(@Param('id') id: string): Promise<Article> {
+    return this.articleService.updateModerationStatus(id, true, 'accepted');
+  }
+
+  @Patch(':id/deny')
+  async denyArticle(@Param('id') id: string): Promise<Article> {
+      console.log(`Denying article with ID: ${id}`); // This should log the ID you passed
+      return this.articleService.updateModerationStatus(id, true, 'denied');
+  }
+  
 }
