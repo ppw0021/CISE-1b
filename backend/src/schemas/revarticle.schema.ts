@@ -1,10 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export type RevArticleDocument = RevArticle & Document;
 
 @Schema()
 export class RevArticle {
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
+    _id: string; // Change to ObjectId    
+
     @Prop({ required: true })
     title: string;
 

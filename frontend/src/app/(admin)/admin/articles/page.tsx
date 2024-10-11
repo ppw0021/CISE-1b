@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 interface Article {
+    _id: string;
     title: string;
     year_of_publication: number;
     journal_or_conference: string;
@@ -55,24 +56,24 @@ export default function AdminPage() {
         fetchArticles();
     }, []);
 
-    // const handleDelete = async (id: string) => {
-    //     try {
-    //         const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    //         const response = await fetch(apiUrl + `/articles/${id}`, {
-    //             method: 'DELETE',
-    //         });
-    //         if (!response.ok) {
-    //             throw new Error('Failed to delete article');
-    //         }
-    //         setArticles(articles.filter(article => article.id !== id));
-    //     } catch (error) {
-    //         if (error instanceof Error) {
-    //             console.error('Failed to delete article', error.message);
-    //         } else {
-    //             console.error('An unknown error occurred while deleting article');
-    //         }
-    //     }
-    // };
+    const handleDelete = async (_id: string) => {
+        try {
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const response = await fetch(apiUrl + `/revarticle/${_id}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete article');
+            }
+            setArticles(articles.filter(article => article._id !== _id));
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error('Failed to delete article', error.message);
+            } else {
+                console.error('An unknown error occurred while deleting article');
+            }
+        }
+    };
 
     return (
         <div className="flex flex-col items-center justify-center bg-gray-100">
@@ -119,11 +120,12 @@ export default function AdminPage() {
                                                 <td className="border border-gray-300 px-4 py-2">{new Date(article.updated_at).toLocaleDateString()}</td>
                                                 <td className="border border-gray-300 px-4 py-2">
                                                     <button
-                                                        // onClick={() => handleDelete(article.title)}
-                                                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                                        onClick={() => handleDelete(article._id)}
+                                                         className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                                                     >
                                                         Delete
                                                     </button>
+                                                    
                                                 </td>
                                             </tr>
                                         ))}
