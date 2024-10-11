@@ -17,30 +17,31 @@ const AdminPage: React.FC = () => {
     const [allowedAccess, setAccess] = useState<boolean>(false); // Default to false
     const [error, setError] = useState<string | null>(null); // Error state
 
+   
+
+    const fetchUsers = async () => {
+        try {
+            setLoading(true);
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const response = await fetch(apiUrl + '/user/all'); // Use full URL
+            if (!response.ok) {
+                throw new Error('Failed to fetch users');
+            }
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unknown error occurred');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
     useEffect(() => {
         const isAdmin = localStorage.getItem("is_admin"); // Check admin status
         setAccess(isAdmin === "true"); // Set access based on local storage
-
-        const fetchUsers = async () => {
-            if (isAdmin === "true") { // Fetch users only if admin
-                try {
-                    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-                    const response = await fetch(apiUrl + '/user/all'); // Use full URL
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch users');
-                    }
-                    const data = await response.json();
-                    setUsers(data);
-                } catch (error) {
-                    if (error instanceof Error) {
-                        setError(error.message); // Set error message if fetch fails
-                    } else {
-                        setError('An unknown error occurred');
-                    }
-                }
-            setLoading(false); // Set loading to false once done
-        }
-    };
 
         fetchUsers(); // Call fetch function
     }, []);
@@ -64,6 +65,34 @@ const AdminPage: React.FC = () => {
         }
     }
 
+
+    const toggleRole = async (authToken: string, role: string, currentStatus: boolean) => {
+    try {
+        console.log(`Toggling ${role} role for user with authToken ${authToken}`);
+        const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(apiUrl + `/user/toggleRole`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ authToken, role, status: !currentStatus }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update role');
+        }
+
+        const updatedUser = await response.json();
+        setUsers(users.map(user => user.authToken === authToken ? updatedUser : user));
+        fetchUsers();
+    } catch (error) {
+        if (error instanceof Error) {
+            setError(error.message);
+        } else {
+            setError('An unknown error occurred');
+        }
+    }
+};
 
     return (
         <div className="flex items-center justify-center bg-gray-100">
@@ -91,20 +120,32 @@ const AdminPage: React.FC = () => {
                                         {users.map(user => (
                                             <tr key={user.authToken} className="bg-gray-50">
                                                 <td className="py-2 px-4 border-b">{user.email}</td>
-                                                <td className="py-2 px-4 border-b">{user.isAdmin ? 'Yes' : 'No'}</td>
-                                                <td className="py-2 px-4 border-b">{user.isMod ? 'Yes' : 'No'}</td>
-                                                <td className="py-2 px-4 border-b">{user.isAnalyst ? 'Yes' : 'No'}</td>
+                                                <td className="py-2 px-4 border-b">
+                                                    <button onClick={() => toggleRole(user.authToken, 'admin', user.isAdmin)}>
+                                                        {user.isAdmin ? 'Yes' : 'No'}
+                                                    </button>
+                                                </td>
+                                                <td className="py-2 px-4 border-b">
+                                                    <button onClick={() => toggleRole(user.authToken, 'mod', user.isMod)}>
+                                                        {user.isMod ? 'Yes' : 'No'}
+                                                    </button>
+                                                </td>
+                                                <td className="py-2 px-4 border-b">
+                                                    <button onClick={() => toggleRole(user.authToken, 'analyst', user.isAnalyst)}>
+                                                        {user.isAnalyst ? 'Yes' : 'No'}
+                                                    </button>
+                                                </td>
                                                 <td className="py-2 px-4 border-b">{user.authToken}</td>
                                                 <button
-                                                         onClick={() => {
-                                                            if (window.confirm('Are you sure you want to delete this user?')) {
-                                                                handleDelete(user.authToken);
-                                                            }
-                                                        }}
-                                                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                                                    >
-                                                        Delete
-                                                    </button>
+                                                    onClick={() => {
+                                                        if (window.confirm('Are you sure you want to delete this user?')) {
+                                                            handleDelete(user.authToken);
+                                                        }
+                                                    }}
+                                                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                                >
+                                                    Delete
+                                                </button>
                                             </tr>
                                         ))}
                                     </tbody>

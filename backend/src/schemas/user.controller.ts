@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, Body, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, Put, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../schemas/user.schema';
 import * as crypto from 'crypto';
@@ -88,5 +88,26 @@ export class UserController {
       console.log(`Deleted user with authToken ${authToken}`);
     }
     return { success: deleted };
+  }
+  
+  //Toggle role function for any of admin, mod, or analyst
+  @Put('toggleRole')
+  async toggleUserRole(@Body() body: { authToken: string, role: string, status: boolean }): Promise<{ success: boolean }> {
+    const { authToken, role, status } = body;
+
+    // Find user by authToken
+    const user = await this.userService.findUserByAuthToken(authToken);
+    if (!user) {
+      return { success: false };
+    }
+
+    // Update the user's role
+    const updatedUser = await this.userService.toggleUserRole(authToken, role, status);
+    if (updatedUser) {
+      console.log(`Toggled ${role} role for user with authToken ${authToken}`);
+      return { success: true };
+    }
+
+    return { success: false };
   }
 }

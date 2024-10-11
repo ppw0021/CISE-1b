@@ -86,6 +86,19 @@ let UserController = class UserController {
         }
         return { success: deleted };
     }
+    async toggleUserRole(body) {
+        const { authToken, role, status } = body;
+        const user = await this.userService.findUserByAuthToken(authToken);
+        if (!user) {
+            return { success: false };
+        }
+        const updatedUser = await this.userService.toggleUserRole(authToken, role, status);
+        if (updatedUser) {
+            console.log(`Toggled ${role} role for user with authToken ${authToken}`);
+            return { success: true };
+        }
+        return { success: false };
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -122,6 +135,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUserByToken", null);
+__decorate([
+    (0, common_1.Put)('toggleRole'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "toggleUserRole", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

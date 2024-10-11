@@ -89,6 +89,28 @@ let UserService = class UserService {
         const deleted = await this.userModel.findOne({ authToken }).deleteOne().exec();
         return !!deleted;
     }
+    async findUserByAuthToken(authToken) {
+        return this.userModel.findOne({ authToken }).exec();
+    }
+    async toggleUserRole(authToken, role, status) {
+        const roleMap = {
+            admin: 'isAdmin',
+            mod: 'isMod',
+            analyst: 'isAnalyst',
+        };
+        const roleField = roleMap[role];
+        if (!roleField) {
+            throw new Error(`Invalid role: ${role}`);
+        }
+        const update = { [roleField]: status };
+        console.log(`Toggling ${roleField} role for user to ${status} with authToken ${authToken}`);
+        const updatedUser = await this.userModel.findOneAndUpdate({ authToken }, { $set: update }, { new: true }).exec();
+        if (!updatedUser) {
+            throw new Error('Failed to update user role');
+        }
+        console.log('Updated user:', updatedUser);
+        return updatedUser;
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

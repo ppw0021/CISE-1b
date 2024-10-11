@@ -31,4 +31,11 @@ export declare class UserController {
     deleteUserByToken(authToken: string): Promise<{
         success: boolean;
     }>;
+    toggleUserRole(body: {
+        authToken: string;
+        role: string;
+        status: boolean;
+    }): Promise<{
+        success: boolean;
+    }>;
 }
