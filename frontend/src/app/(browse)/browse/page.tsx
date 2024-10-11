@@ -1,7 +1,6 @@
 "use client"
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface Article {
     title: string;
@@ -29,7 +28,6 @@ export default function BrowsePage() {
     const [error, setError] = useState<string | null>(null);
     const [hoverRatings, setHoverRatings] = useState<{ [key: string]: number }>({});
     const [rated, setRated] = useState<{ [key: string]: boolean }>({});
-    const router = useRouter();
 
     const handleMouseEnter = (title: string, num: number) => {
         if (rated[title]) {
@@ -82,17 +80,17 @@ export default function BrowsePage() {
     }
 
     const averageRating = (dataIncoming: Article) => {
-        let total = (dataIncoming.one_star_reviews * 1)
+        const total = (dataIncoming.one_star_reviews * 1)
             + (dataIncoming.two_star_reviews * 2)
             + (dataIncoming.three_star_reviews * 3)
             + (dataIncoming.four_star_reviews * 4)
             + (dataIncoming.five_star_reviews * 5);
-        let totalCount = (dataIncoming.one_star_reviews)
+        const totalCount = (dataIncoming.one_star_reviews)
             + (dataIncoming.two_star_reviews)
             + (dataIncoming.three_star_reviews)
             + (dataIncoming.four_star_reviews)
             + (dataIncoming.five_star_reviews);
-        let average = total / totalCount;
+        const average = total / totalCount;
         if (Number.isNaN(average)) {
             return "No reviews";
         }
