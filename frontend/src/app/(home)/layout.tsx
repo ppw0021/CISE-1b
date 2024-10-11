@@ -14,8 +14,8 @@ export default function RootLayout({
   const router = useRouter();
 
   const logOutClicked = () => {
-    
-    
+
+
     //Old method using local storage
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
@@ -88,6 +88,15 @@ export default function RootLayout({
                     Admin panel
                   </button>
                 </Link>
+
+              )}
+              {(isLoggedIn) && (
+                <Link href="/request">
+                  <button aria-label="req" className="mr-2">
+                    Request Roles
+                  </button>
+                </Link>
+
               )}
             </>
           </nav>
