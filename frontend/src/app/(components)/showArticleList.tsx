@@ -23,15 +23,15 @@ const ShowArticleList: React.FC<Props> = ({ articles, moderationMode = false, on
           <table className='table table-bordered table-striped'>
             <thead>
               <tr className="bg-light">
-                <th>Title</th>
-                <th>Authors</th>
-                <th>Publisher</th>
-                <th>Year of Publication</th>
-                <th>Volume</th>
-                <th>Number</th>
-                <th>Pages</th>
-                <th>DOI</th>
-                {moderationMode && <th>Actions</th>}
+                <th className="table-header">Title</th>
+                <th className="table-header">Authors</th>
+                <th className="table-header">Publisher</th>
+                <th className="table-header">Year of Publication</th>
+                <th className="table-header">Volume</th>
+                <th className="table-header">Number</th>
+                <th className="table-header">Pages</th>
+                <th className="table-header">DOI</th>
+                {moderationMode && <th className="table-header">Actions</th>}
               </tr>
             </thead>
             <tbody>

@@ -58,35 +58,43 @@ export default function RootLayout({
                 <button aria-label="Login" className="mr-2">
                   Login
                 </button>
-              </Link>)}
-            <>
-              {isLoggedIn && (
-                < button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
+              </Link>
+            )}
+            {isLoggedIn && (
+              <>
+                <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
                   Logout
                 </button>
-              )}
-              {isLoggedIn && (
-                <Link href="/browse">
+                <Link href="/search">
                   <button aria-label="Search" className="mr-2">
+                    Search
+                  </button>
+                </Link>
+                <Link href="/moderator">
+                  <button aria-label="Moderator" className="mr-2">
+                    Moderate Article
+                  </button>
+                </Link>
+                <Link href="/browse">
+                  <button aria-label="Browse" className="mr-2">
                     Browse
                   </button>
                 </Link>
-              )}
-              {isLoggedIn && (
-                <Link href="/submit">
-                  <button aria-label="Submit" className="mr-2">
-                    Submit Article
+                {/* Link to Create Article */}
+                <Link href="/create-article">
+                  <button aria-label="Create Article" className="mr-2">
+                    Create Article
                   </button>
                 </Link>
-              )}
-              {(isLoggedIn && isUserAdmin) && (
-                <Link href="/admin">
-                  <button aria-label="Admin Panel" className="mr-2">
-                    Admin panel
-                  </button>
-                </Link>
-              )}
-            </>
+                {isUserAdmin && (
+                  <Link href="/admin">
+                    <button aria-label="Admin Panel" className="mr-2">
+                      Admin Panel
+                    </button>
+                  </Link>
+                )}
+              </>
+            )}
           </nav>
         </header>
         <main className="flex-grow p-4">{children}</main>

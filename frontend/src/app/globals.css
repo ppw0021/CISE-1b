@@ -70,7 +70,6 @@ footer {
   }
 }
 
-/* Ensure this CSS file is imported in your global styles or ShowArticleList component */
 .table-bordered td, 
 .table-bordered th {
   border: 2px solid #000; /* Thick black border for clear separation */
@@ -82,7 +81,11 @@ footer {
 
 .table td, 
 .table th {
-  padding: 8px; /* Adds padding for better readability */
+  padding: 16px; /* Adds padding for better readability */
+}
+
+.table-header {
+  width: 15vw; /* Set this to your desired width */
 }
 
 .table-striped tbody tr:nth-of-type(odd) {

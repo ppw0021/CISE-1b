@@ -65,12 +65,18 @@ export default function ModeratorLayout({
                 </Link>
                 <Link href="/moderator">
                   <button aria-label="Moderator" className="mr-2">
-                    Moderate Articles
+                    Moderate Article
                   </button>
                 </Link>
                 <Link href="/browse">
                   <button aria-label="Browse" className="mr-2">
                     Browse
+                  </button>
+                </Link>
+                {/* Link to Create Article */}
+                <Link href="/create-article">
+                  <button aria-label="Create Article" className="mr-2">
+                    Create Article
                   </button>
                 </Link>
                 {isUserAdmin && (
