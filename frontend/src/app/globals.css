@@ -69,3 +69,25 @@ footer {
     text-wrap: balance;
   }
 }
+
+.table-bordered td, 
+.table-bordered th {
+  border: 2px solid #000; /* Thick black border for clear separation */
+}
+
+.table {
+  border-collapse: collapse; /* Ensures borders don't overlap */
+}
+
+.table td, 
+.table th {
+  padding: 16px; /* Adds padding for better readability */
+}
+
+.table-header {
+  width: 15vw; /* Set this to your desired width */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9; /* Alternating row color */
+}

@@ -31,17 +31,10 @@ export default function RootLayout({
     if (token === null) {
       setLoggedInStatus(false);
       setAdminStatus(false);
-    }
-    else {
+    } else {
       setLoggedInStatus(true);
-      if (isAdmin == "true") {
-        setAdminStatus(true);
-      } else {
-        setAdminStatus(false)
-      }
-      //Load page here
+      setAdminStatus(isAdmin === "true");
     }
-
   }, []);
 
   return (
@@ -61,34 +54,45 @@ export default function RootLayout({
                 <button aria-label="Login" className="mr-2">
                   Login
                 </button>
-              </Link>)}
-            <>
-              {isLoggedIn && (
+              </Link>
+            )}
+            {isLoggedIn && (
+              <>
                 <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
                   Logout
                 </button>
-              )}
-              {isLoggedIn && (
                 <Link href="/search">
                   <button aria-label="Search" className="mr-2">
                     Search
                   </button>
                 </Link>
-              )}
-              {isLoggedIn && (
+                <Link href="/moderator">
+                  <button aria-label="Moderator" className="mr-2">
+                    Moderate Article
+                  </button>
+                </Link>
+                <Link href="/analysis">
+                  <button aria-label="Analysis" className="mr-2">
+                    Analysis
+                  </button>
+                </Link>  
                 <Link href="/browse">
-                  <button aria-label="Search" className="mr-2">
+                  <button aria-label="Browse" className="mr-2">
                     Browse
                   </button>
                 </Link>
-              )}
-              {(isLoggedIn && isUserAdmin) && (
-                <Link href="/admin">
-                  <button aria-label="Admin Panel" className="mr-2">
-                    Admin panel
+                <Link href="/create-article">
+                  <button aria-label="Create Article" className="mr-2">
+                    Create Article
                   </button>
                 </Link>
-
+                {isUserAdmin && (
+                  <Link href="/admin">
+                    <button aria-label="Admin Panel" className="mr-2">
+                      Admin Panel
+                    </button>
+                  </Link>
+  
               )}
               {(isLoggedIn) && (
                 <Link href="/request">
@@ -98,7 +102,8 @@ export default function RootLayout({
                 </Link>
 
               )}
-            </>
+              </>
+            )}
           </nav>
         </header>
         <main className="flex-grow p-4">{children}</main>
@@ -106,6 +111,6 @@ export default function RootLayout({
           <p>Group Number 7: Adam, Declan, and Joel.</p>
         </footer>
       </body>
-    </html >
+    </html>
   );
 }

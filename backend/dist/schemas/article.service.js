@@ -24,6 +24,41 @@ let ArticleService = class ArticleService {
     async findAll() {
         return this.articleModel.find().exec();
     }
+    async create(createArticleDto) {
+        const createdArticle = new this.articleModel(createArticleDto);
+        return createdArticle.save();
+    }
+    async updateModerationStatus(id, moderated, status, researchType) {
+        console.log(`Updating article ${id} with status: ${status}`);
+        const updateData = { moderated, status };
+        if (researchType) {
+            updateData.researchType = researchType;
+        }
+        const updatedArticle = await this.articleModel.findByIdAndUpdate(id, updateData, { new: true });
+        if (!updatedArticle) {
+            console.log(`Article ${id} not found`);
+            throw new common_1.NotFoundException('Article not found');
+        }
+        console.log(`Updated article: ${JSON.stringify(updatedArticle)}`);
+        return updatedArticle;
+    }
+    async checkArticleExists(title) {
+        const article = await this.articleModel.findOne({ title }).exec();
+        return !!article;
+    }
+    async findUnmoderated() {
+        return this.articleModel.find({ moderated: false }).exec();
+    }
+    async findByStatus(status) {
+        return await this.articleModel.find({ status }).exec();
+    }
+    async update(id, updateArticleDto) {
+        const updatedArticle = await this.articleModel.findByIdAndUpdate(id, updateArticleDto, { new: true });
+        if (!updatedArticle) {
+            throw new common_1.NotFoundException('Article not found');
+        }
+        return updatedArticle;
+    }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([

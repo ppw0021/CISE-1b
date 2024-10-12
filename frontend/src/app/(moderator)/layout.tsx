@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from 'react';
-import "../globals.css";
+import "../globals.css"; // Ensure this path is correct for your project
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function RootLayout({
+export default function ModeratorLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(false);
+  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
   const router = useRouter();
 
@@ -28,25 +28,18 @@ export default function RootLayout({
     if (token === null) {
       setLoggedInStatus(false);
       setAdminStatus(false);
-    }
-    else {
+    } else {
       setLoggedInStatus(true);
-      if (isAdmin == "true") {
-        setAdminStatus(true);
-      } else {
-        setAdminStatus(false)
-      }
-
+      setAdminStatus(isAdmin === "true");
     }
-
   }, []);
 
   return (
     <html lang="en">
-      <title>Group 7</title>
+      <title>Moderator Page</title>
       <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
-          <h1 className="mb-2">SPEED Application</h1>
+          <h1 className="mb-2">Moderator Portal</h1>
           <nav>
             <Link href="/">
               <button aria-label="Home" className="mr-2">
@@ -102,6 +95,6 @@ export default function RootLayout({
           <p>Group Number 7: Adam, Declan, and Joel.</p>
         </footer>
       </body>
-    </html >
+    </html>
   );
 }
