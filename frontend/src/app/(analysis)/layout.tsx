@@ -70,28 +70,6 @@ export default function AnalysisLayout({
                     Moderate Article
                   </button>
                 </Link>
-                <Link href="/analysis">
-                  <button aria-label="Analysis" className="mr-2">
-                    Analysis
-                  </button>
-                </Link>  
-                <Link href="/browse">
-                  <button aria-label="Browse" className="mr-2">
-                    Browse
-                  </button>
-                </Link>
-                <Link href="/create-article">
-                  <button aria-label="Create Article" className="mr-2">
-                    Create Article
-                  </button>
-                </Link>
-                {isUserAdmin && (
-                  <Link href="/admin">
-                    <button aria-label="Admin Panel" className="mr-2">
-                      Admin Panel
-                    </button>
-                  </Link>
-                )}
               </>
             )}
           </nav>
