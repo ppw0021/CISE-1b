@@ -28,6 +28,11 @@ export default function AdminPage() {
                 Reviewed Articles
               </button>
             </Link>
+            <Link href="/admin/rolereq">
+              <button className="w-48 mb-1">
+                Role Requests
+              </button>
+            </Link>
             <Link href="/">
               <button className="w-48">
                 Return
