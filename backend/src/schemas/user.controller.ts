@@ -2,6 +2,7 @@ import { Controller, Get, Post, Query, Body, Put, Param, Delete } from '@nestjs/
 import { UserService } from './user.service';
 import { User } from '../schemas/user.schema';
 import * as crypto from 'crypto';
+import { HttpService } from '@nestjs/axios';
 //import { NotificationController } from './notification.controller';
 
 @Controller('user')
