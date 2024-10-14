@@ -76,6 +76,7 @@ export default function SubmitterPage() {
                 setErrorMessage(data.message || "An error occurred while submitting the article.");
             }
         } catch (error) {
+            console.log(error);
             setErrorMessage("Failed to submit the article. Please try again.");
         }
     };
