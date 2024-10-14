@@ -79,6 +79,7 @@ export default function LoginPage() {
                 localStorage.setItem("is_admin", data.isAdmin);
                 localStorage.setItem("is_mod", data.isMod);
                 localStorage.setItem("is_analyst", data.isAnalyst);
+                localStorage.setItem("email", emailEntry);
                 router.push('/');
                 
 

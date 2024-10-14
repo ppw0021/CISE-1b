@@ -34,6 +34,16 @@ export class UserService {
 
   }
 
+  async getEmailFromAuthToken(auth_token: string) {
+    const user = await this.userModel.findOne({ auth_token }).exec();
+    if (user === null) {
+      return '';
+    }
+    else {
+      return user.email;
+    }
+  }
+
   async checkMod(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email }).exec();
     if (user.isMod === null) {

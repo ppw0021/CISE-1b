@@ -18,6 +18,14 @@ export class UserController {
     return { exists };
   }
 
+  @Post('emailfromtoken')
+  async getEmailFromToken(@Body() body: { auth_token: string }): Promise<{ response: string }> {
+    const { auth_token } = body;
+    const response = await this.userService.getEmailFromAuthToken(auth_token);
+    return { response };
+  }
+  
+
   generateToken(): string {
     return crypto.randomBytes(16).toString('hex'); // Generate a simple random token
   }
@@ -89,7 +97,7 @@ export class UserController {
     }
     return { success: deleted };
   }
-  
+
   //Toggle role function for any of admin, mod, or analyst
   @Put('toggleRole')
   async toggleUserRole(@Body() body: { authToken: string, role: string, status: boolean }): Promise<{ success: boolean }> {

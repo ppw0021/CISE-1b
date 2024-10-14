@@ -15,8 +15,6 @@ export default function RootLayout({
   const router = useRouter();
 
   const logOutClicked = () => {
-
-
     //Old method using local storage
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
@@ -36,7 +34,41 @@ export default function RootLayout({
       setLoggedInStatus(true);
       setAdminStatus(isAdmin === "true");
     }
+    getNotifications();
   }, []);
+
+  const getNotifications = async () => {
+    if (!isLoggedIn)
+    {
+      return 0;
+    }
+    try {
+      const emailToSend = localStorage.getItem('email');
+      //console.log(emailToSend);
+      const payload = {
+        email: emailToSend,
+      }
+      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      const response = await fetch(apiUrl + `/notification/filterbyemail`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user existence");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setNotificationCount(data.length);
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <html lang="en">
@@ -53,9 +85,6 @@ export default function RootLayout({
               </Link>
               {isLoggedIn && (
                 <>
-                  <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
-                    Logout
-                  </button>
                   <Link href="/search">
                     <button aria-label="Search" className="mr-2">
                       Search
@@ -111,11 +140,13 @@ export default function RootLayout({
                 <>
                   <Link href="/notifications">
                     <button type="button" className="mr-2 relative">
-                      Notifications
+                      Inbox
                       <span className="sr-only">Notifications</span>
+                      {(notificationCount > 0) && (
                       <div className="absolute inline-flex items-center justify-center w-6 h-6 text-s font-bold bg-red-500 rounded-full -top-2 -end-2">
                         {notificationCount}
-                        </div>
+                      </div>
+                      )}
                     </button>
 
                   </Link>

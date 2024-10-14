@@ -43,6 +43,15 @@ let UserService = class UserService {
             return user.isAdmin;
         }
     }
+    async getEmailFromAuthToken(auth_token) {
+        const user = await this.userModel.findOne({ auth_token }).exec();
+        if (user === null) {
+            return '';
+        }
+        else {
+            return user.email;
+        }
+    }
     async checkMod(email) {
         const user = await this.userModel.findOne({ email }).exec();
         if (user.isMod === null) {

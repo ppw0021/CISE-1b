@@ -27,6 +27,11 @@ let UserController = class UserController {
         const exists = await this.userService.emailExists(email);
         return { exists };
     }
+    async getEmailFromToken(body) {
+        const { auth_token } = body;
+        const response = await this.userService.getEmailFromAuthToken(auth_token);
+        return { response };
+    }
     generateToken() {
         return crypto.randomBytes(16).toString('hex');
     }
@@ -114,6 +119,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "emailExists", null);
+__decorate([
+    (0, common_1.Post)('emailfromtoken'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getEmailFromToken", null);
 __decorate([
     (0, common_1.Post)('validate'),
     __param(0, (0, common_1.Body)()),

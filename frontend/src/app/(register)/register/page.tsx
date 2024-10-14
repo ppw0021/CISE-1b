@@ -89,6 +89,7 @@ export default function RegisterPage() {
                 localStorage.setItem("is_admin", "false");
                 localStorage.setItem("is_mod", "false");
                 localStorage.setItem("is_analyst", "false");
+                localStorage.setItem("email", emailEntry);
                 router.push('/');
 
 

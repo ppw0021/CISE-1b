@@ -1,4 +1,4 @@
-import { Controller, Get, Body } from '@nestjs/common';
+import { Controller, Get, Body, Post } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { Notification } from '../schemas/notification.schema';
 
@@ -11,7 +11,7 @@ export class NotificationController {
     return this.notificationService.getAllNotifications();
   }
 
-  @Get('filterbyemail')
+  @Post('filterbyemail')
   async getSomeNotifications(@Body() body: { email: string }) {
     const { email } = body;
     return this.notificationService.getFilteredNotifications(email);
