@@ -27,6 +27,10 @@ let NotificationService = class NotificationService {
     async getFilteredNotifications(email) {
         return this.notificationModel.find({ recipient: email }).exec();
     }
+    static async createNotification(email, note) {
+        console.log(`Request made for ${email} with note ${note}`);
+        return false;
+    }
 };
 exports.NotificationService = NotificationService;
 exports.NotificationService = NotificationService = __decorate([

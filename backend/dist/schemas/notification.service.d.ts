@@ -5,4 +5,5 @@ export declare class NotificationService {
     constructor(notificationModel: Model<NotificationDocument>);
     getAllNotifications(): Promise<Notification[]>;
     getFilteredNotifications(email: string): Promise<Notification[]>;
+    static createNotification(email: string, note: string): Promise<boolean>;
 }

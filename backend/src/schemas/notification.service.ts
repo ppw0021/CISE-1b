@@ -15,4 +15,12 @@ export class NotificationService {
     return this.notificationModel.find({ recipient: email }).exec();
   }
 
+  async createNotification(email: string, note: string): Promise<Notification> {
+    const newNotification = new this.notificationModel({
+      recipient: email,
+      note: note,
+      createdAt: new Date(),
+    });
+    return newNotification.save();
+  }
 }

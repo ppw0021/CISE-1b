@@ -16,4 +16,10 @@ export class NotificationController {
     const { email } = body;
     return this.notificationService.getFilteredNotifications(email);
   }
+
+  @Post('makenotification')
+  async makeNotification(@Body() body: { email: string, note: string }) {
+    const { email, note } = body;
+    return this.notificationService.createNotification(email, note);
+  }
 }
