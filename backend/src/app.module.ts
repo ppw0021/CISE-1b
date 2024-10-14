@@ -6,12 +6,13 @@ import { ConfigModule } from '@nestjs/config';
 import { ArticleModule } from './schemas/article.module'; // Adjust the path as needed
 import { UserModule } from './schemas/user.module';
 import { RevArticleModule } from './schemas/revarticle.module';
+import { MessageModule } from './schemas/message.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(), 
     MongooseModule.forRoot(process.env.DB_URI), // Ensure your DB_URI is set in your environment variables
-    ArticleModule, UserModule, RevArticleModule
+    ArticleModule, UserModule, RevArticleModule, MessageModule
   ],
   controllers: [AppController],
   providers: [AppService],

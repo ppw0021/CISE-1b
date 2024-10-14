@@ -21,15 +21,14 @@ export default function MessageSubmissionPage() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-      const response = await fetch(`${apiUrl}/submitMessage`, {
+      const response = await fetch(`${apiUrl}/messages/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${storedAuthToken}`,
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({storedAuthToken,message }),
       });
-
       if (!response.ok) {
         throw new Error('Failed to submit message');
       }
