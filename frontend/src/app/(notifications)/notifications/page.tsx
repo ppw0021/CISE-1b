@@ -7,8 +7,6 @@ interface Notification {
   note: string;
 }
 
-
-
 export default function Home() {
   const [storedAuthToken, setStoredAuthToken] = useState<string | null>(null);
   const [isUserAdmin, setAdminStatus] = useState<string | null>(null);
@@ -62,14 +60,17 @@ export default function Home() {
     <div className="flex items-center justify-center">
       <div className="bg-white shadow-2xl rounded-lg p-6 w-80 text-center">
         <h1 className="text-lg font-bold">Notification Page</h1>
-        <tbody>
-          {notifications.map(notif => (
-            <tr key={notif.email} className="bg-gray-50">
-              <td className="border border-gray-300 px-4 py-2">{notif.note}</td>
-            </tr>
-          ))}
-        </tbody>
+        <table className="w-full">
+          <tbody>
+            {notifications.map(notif => (
+              <tr key={notif.email} className="bg-gray-50">
+                <td className="border border-gray-300 px-4 py-4">{notif.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
+
 }
