@@ -9,6 +9,7 @@ export type Article = {
     pages?: number;
     doi?: string;
     moderated?: boolean;
+    journalName?: string;
     status?: 'accepted' | 'denied' | 'unmoderated';
     researchType?: string[]; // Add this field to the Article type
 };
@@ -24,6 +25,7 @@ export const DefaultEmptyArticle: Article = {
     pages: 0,
     doi: '',
     moderated: false,
+    journalName: '',
     status: 'unmoderated',
     researchType: [], // Initialize as an empty array
 };

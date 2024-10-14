@@ -25,9 +25,10 @@ function UpdateArticleInfo() {
         setArticle({ ...Article, [event.target.name]: event.target.value });
     };
 
-    const textAreaOnChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    //Never used
+    /*const textAreaOnChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setArticle({ ...Article, [event.target.name]: event.target.value });
-    };
+    };*/
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,6 +39,7 @@ function UpdateArticleInfo() {
         })
             .then((res) => {
                 router.push(`/show-article/${id}`);
+                console.log(res);
             })
             .catch((err) => {
                 console.log('Error from UpdateArticleInfo: ' + err);
@@ -56,7 +58,7 @@ function UpdateArticleInfo() {
                     </div>
                     <div className='col-md-8 m-auto'>
                         <h1 className='display-4 text-center'>Edit Article</h1>
-                        <p className='lead text-center'>Update Article's Info</p>
+                        <p className='lead text-center'>Update Article&apos;s Info</p>
                     </div>
                 </div>
                 <div className='col-md-8 m-auto'>
@@ -98,13 +100,13 @@ function UpdateArticleInfo() {
                         </div>
                         <br />
                         <div className='form-group'>
-                            <label htmlFor='year'>Year</label>
+                            <label htmlFor='year_of_publication'>Year</label>
                             <input
                                 type='number'
-                                placeholder='Year'
-                                name='year'
+                                placeholder='year_of_publication'
+                                name='year_of_publication'
                                 className='form-control'
-                                value={Article.year?.toString() || ''}
+                                value={Article.year_of_publication?.toString() || ''}
                                 onChange={inputOnChange}
                             />
                         </div>

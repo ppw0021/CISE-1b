@@ -12,7 +12,6 @@ const CreateArticleComponent = () => {
     }); 
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
-    const [allowedAccess, setAllowedAccess] = useState(true); 
     const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
     const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
 
@@ -210,7 +209,7 @@ const CreateArticleComponent = () => {
                 <div className="flex items-center justify-center bg-gray-100">
                     <div className="p-6 bg-white shadow-lg rounded-lg w-full max-w-xl">
                         <h2 className="text-2xl font-bold mb-4">Submit Article</h2>
-                        {allowedAccess ? (
+                        {true ? (
                             <>
                                 {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
                                 {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}

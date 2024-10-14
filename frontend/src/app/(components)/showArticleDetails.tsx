@@ -25,6 +25,7 @@ function ShowArticleDetails() {
     const onDeleteClick = (id: string) => {
         fetch(`http://localhost:8082/api/Articles/${id}`, { method: 'DELETE' })
             .then((res) => {
+                console.log(res);
                 navigate.push('/');
             })
             .catch((err) => {
@@ -93,8 +94,8 @@ function ShowArticleDetails() {
                     </div>
                     <br />
                     <div className='col-md-8 m-auto'>
-                        <h1 className='display-4 text-center'>Article's Record</h1>
-                        <p className='lead text-center'>View Article's Info</p>
+                        <h1 className='display-4 text-center'>Article&apos;s Record</h1>
+                        <p className='lead text-center'>View Article&apos;s Info</p>
                         <hr /> <br />
                     </div>
                     <div className='col-md-10 m-auto'>{ArticleItem}</div>

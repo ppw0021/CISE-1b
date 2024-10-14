@@ -31,6 +31,7 @@ export default function AnalysisLayout({
     } else {
       setLoggedInStatus(true);
       setAdminStatus(isAdmin === "true");
+      console.log(isUserAdmin);
     }
   }, []);
 
