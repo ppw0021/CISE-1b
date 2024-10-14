@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 
 export default function MessageSubmissionPage() {
   const [message, setMessage] = useState<string>('');
-  const storedEmail = localStorage.getItem('email');
   const [responseMessage, setResponseMessage] = useState<string>('');
   const [storedAuthToken, setStoredAuthToken] = useState<string | null>(null);
 

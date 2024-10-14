@@ -33,7 +33,7 @@ export default function AnalysisLayout({
       setAdminStatus(isAdmin === "true");
       console.log(isUserAdmin);
     }
-  }, []);
+  }, [isUserAdmin]);
 
   return (
     <html lang="en">

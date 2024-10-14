@@ -63,7 +63,7 @@ const SearchResults = () => {
         };
 
         fetchArticles();
-    }, []);
+    }, [fromYearToFilter, methodToFilter, toYearToFilter]); // Add missing dependencies
 
     const filteredArticles = articles.filter(article => {
         const articleYear = article.year_of_publication; // Replace this with the actual property name for the year
