@@ -15,6 +15,7 @@ const config_1 = require("@nestjs/config");
 const article_module_1 = require("./schemas/article.module");
 const user_module_1 = require("./schemas/user.module");
 const revarticle_module_1 = require("./schemas/revarticle.module");
+const notification_module_1 = require("./schemas/notification.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -23,7 +24,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot(),
             mongoose_1.MongooseModule.forRoot(process.env.DB_URI),
-            article_module_1.ArticleModule, user_module_1.UserModule, revarticle_module_1.RevArticleModule
+            article_module_1.ArticleModule, user_module_1.UserModule, revarticle_module_1.RevArticleModule, notification_module_1.NotificationModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

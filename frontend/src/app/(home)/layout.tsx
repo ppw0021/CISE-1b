@@ -11,6 +11,7 @@ export default function RootLayout({
 }>) {
   const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
+  const [notificationCount, setNotificationCount] = useState<number>(0);
   const router = useRouter();
 
   const logOutClicked = () => {
@@ -113,7 +114,7 @@ export default function RootLayout({
                       Notifications
                       <span className="sr-only">Notifications</span>
                       <div className="absolute inline-flex items-center justify-center w-6 h-6 text-s font-bold bg-red-500 rounded-full -top-2 -end-2">
-                        99
+                        {notificationCount}
                         </div>
                     </button>
 
