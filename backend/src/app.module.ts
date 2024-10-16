@@ -7,12 +7,13 @@ import { ArticleModule } from './schemas/article.module'; // Adjust the path as 
 import { UserModule } from './schemas/user.module';
 import { RevArticleModule } from './schemas/revarticle.module';
 import { NotificationModule } from './schemas/notification.module';
+import { MessageModule } from './schemas/message.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(), 
     MongooseModule.forRoot(process.env.DB_URI), // Ensure your DB_URI is set in your environment variables
-    ArticleModule, UserModule, RevArticleModule, NotificationModule
+    ArticleModule, UserModule, RevArticleModule, MessageModule, NotificationModule
   ],
   controllers: [AppController],
   providers: [AppService],
