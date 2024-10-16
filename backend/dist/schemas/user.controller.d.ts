@@ -7,6 +7,11 @@ export declare class UserController {
     emailExists(email: string): Promise<{
         exists: boolean;
     }>;
+    getEmailFromToken(body: {
+        auth_token: string;
+    }): Promise<{
+        response: string;
+    }>;
     generateToken(): string;
     validateUser(body: {
         email: string;

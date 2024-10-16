@@ -2,6 +2,8 @@ import { Controller, Get, Post, Query, Body, Put, Param, Delete } from '@nestjs/
 import { UserService } from './user.service';
 import { User } from '../schemas/user.schema';
 import * as crypto from 'crypto';
+import { HttpService } from '@nestjs/axios';
+//import { NotificationController } from './notification.controller';
 
 @Controller('user')
 export class UserController {
@@ -17,6 +19,14 @@ export class UserController {
     const exists = await this.userService.emailExists(email);
     return { exists };
   }
+
+  @Post('emailfromtoken')
+  async getEmailFromToken(@Body() body: { auth_token: string }): Promise<{ response: string }> {
+    const { auth_token } = body;
+    const response = await this.userService.getEmailFromAuthToken(auth_token);
+    return { response };
+  }
+  
 
   generateToken(): string {
     return crypto.randomBytes(16).toString('hex'); // Generate a simple random token
@@ -89,7 +99,7 @@ export class UserController {
     }
     return { success: deleted };
   }
-  
+
   //Toggle role function for any of admin, mod, or analyst
   @Put('toggleRole')
   async toggleUserRole(@Body() body: { authToken: string, role: string, status: boolean }): Promise<{ success: boolean }> {

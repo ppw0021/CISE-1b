@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
+const notification_service_1 = require("./notification.service");
 const crypto = require("crypto");
 let UserController = class UserController {
     constructor(userService) {
@@ -27,10 +28,16 @@ let UserController = class UserController {
         const exists = await this.userService.emailExists(email);
         return { exists };
     }
+    async getEmailFromToken(body) {
+        const { auth_token } = body;
+        const response = await this.userService.getEmailFromAuthToken(auth_token);
+        return { response };
+    }
     generateToken() {
         return crypto.randomBytes(16).toString('hex');
     }
     async validateUser(body) {
+        notification_service_1.NotificationService.createNotification("example@gmail.com", "This is a test notification");
         const { email, passwordHash } = body;
         const exists = await this.userService.emailExists(email);
         let isAdmin = false;
@@ -114,6 +121,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "emailExists", null);
+__decorate([
+    (0, common_1.Post)('emailfromtoken'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getEmailFromToken", null);
 __decorate([
     (0, common_1.Post)('validate'),
     __param(0, (0, common_1.Body)()),
