@@ -49,6 +49,31 @@ describe('SearchResults Component', () => {
     });
   });
 
+   it('allows unchecking checkboxes', () => {
+    render(<SearchResults />);
+
+    // Check for all expected checkbox labels
+    const columns = [
+      'Title',
+      'Year',
+      'Journal/Conference',
+      'SE Practice',
+      'Claim',
+      'Evidence Result',
+      'Research Type',
+      'Participant Type',
+      'Authors',
+      'Created At',
+      'Updated At',
+    ];
+
+    columns.forEach((column) => {
+      const checkbox = screen.getByLabelText(column);
+      fireEvent.click(checkbox);
+      expect(checkbox).not.toBeChecked();
+    });
+  });
+
   it('renders the return button', () => {
     render(<SearchResults />);
     const returnButton = screen.getByRole('button', { name: /Return/i });
