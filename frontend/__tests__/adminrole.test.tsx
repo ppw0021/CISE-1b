@@ -73,38 +73,38 @@ describe('AdminPage', () => {
     //         { timeout: 3000 }
     //     );
     // });
-    // it('deletes a user successfully', async () => {
-    //     const mockUsers = [
-    //         { email: 'user1@example.com', passwordHash: 'hash1', isAdmin: true, authToken: 'token1', isMod: false, isAnalyst: false },
-    //     ];
+    it('deletes a user successfully', async () => {
+        const mockUsers = [
+            { email: 'user1@example.com', passwordHash: 'hash1', isAdmin: true, authToken: 'token1', isMod: false, isAnalyst: false },
+        ];
 
-    //     (fetch as jest.Mock).mockImplementationOnce(() =>
-    //         Promise.resolve({ ok: true, json: () => Promise.resolve(mockUsers) })
-    //     );
+        (fetch as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve({ ok: true, json: () => Promise.resolve(mockUsers) })
+        );
 
-    //     (fetch as jest.Mock).mockImplementationOnce(() =>
-    //         Promise.resolve({ ok: true }) // Mock delete response
-    //     );
+        (fetch as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve({ ok: true }) // Mock delete response
+        );
 
-    //     await act(async () => {
-    //         render(<AdminPage />);
-    //     });
+        await act(async () => {
+            render(<AdminPage />);
+        });
 
-    //     await waitFor(() => expect(screen.getByText(/user1@example.com/i)).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText(/user1@example.com/i)).toBeInTheDocument());
 
-    //     const deleteButton = screen.getByText(/Delete/i);
-    //     await act(async () => {
-    //         fireEvent.click(deleteButton);
-    //     });
+        const deleteButton = screen.getByText(/Delete/i);
+        await act(async () => {
+            fireEvent.click(deleteButton);
+        });
 
-    //     // Simulating user confirmation
-    //     window.confirm = jest.fn(() => true);
+        // Simulating user confirmation
+        window.confirm = jest.fn(() => true);
 
-    //     await waitFor(
-    //         () => expect(screen.queryByText(/user1@example.com/i)).not.toBeInTheDocument(),
-    //         { timeout: 3000 }
-    //     );
-    // });
+        await waitFor(
+            () => expect(screen.queryByText(/user1@example.com/i)).not.toBeInTheDocument(),
+            { timeout: 3000 }
+        );
+    });
     it('displays access denied message when not admin', async () => {
         localStorage.setItem("is_admin", "false"); // Set non-admin access
         await act(async () => {
