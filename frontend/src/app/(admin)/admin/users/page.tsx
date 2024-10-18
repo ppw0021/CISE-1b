@@ -135,7 +135,7 @@ const AdminPage: React.FC = () => {
                                                         {user.isAnalyst ? 'Yes' : 'No'}
                                                     </button>
                                                 </td>
-                                                <td className="py-2 px-4 border-b">{user.authToken}</td>
+                                                <td className="py-2 px-4 border-b">{user.authToken}
                                                 <button
                                                     onClick={() => {
                                                         if (window.confirm('Are you sure you want to delete this user?')) {
@@ -146,6 +146,7 @@ const AdminPage: React.FC = () => {
                                                 >
                                                     Delete
                                                 </button>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
