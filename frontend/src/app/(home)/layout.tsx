@@ -12,10 +12,11 @@ export default function RootLayout({
   const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
   const [notificationCount, setNotificationCount] = useState<number>(0);
+  const [loadedStorage, setLoadedStorage] = useState<boolean | null>(false);
+  const [showButtons, setShowButtons] = useState<boolean>(false);
   const router = useRouter();
 
   const logOutClicked = () => {
-    //Old method using local storage
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
     setLoggedInStatus(false);
@@ -30,24 +31,24 @@ export default function RootLayout({
     if (token === null) {
       setLoggedInStatus(false);
       setAdminStatus(false);
+      setLoadedStorage(true);
     } else {
       setLoggedInStatus(true);
       setAdminStatus(isAdmin === "true");
+      setLoadedStorage(true);
     }
     getNotifications();
   }, []);
 
   const getNotifications = async () => {
-    if (!isLoggedIn)
-    {
+    if (!isLoggedIn) {
       return 0;
     }
     try {
       const emailToSend = localStorage.getItem('email');
-      //console.log(emailToSend);
       const payload = {
         email: emailToSend,
-      }
+      };
       const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const response = await fetch(apiUrl + `/notification/filterbyemail`, {
         method: 'POST',
@@ -55,108 +56,103 @@ export default function RootLayout({
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
-      })
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch user existence");
       }
 
       const data = await response.json();
-      console.log(data);
       setNotificationCount(data.length);
       return data;
     } catch (err) {
       console.error(err);
     }
-  }
+  };
+
+  const toggleButtons = () => {
+    setShowButtons(!showButtons);
+  };
 
   return (
     <html lang="en">
       <title>Group 7</title>
       <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
-          <h1 className="mb-2">SPEED Application</h1>
-          <nav className="flex justify-between items-center">
+          <nav className="flex items-center justify-between">
+            {/* SPEED Application title positioned on the left */}
+            <h1 className="text-xl">SPEED Application</h1>
+            {/* Toggle button placed to the right of the title */}
             <div>
-              <Link href="/">
-                <button aria-label="Home" className="mr-2">
-                  Home
-                </button>
-              </Link>
-              {isLoggedIn && (
+              {(isLoggedIn && loadedStorage) && (
                 <>
-                  <Link href="/search">
-                    <button aria-label="Search" className="mr-2">
-                      Search
-                    </button>
-                  </Link>
-                  <Link href="/moderator">
-                    <button aria-label="Moderator" className="mr-2">
-                      Moderate Article
-                    </button>
-                  </Link>
-                  <Link href="/analysis">
-                    <button aria-label="Analysis" className="mr-2">
-                      Analysis
-                    </button>
-                  </Link>
-                  <Link href="/browse">
-                    <button aria-label="Browse" className="mr-2">
-                      Browse
-                    </button>
-                  </Link>
-                  <Link href="/create-article">
-                    <button aria-label="Create Article" className="mr-2">
-                      Create Article
-                    </button>
-                  </Link>
-                  {isUserAdmin && (
-                    <Link href="/admin">
-                      <button aria-label="Admin Panel" className="mr-2">
-                        Admin Panel
-                      </button>
-                    </Link>
-                  )}
-                  <Link href="/request">
-                    <button aria-label="req" className="mr-2">
-                      Request Roles
-                    </button>
-                  </Link>
-                </>
-              )}
-            </div>
-            <div className="flex items-center">
-              {!isLoggedIn && (
-                <>
-                  <Link href="/login">
-                    <button aria-label="Login" className="mr-2">
-                      Login
-                    </button>
-                  </Link>
-
-                </>
-              )}
-              {isLoggedIn && (
-                <>
-                  <Link href="/notifications">
-                    <button type="button" className="mr-2 relative">
-                      Inbox
-                      <span className="sr-only">Notifications</span>
-                      {(notificationCount > 0) && (
+                <Link href="/notifications">
+                  <button type="button" className="mr-2 relative">
+                    Inbox
+                    <span className="sr-only">Notifications</span>
+                    {(notificationCount > 0) && (
                       <div className="absolute inline-flex items-center justify-center w-6 h-6 text-s font-bold bg-red-500 rounded-full -top-2 -end-2">
                         {notificationCount}
                       </div>
-                      )}
-                    </button>
-
-                  </Link>
-                  <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
-                    Logout
+                    )}
                   </button>
+                </Link>
+                <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
+                  Logout
+                </button>
+                </>
+              )}
+              {(!isLoggedIn && loadedStorage) && (
+                <Link href="/login">
+                  <button aria-label="Login" className="mr-2">Login</button>
+                </Link>
+              )}
+              <button
+                onClick={toggleButtons}
+                className={`transition-transform duration-100 ${showButtons ? 'rotate-360' : ''} mb-2`}
+                aria-label="Toggle Menu"
+              >
+                {showButtons ? '▲' : '▼'} {/* Use arrow indicators for toggle */}
+              </button>
+            </div>
+          </nav>
+          {/* Buttons container with sliding effect */}
+          <div
+            className={`overflow-hidden transition-all duration-250 ease-in-out ${showButtons ? 'max-h-20' : 'max-h-0'}`} // Adjust max height as needed
+          >
+            <div className={`flex items-center ${showButtons ? 'opacity-100' : 'opacity-0'}`}>
+              {(isLoggedIn && loadedStorage) && (
+                <>
+                  <Link href="/">
+                    <button aria-label="Home" className="mr-2">Home</button>
+                  </Link>
+                  <Link href="/search">
+                    <button aria-label="Search" className="mr-2">Search</button>
+                  </Link>
+                  <Link href="/moderator">
+                    <button aria-label="Moderator" className="mr-2">Moderate Article</button>
+                  </Link>
+                  <Link href="/analysis">
+                    <button aria-label="Analysis" className="mr-2">Analysis</button>
+                  </Link>
+                  <Link href="/browse">
+                    <button aria-label="Browse" className="mr-2">Browse</button>
+                  </Link>
+                  <Link href="/create-article">
+                    <button aria-label="Create Article" className="mr-2">Create Article</button>
+                  </Link>
+                  {isUserAdmin && (
+                    <Link href="/admin">
+                      <button aria-label="Admin Panel" className="mr-2">Admin Panel</button>
+                    </Link>
+                  )}
+                  <Link href="/request">
+                    <button aria-label="Request Roles" className="mr-2">Request Roles</button>
+                  </Link>
                 </>
               )}
             </div>
-          </nav>
+          </div>
         </header>
         <main className="flex-grow p-4">{children}</main>
         <footer className="shadow-lg">
@@ -164,6 +160,5 @@ export default function RootLayout({
         </footer>
       </body>
     </html>
-
   );
 }
