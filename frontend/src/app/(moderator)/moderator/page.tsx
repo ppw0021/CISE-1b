@@ -85,9 +85,7 @@ export default function ModeratorPage() {
   return (
     <div className="flex items-center justify-center">
       <div className="bg-white shadow-2xl rounded-lg p-6 text-center">
-        <h1 style={{ textAlign: 'center' }}><u>Moderator Page</u></h1>
-        <br />
-        {/* Unmoderated Articles */}
+        <h1 style={{ textAlign: 'center' }}>Moderator Page</h1>
         <h1>Unmoderated Articles</h1>
         <ShowArticleList
           articles={unmoderatedArticles}

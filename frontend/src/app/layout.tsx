@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import "../globals.css";
+import "./globals.css";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -13,6 +13,8 @@ export default function RootLayout({
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
   const [notificationCount, setNotificationCount] = useState<number>(0);
   const [loadedStorage, setLoadedStorage] = useState<boolean | null>(false);
+  const [isUserMod, setModStatus] = useState<string | null>(null);
+  const [isUserAnalyst, setAnalystStatus] = useState<string | null>(null);
   const [showButtons, setShowButtons] = useState<boolean>(false);
   const router = useRouter();
 
@@ -28,6 +30,8 @@ export default function RootLayout({
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     const isAdmin = localStorage.getItem("is_admin");
+    const isMod = localStorage.getItem('is_mod');
+    const isAnalyst = localStorage.getItem('is_analyst');
     if (token === null) {
       setLoggedInStatus(false);
       setAdminStatus(false);
@@ -35,6 +39,8 @@ export default function RootLayout({
     } else {
       setLoggedInStatus(true);
       setAdminStatus(isAdmin === "true");
+      setModStatus(isMod);
+      setAnalystStatus(isAnalyst);
       setLoadedStorage(true);
     }
     getNotifications();
@@ -80,26 +86,28 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
           <nav className="flex items-center justify-between">
-            {/* SPEED Application title positioned on the left */}
-            <h1 className="text-xl">SPEED Application</h1>
-            {/* Toggle button placed to the right of the title */}
+            <Link href="/">
+              <button className="border-none outline-none bg-transparent p-0 m-0 text-2xl shadow-none hover:shadow-none hover:bg-transparent">
+                SPEED Application
+              </button>
+            </Link>
             <div>
               {(isLoggedIn && loadedStorage) && (
                 <>
-                <Link href="/notifications">
-                  <button type="button" className="mr-2 relative">
-                    Inbox
-                    <span className="sr-only">Notifications</span>
-                    {(notificationCount > 0) && (
-                      <div className="absolute inline-flex items-center justify-center w-6 h-6 text-s font-bold bg-red-500 rounded-full -top-2 -end-2">
-                        {notificationCount}
-                      </div>
-                    )}
+                  <Link href="/notifications">
+                    <button type="button" className="mr-2 relative">
+                      Inbox
+                      <span className="sr-only">Notifications</span>
+                      {(notificationCount > 0) && (
+                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-s font-bold bg-red-500 rounded-full -top-2 -end-2">
+                          {notificationCount}
+                        </div>
+                      )}
+                    </button>
+                  </Link>
+                  <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
+                    Logout
                   </button>
-                </Link>
-                <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
-                  Logout
-                </button>
                 </>
               )}
               {(!isLoggedIn && loadedStorage) && (
@@ -109,7 +117,7 @@ export default function RootLayout({
               )}
               <button
                 onClick={toggleButtons}
-                className={`transition-transform duration-100 ${showButtons ? 'rotate-360' : ''} mb-2`}
+                className={`transition-transform duration-100 ${showButtons ? 'rotate-360' : ''} `}
                 aria-label="Toggle Menu"
               >
                 {showButtons ? '▲' : '▼'} {/* Use arrow indicators for toggle */}
@@ -129,12 +137,20 @@ export default function RootLayout({
                   <Link href="/search">
                     <button aria-label="Search" className="mr-2">Search</button>
                   </Link>
-                  <Link href="/moderator">
-                    <button aria-label="Moderator" className="mr-2">Moderate Article</button>
-                  </Link>
-                  <Link href="/analysis">
-                    <button aria-label="Analysis" className="mr-2">Analysis</button>
-                  </Link>
+                  {isUserMod && (
+                    <>
+                      <Link href="/moderator">
+                        <button aria-label="Moderator" className="mr-2">Moderate Article</button>
+                      </Link>
+                    </>
+                  )}
+                  {isUserAnalyst && (
+                    <>
+                      <Link href="/analysis">
+                        <button aria-label="Analysis" className="mr-2">Analysis</button>
+                      </Link>
+                    </>
+                  )}
                   <Link href="/browse">
                     <button aria-label="Browse" className="mr-2">Browse</button>
                   </Link>

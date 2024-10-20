@@ -80,9 +80,7 @@ export default function LoginPage() {
                 localStorage.setItem("is_mod", data.isMod);
                 localStorage.setItem("is_analyst", data.isAnalyst);
                 localStorage.setItem("email", emailEntry);
-                router.push('/');
-                
-
+                window.location.href = '/';
             } else if (data.exists && !data.valid) {
                 //Email exists but password not valid
                 setPopupVisible(true);

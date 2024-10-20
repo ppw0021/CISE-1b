@@ -123,7 +123,6 @@ export default function AcceptedArticles() {
                       {article._id ? (
                         <button 
                           onClick={() => confirmArticle(article)} 
-                          style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: 'white', border: 'none', borderRadius: '5px' }}
                         >
                           Confirm
                         </button>

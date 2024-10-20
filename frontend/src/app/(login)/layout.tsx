@@ -2,49 +2,35 @@
 import { useState, useEffect } from 'react';
 import "../globals.css";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(false);
-  const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    const isAdmin = localStorage.getItem("is_admin");
-    if (token === null) {
-      setLoggedInStatus(false);
-      setAdminStatus(false);
-    }
-    else {
-      setLoggedInStatus(true);
-      if (isAdmin == "true") {
-        setAdminStatus(true);
-      } else {
-        setAdminStatus(false)
-      }
-      console.log(isLoggedIn);
-      console.log(isUserAdmin);
-    }
-
-  }, [isLoggedIn, isUserAdmin, setAdminStatus, setLoggedInStatus]);
+  const goHome = () =>{
+    window.location.href = '/';
+  } 
 
   return (
     <html lang="en">
       <title>Group 7</title>
       <body className="flex flex-col min-h-screen">
         <header className="shadow-lg">
-          <h1 className="mb-2">SPEED Application</h1>
-          <nav>
-            <Link href="/">
-              <button aria-label="Home" className="mr-2">
-                Home
+          <nav className="flex items-center justify-between">
+              <button className="border-none outline-none bg-transparent p-0 m-0 text-2xl shadow-none hover:shadow-none hover:bg-transparent" onClick={goHome}>
+                SPEED Application
               </button>
-            </Link>
-            <>
-            </>
+
+            <div>
+              <button
+                aria-label="Toggle Menu"
+              >
+                ▼
+              </button>
+            </div>
           </nav>
         </header>
         <main className="flex-grow p-4">{children}</main>
@@ -52,6 +38,6 @@ export default function RootLayout({
           <p>Group Number 7: Adam, Declan, and Joel.</p>
         </footer>
       </body>
-    </html >
+    </html>
   );
 }

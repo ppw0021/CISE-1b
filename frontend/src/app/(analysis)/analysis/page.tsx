@@ -4,10 +4,9 @@ import AcceptedArticles from '../../(components)/AcceptedArticles';  // Import t
 
 export default function AnalysisPage() {
   return (
-    <div>
-      <h1 style={{ textAlign: 'center' }}><u>Analysis Page</u></h1>
-      <AcceptedArticles />  {/* Call the AcceptedArticles component here */}
-      {/* Additional analysis content can go here */}
+    <div className="bg-white shadow-2xl rounded-lg p-6 text-center">
+      <h1 style={{ textAlign: 'center' }}>Analysis Page</h1>
+      <AcceptedArticles />
     </div>
   );
 }

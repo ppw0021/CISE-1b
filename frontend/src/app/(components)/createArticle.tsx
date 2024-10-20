@@ -154,57 +154,6 @@ const CreateArticleComponent = () => {
     
     return (
         <div className="flex flex-col min-h-screen">
-            <header className="shadow-lg">
-                <h1 className="mb-2">SPEED Application</h1>
-                <nav>
-                    <Link href="/">
-                      <button aria-label="Home" className="mr-2">
-                        Home
-                      </button>
-                    </Link>
-                    {!isLoggedIn && (
-                      <Link href="/login">
-                        <button aria-label="Login" className="mr-2">
-                          Login
-                        </button>
-                      </Link>
-                    )}
-                    {isLoggedIn && (
-                      <>
-                        <button aria-label="Logout" className="mr-2" onClick={logOutClicked}>
-                          Logout
-                        </button>
-                        <Link href="/search">
-                          <button aria-label="Search" className="mr-2">
-                            Search
-                          </button>
-                        </Link>
-                        <Link href="/moderator">
-                          <button aria-label="Moderator" className="mr-2">
-                            Moderate Article
-                          </button>
-                        </Link>
-                        <Link href="/browse">
-                          <button aria-label="Browse" className="mr-2">
-                            Browse
-                          </button>
-                        </Link>
-                        <Link href="/create-article">
-                          <button aria-label="Create Article" className="mr-2">
-                            Create Article
-                          </button>
-                        </Link>
-                        {isUserAdmin && (
-                          <Link href="/admin">
-                            <button aria-label="Admin Panel" className="mr-2">
-                              Admin Panel
-                            </button>
-                          </Link>
-                        )}
-                      </>
-                    )}
-                </nav>
-            </header>
             <main className="flex-grow p-4">
                 <div className="flex items-center justify-center bg-gray-100">
                     <div className="p-6 bg-white shadow-lg rounded-lg w-full max-w-xl">
