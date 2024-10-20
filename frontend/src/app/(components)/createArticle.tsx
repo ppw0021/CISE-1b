@@ -1,40 +1,17 @@
 import { useState, useEffect } from 'react';
 import "../globals.css"; 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Article as ArticleType, DefaultEmptyArticle } from "./Article";
 
 const CreateArticleComponent = () => {
-    const router = useRouter();
     const [articleState, setArticle] = useState<ArticleType>({
         ...DefaultEmptyArticle,
         authors: [] // Initialize authors as an empty array
     }); 
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
-    const [isLoggedIn, setLoggedInStatus] = useState<boolean | null>(true);
-    const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
 
     useEffect(() => {
-        const token = localStorage.getItem("auth_token");
-        const isAdmin = localStorage.getItem("is_admin");
-        if (token === null) {
-            setLoggedInStatus(false);
-            setAdminStatus(false);
-        } else {
-            setLoggedInStatus(true);
-            setAdminStatus(isAdmin === "true");
-        }
     }, []);
-
-    const logOutClicked = () => {
-        localStorage.removeItem("auth_token");
-        localStorage.removeItem("is_admin");
-        setLoggedInStatus(false);
-        setAdminStatus(false);
-        router.push("/");
-        window.location.reload();
-    };
     
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;

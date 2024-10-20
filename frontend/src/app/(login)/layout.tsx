@@ -1,8 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
 import "../globals.css";
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function RootLayout({
   children,
