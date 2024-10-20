@@ -83,24 +83,26 @@ export default function ModeratorPage() {
   };
 
   return (
-    <div>
-      <h1 style={{ textAlign: 'center' }}><u>Moderator Page</u></h1>
-      <br />
-      {/* Unmoderated Articles */}
-      <h1><u>Unmoderated Articles</u></h1>
-      <ShowArticleList
-        articles={unmoderatedArticles}
-        moderationMode={true}
-        onAccept={handleAccept}
-        onDeny={handleDeny}
-      />
+    <div className="flex items-center justify-center">
+      <div className="bg-white shadow-2xl rounded-lg p-6 text-center">
+        <h1 style={{ textAlign: 'center' }}><u>Moderator Page</u></h1>
+        <br />
+        {/* Unmoderated Articles */}
+        <h1>Unmoderated Articles</h1>
+        <ShowArticleList
+          articles={unmoderatedArticles}
+          moderationMode={true}
+          onAccept={handleAccept}
+          onDeny={handleDeny}
+        />
 
-      {/* Moderated Articles */}
-      <h1><u>Accepted Articles</u></h1>
-      <ShowArticleList articles={moderatedArticles.accepted} />
+        {/* Moderated Articles */}
+        <h1>Accepted Articles</h1>
+        <ShowArticleList articles={moderatedArticles.accepted} />
 
-      <h1><u>Denied Articles</u></h1>
-      <ShowArticleList articles={moderatedArticles.denied} />
-    </div>
+        <h1>Denied Articles</h1>
+        <ShowArticleList articles={moderatedArticles.denied} />
+      </div>
+    </div >
   );
 }

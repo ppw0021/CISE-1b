@@ -16,7 +16,7 @@ const article_module_1 = require("./schemas/article.module");
 const user_module_1 = require("./schemas/user.module");
 const revarticle_module_1 = require("./schemas/revarticle.module");
 const notification_module_1 = require("./schemas/notification.module");
-  const message_module_1 = require("./schemas/message.module");
+const message_module_1 = require("./schemas/message.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;

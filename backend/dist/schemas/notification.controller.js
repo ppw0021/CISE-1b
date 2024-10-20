@@ -26,6 +26,10 @@ let NotificationController = class NotificationController {
         const { email } = body;
         return this.notificationService.getFilteredNotifications(email);
     }
+    async makeNotification(body) {
+        const { email, note } = body;
+        return this.notificationService.createNotification(email, note);
+    }
 };
 exports.NotificationController = NotificationController;
 __decorate([
@@ -41,6 +45,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], NotificationController.prototype, "getSomeNotifications", null);
+__decorate([
+    (0, common_1.Post)('makenotification'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], NotificationController.prototype, "makeNotification", null);
 exports.NotificationController = NotificationController = __decorate([
     (0, common_1.Controller)('notification'),
     __metadata("design:paramtypes", [notification_service_1.NotificationService])

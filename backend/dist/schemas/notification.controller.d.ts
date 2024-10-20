@@ -7,4 +7,8 @@ export declare class NotificationController {
     getSomeNotifications(body: {
         email: string;
     }): Promise<Notification[]>;
+    makeNotification(body: {
+        email: string;
+        note: string;
+    }): Promise<Notification>;
 }

@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
-const notification_service_1 = require("./notification.service");
 const crypto = require("crypto");
 let UserController = class UserController {
     constructor(userService) {
@@ -37,7 +36,6 @@ let UserController = class UserController {
         return crypto.randomBytes(16).toString('hex');
     }
     async validateUser(body) {
-        notification_service_1.NotificationService.createNotification("example@gmail.com", "This is a test notification");
         const { email, passwordHash } = body;
         const exists = await this.userService.emailExists(email);
         let isAdmin = false;

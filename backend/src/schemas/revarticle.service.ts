@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class RevArticleService {
-    constructor(@InjectModel(RevArticle.name) private revArticleModel: Model<RevArticleDocument>, private readonly httpService: HttpService) { }
+    constructor(@InjectModel(RevArticle.name) private revArticleModel: Model<RevArticleDocument>) { }
 
     async create(revArticle: RevArticle): Promise<RevArticle> {
         const createdRevArticle = new this.revArticleModel(revArticle);
@@ -70,6 +70,7 @@ export class RevArticleService {
         }
     }
 
+    /*
     async sendNotification() {
         const url = 'http://localhost:3000/notification/makenotification'; // Your API URL
     
@@ -86,4 +87,5 @@ export class RevArticleService {
           throw error;
         }
       }
+        */
 }
