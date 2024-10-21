@@ -1,12 +1,11 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { Article, DefaultEmptyArticle } from './Article';
 import Link from 'next/link';
 
 function UpdateArticleInfo() {
     const [Article, setArticle] = useState<Article>(DefaultEmptyArticle);
     const id = useParams<{ id: string }>().id;
-    const router = useRouter();
 
     useEffect(() => {
         fetch(`http://localhost:8082/api/Articles/${id}`)
@@ -25,11 +24,6 @@ function UpdateArticleInfo() {
         setArticle({ ...Article, [event.target.name]: event.target.value });
     };
 
-    //Never used
-    /*const textAreaOnChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setArticle({ ...Article, [event.target.name]: event.target.value });
-    };*/
-
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         fetch(`http://localhost:8082/api/Articles/${id}`, {
@@ -38,7 +32,7 @@ function UpdateArticleInfo() {
             body: JSON.stringify(Article),
         })
             .then((res) => {
-                router.push(`/show-article/${id}`);
+                window.location.href = `/show-article/${id}`;
                 console.log(res);
             })
             .catch((err) => {

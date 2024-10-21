@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import crypto from 'crypto';
-import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
 
@@ -11,7 +10,6 @@ export default function RegisterPage() {
     const [verifyPasswordEntry, setVerifyPasswordEntry] = useState<string>("");
     const [isPopupVisible, setPopupVisible] = useState<boolean>(false);
     const [popupMessage, setPopupMessage] = useState<string>("Password incorrect");
-    const router = useRouter();
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmailEntry(e.target.value);
@@ -90,7 +88,7 @@ export default function RegisterPage() {
                 localStorage.setItem("is_mod", "false");
                 localStorage.setItem("is_analyst", "false");
                 localStorage.setItem("email", emailEntry);
-                router.push('/');
+                window.location.href = '/';
 
 
             } else if (data.exists || !data.success) {
@@ -121,7 +119,7 @@ export default function RegisterPage() {
     }
 
     const backToLoginButtonPressed = async () => {
-        router.push('/login');
+        window.location.href = 'login';
     }
 
     return (

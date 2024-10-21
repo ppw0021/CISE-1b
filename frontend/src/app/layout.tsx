@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import "./globals.css";
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function RootLayout({
   children,
@@ -16,14 +15,13 @@ export default function RootLayout({
   const [isUserMod, setModStatus] = useState<string | null>(null);
   const [isUserAnalyst, setAnalystStatus] = useState<string | null>(null);
   const [showButtons, setShowButtons] = useState<boolean>(false);
-  const router = useRouter();
 
   const logOutClicked = () => {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
     setLoggedInStatus(false);
     setAdminStatus(false);
-    router.push("/");
+    window.location.href = '/';
     window.location.reload();
   };
 

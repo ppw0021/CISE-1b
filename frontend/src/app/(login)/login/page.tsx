@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import crypto from 'crypto';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
 
@@ -10,7 +9,6 @@ export default function LoginPage() {
     const [passwordEntry, setPasswordEntry] = useState<string>("");
     const [isPopupVisible, setPopupVisible] = useState<boolean>(false);
     const [popupMessage, setPopupMessage] = useState<string>("Password incorrect");
-    const router = useRouter();
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmailEntry(e.target.value);
@@ -32,7 +30,7 @@ export default function LoginPage() {
     }
 
     const registerButtonPressed = async () => {
-        router.push('/register');
+        window.location.href = '/register';
     }
 
     const loginButtonPressed = async () => {
