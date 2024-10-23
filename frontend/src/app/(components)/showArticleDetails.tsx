@@ -1,13 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { Article, DefaultEmptyArticle } from './Article';
 import Link from 'next/link';
 
 function ShowArticleDetails() {
     const [Article, setArticle] = useState<Article>(DefaultEmptyArticle);
     const id = useParams<{ id: string }>().id;
-    const navigate = useRouter();
 
     useEffect(() => {
         fetch(`http://localhost:8082/api/Articles/${id}`)
@@ -26,7 +25,7 @@ function ShowArticleDetails() {
         fetch(`http://localhost:8082/api/Articles/${id}`, { method: 'DELETE' })
             .then((res) => {
                 console.log(res);
-                navigate.push('/');
+                window.location.href = '/';
             })
             .catch((err) => {
                 console.log('Error from ShowArticleDetails_deleteClick: ' + err);
