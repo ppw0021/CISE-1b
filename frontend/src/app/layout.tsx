@@ -12,15 +12,19 @@ export default function RootLayout({
   const [isUserAdmin, setAdminStatus] = useState<boolean | null>(false);
   const [notificationCount, setNotificationCount] = useState<number>(0);
   const [loadedStorage, setLoadedStorage] = useState<boolean | null>(false);
-  const [isUserMod, setModStatus] = useState<string | null>(null);
-  const [isUserAnalyst, setAnalystStatus] = useState<string | null>(null);
+  const [isUserMod, setModStatus] = useState<boolean | null>(false);
+  const [isUserAnalyst, setAnalystStatus] = useState<boolean | null>(false);
   const [showButtons, setShowButtons] = useState<boolean>(false);
 
   const logOutClicked = () => {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("is_admin");
+    localStorage.removeItem("is_mod");
+    localStorage.removeItem("is_analyst");
     setLoggedInStatus(false);
     setAdminStatus(false);
+    setModStatus(false);
+    setAnalystStatus(false);
     window.location.href = '/';
     window.location.reload();
   };
@@ -37,8 +41,8 @@ export default function RootLayout({
     } else {
       setLoggedInStatus(true);
       setAdminStatus(isAdmin === "true");
-      setModStatus(isMod);
-      setAnalystStatus(isAnalyst);
+      setModStatus(isMod === "true");
+      setAnalystStatus(isAnalyst === "true");
       setLoadedStorage(true);
     }
     getNotifications();
