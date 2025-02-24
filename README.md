@@ -63,3 +63,17 @@ The application follows a **CI/CD pipeline** using **GitHub Actions**:
 4. Users receive **seamless updates** without downtime.
 
 ---
+
+## Gallery
+
+![Log in](https://github.com/user-attachments/assets/8db728f1-bac1-496a-85a2-aee8694e8cd8)
+
+![Register](https://github.com/user-attachments/assets/4794186c-d61c-4183-b8df-aa41a4355efa)
+
+![Browse](https://github.com/user-attachments/assets/eb1693c7-be4d-47c7-bb60-15b545fac9de)
+
+![Search](https://github.com/user-attachments/assets/209ed552-7972-456d-acfc-29e08578d698)
+
+![Mod](https://github.com/user-attachments/assets/ba38b3b2-c32e-4eb4-a71b-296e6af76dd1)
+
+![Submit](https://github.com/user-attachments/assets/bfd753f2-d033-4dbd-b737-810fb84ec262)
